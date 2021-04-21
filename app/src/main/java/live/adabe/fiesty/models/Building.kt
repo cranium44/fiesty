@@ -9,5 +9,6 @@ data class Building(
         val buildId: Int,
         val name: String,
         val address: String,
+        val energyRate: Long,
         val type: BuildingType,
 )
