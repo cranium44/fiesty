@@ -12,8 +12,8 @@ data class Device(
     val deviceId: Int,
     val roomId: Int,
     val name: String,
-    val duration: Duration,
-    val startTime: Instant,
-    val stopTime: Instant,
+    val duration: Long,
+    val startTime: Long,
+    val stopTime: Long,
     val energyUse: Double,
 )

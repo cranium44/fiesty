@@ -6,7 +6,8 @@ import android.content.SharedPreferences
 import javax.inject.Inject
 
 class Preferences @Inject constructor(private val application: Application) {
-    private var sharedPreferences: SharedPreferences
+    private var sharedPreferences: SharedPreferences =
+        application.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE)
 
     companion object{
         private const val SHARED_PREF_NAME = "sharedPref"
@@ -15,10 +16,6 @@ class Preferences @Inject constructor(private val application: Application) {
         private const val EMAIL = "email"
         private const val ID = "id"
         private const val LOGGED_IN_KEY = "logged_in"
-    }
-
-    init {
-        sharedPreferences = application.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE)
     }
 
     fun setIsLoggedIn(boolean: Boolean){

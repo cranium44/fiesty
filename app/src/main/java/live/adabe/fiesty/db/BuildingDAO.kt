@@ -16,11 +16,11 @@ interface BuildingDAO {
     fun getBuildingByName(name: String): LiveData<List<Building>>
 
     @Insert
-    fun addOneBuilding()
-    
+    fun addOneBuilding(building: Building)
+
     @Insert
     fun addBuildings(vararg buildings: Building)
 
     @Delete
-    fun deleteBuilding(id: Int)
+    fun deleteBuilding(building: Building)
 }

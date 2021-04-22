@@ -9,4 +9,5 @@ import live.adabe.fiesty.models.Room
 @Database(entities = [Building::class, Room::class, Device::class], version = 1)
 abstract class Database: RoomDatabase() {
     abstract fun buildingDao(): BuildingDAO
+    abstract fun roomDAO(): RoomDAO
 }

@@ -11,12 +11,12 @@ interface RoomDAO {
     @Query("SELECT * FROM room")
     fun getAllRooms(): LiveData<List<Room>>
 
-    @Insert(onConflict = REPLACE)
+    @Insert
     fun addRoom(room: Room)
 
     @Update
     fun updateRoom(room: Room)
 
     @Delete
-    fun deleteRoom(id: Int)
+    fun deleteRoom(room: Room)
 }
