@@ -5,21 +5,35 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import live.adabe.fiesty.network.NetworkConstants
-import live.adabe.fiesty.network.UserAPI
+import live.adabe.fiesty.network.*
 import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
+import javax.inject.Singleton
 
 
 @Module
 @InstallIn(SingletonComponent::class)
 class NetworkModule {
 
+
     @Provides
-    fun provideOkHttpClient(application: Application): OkHttpClient {
-        return OkHttpClient.Builder().callTimeout(10, TimeUnit.MINUTES).build()
+    @Singleton
+    fun provideLoggingInterceptor(): HttpLoggingInterceptor {
+        return with(HttpLoggingInterceptor()) {
+            setLevel(HttpLoggingInterceptor.Level.BODY)
+        }
+    }
+
+    @Provides
+    fun provideOkHttpClient(
+        application: Application,
+        httpLoggingInterceptor: HttpLoggingInterceptor
+    ): OkHttpClient {
+        return OkHttpClient.Builder().callTimeout(10, TimeUnit.MINUTES)
+            .addNetworkInterceptor(httpLoggingInterceptor).build()
     }
 
     @Provides
@@ -33,4 +47,20 @@ class NetworkModule {
     fun provideUserApi(retrofit: Retrofit): UserAPI {
         return retrofit.create(UserAPI::class.java)
     }
+
+    @Provides
+    fun provideBuildingAPI(retrofit: Retrofit): BuildingAPI {
+        return retrofit.create(BuildingAPI::class.java)
+    }
+
+    @Provides
+    fun provideRoomAPI(retrofit: Retrofit): RoomAPI {
+        return retrofit.create(RoomAPI::class.java)
+    }
+
+    @Provides
+    fun provideDeviceAPI(retrofit: Retrofit) = retrofit.create(DeviceAPI::class.java)
+
+    @Provides
+    fun provideEnergyAPI(retrofit: Retrofit) = retrofit.create(EnergyAPI::class.java)
 }
