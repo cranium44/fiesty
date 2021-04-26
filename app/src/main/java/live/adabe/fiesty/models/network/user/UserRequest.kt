@@ -1,4 +1,4 @@
-package live.adabe.fiesty.models.network
+package live.adabe.fiesty.models.network.user
 
 data class UserRequest(
     val firstName: String,
