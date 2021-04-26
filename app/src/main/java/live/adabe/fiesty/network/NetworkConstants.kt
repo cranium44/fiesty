@@ -2,6 +2,7 @@ package live.adabe.fiesty.network
 
 object NetworkConstants {
     const val BASE_URL = "http://localhost:3000/api/"
+    const val TIMEOUT = 10000L
 
     //user
     const val USER_CREATE_ENDPOINT = "createUser"

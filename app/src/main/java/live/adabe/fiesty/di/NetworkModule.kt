@@ -59,8 +59,8 @@ class NetworkModule {
     }
 
     @Provides
-    fun provideDeviceAPI(retrofit: Retrofit) = retrofit.create(DeviceAPI::class.java)
+    fun provideDeviceAPI(retrofit: Retrofit): DeviceAPI = retrofit.create(DeviceAPI::class.java)
 
     @Provides
-    fun provideEnergyAPI(retrofit: Retrofit) = retrofit.create(EnergyAPI::class.java)
+    fun provideEnergyAPI(retrofit: Retrofit): EnergyAPI = retrofit.create(EnergyAPI::class.java)
 }
