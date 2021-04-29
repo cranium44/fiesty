@@ -1,4 +1,4 @@
-package live.adabe.fiesty.ui
+package live.adabe.fiesty.ui.home
 
 import androidx.lifecycle.ViewModel
 

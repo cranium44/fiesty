@@ -1,8 +1,9 @@
-package live.adabe.fiesty.network
+package live.adabe.fiesty.network.api
 
 import androidx.lifecycle.LiveData
 import live.adabe.fiesty.models.network.device.DeviceRequest
 import live.adabe.fiesty.models.network.device.DeviceResponse
+import live.adabe.fiesty.network.NetworkConstants
 import retrofit2.http.*
 
 interface DeviceAPI {

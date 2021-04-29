@@ -1,4 +1,4 @@
-package live.adabe.fiesty.ui
+package live.adabe.fiesty.ui.home
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment

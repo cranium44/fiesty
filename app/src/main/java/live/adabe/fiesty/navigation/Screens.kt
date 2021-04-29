@@ -2,7 +2,7 @@ package live.adabe.fiesty.navigation
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
-import live.adabe.fiesty.ui.HomeFragment
+import live.adabe.fiesty.ui.home.HomeFragment
 import live.adabe.fiesty.ui.login.LoginFragment
 import live.adabe.fiesty.ui.profile.ProfileFragment
 import live.adabe.fiesty.ui.signup.SignUpFragment

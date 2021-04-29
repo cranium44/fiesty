@@ -1,7 +1,7 @@
 package live.adabe.fiesty.network
 
 object NetworkConstants {
-    const val BASE_URL = "http://localhost:3000/api/"
+    const val BASE_URL = "https://home-energy-api.herokuapp.com/api/"
     const val TIMEOUT = 10000L
 
     //user

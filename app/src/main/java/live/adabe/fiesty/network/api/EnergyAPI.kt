@@ -1,5 +1,6 @@
-package live.adabe.fiesty.network
+package live.adabe.fiesty.network.api
 
+import live.adabe.fiesty.network.NetworkConstants
 import retrofit2.http.GET
 import retrofit2.http.Path
 
