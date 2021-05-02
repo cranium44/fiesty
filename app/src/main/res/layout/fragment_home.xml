@@ -7,15 +7,88 @@
     android:layout_height="match_parent"
     tools:context=".ui.home.HomeFragment">
 
-    <!-- TODO: Update blank fragment layout -->
+    <TextView
+        android:id="@+id/welcome_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="@string/hello"
+        android:textColor="@color/black"
+        android:textSize="25sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="@+id/home_start_guideline"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <TextView
         android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="@string/your_stats_are"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toStartOf="@+id/home_end_guideline"
+        app:layout_constraintStart_toStartOf="@+id/home_start_guideline"
+        app:layout_constraintTop_toTopOf="@+id/guideline5" />
+
+    <ImageView
+        android:id="@+id/display_pic"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        app:layout_constraintEnd_toStartOf="@+id/home_end_guideline"
+        app:layout_constraintTop_toTopOf="@+id/welcome_text"
+        tools:src="@tools:sample/avatars"
+        android:contentDescription="@string/image" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/building_recycler"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:text="@string/hello_blank_fragment"
+        app:layout_constraintBottom_toTopOf="@+id/guideline7"
+        app:layout_constraintEnd_toStartOf="@+id/home_end_guideline"
+        app:layout_constraintStart_toStartOf="@+id/home_start_guideline"
+        app:layout_constraintTop_toTopOf="@+id/guideline6" />
+
+    <Button
+        android:id="@+id/add_building"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:text="@string/add_new_building"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintEnd_toStartOf="@+id/home_end_guideline"
+        app:layout_constraintStart_toStartOf="@+id/home_start_guideline" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/home_start_guideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintGuide_percent="0.1"
+        android:orientation="vertical" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/home_end_guideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintGuide_percent="0.9"
+        android:orientation="vertical" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintGuide_percent=".15"
+        android:orientation="horizontal" />
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintGuide_percent=".45"
+        android:orientation="horizontal" />
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline7"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintGuide_percent=".85"
+        android:orientation="horizontal" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

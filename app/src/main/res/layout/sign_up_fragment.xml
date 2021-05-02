@@ -79,10 +79,28 @@
         android:id="@+id/password_input"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="@id/guideline3"
+        app:layout_constraintBottom_toBottomOf="@id/rate_input"
         app:layout_constraintEnd_toStartOf="@id/signup_guideline_end"
         app:layout_constraintStart_toEndOf="@id/signup_guideline_start"
         app:layout_constraintTop_toBottomOf="@+id/email_input">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/white"
+            android:hint="@string/password"
+            android:inputType="textEmailAddress"
+            android:textColor="@color/black" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/rate_input"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="@id/guideline3"
+        app:layout_constraintEnd_toStartOf="@id/signup_guideline_end"
+        app:layout_constraintStart_toEndOf="@id/signup_guideline_start"
+        app:layout_constraintTop_toBottomOf="@+id/password_input">
 
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"

@@ -43,9 +43,9 @@ class UserRepository(private val userAPI: UserAPI, private val preferences: Pref
                 val id = preferences.getId()
                 if (id != 0) {
                     userAPI.getUser(id)
-                }
+                }else{}
             }catch (t: Throwable){
-
+                Log.e(TAG, t.message.toString())
             }
         }
     }
@@ -57,9 +57,9 @@ class UserRepository(private val userAPI: UserAPI, private val preferences: Pref
                 if (id != 0){
                     val response = userAPI.updateUser(id, userRequest)
                     response.value?.let { saveUserInfo(it) }
-                }
+                }else{}
             }catch (t: Throwable){
-
+                Log.e(TAG, t.message.toString())
             }
         }
     }
