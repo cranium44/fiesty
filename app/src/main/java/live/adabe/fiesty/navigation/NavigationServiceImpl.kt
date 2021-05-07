@@ -43,6 +43,14 @@ class NavigationServiceImpl(cicerone: Cicerone<Router>): NavigationService {
         navigateTo(Screens.ProfileScreen())
     }
 
+    override fun openBuildingScreen(bundle: Bundle?) {
+        navigateTo(Screens.BuildingDetailsScreen(bundle))
+    }
+
+    override fun openRoomScreen(bundle: Bundle?) {
+        navigateTo(Screens.RoomScreen(bundle))
+    }
+
     private fun navigateTo(screen: Screen) {
         CoroutineScope(Dispatchers.Main).launch {
             router.navigateTo(screen)

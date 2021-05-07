@@ -17,4 +17,8 @@ interface NavigationService {
 
     fun openProfileScreen()
 
+    fun openBuildingScreen(bundle: Bundle?)
+
+    fun openRoomScreen(bundle: Bundle?)
+
 }
