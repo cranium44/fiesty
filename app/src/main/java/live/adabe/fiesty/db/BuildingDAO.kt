@@ -1,10 +1,7 @@
 package live.adabe.fiesty.db
 
 import androidx.lifecycle.LiveData
-import androidx.room.Dao
-import androidx.room.Delete
-import androidx.room.Insert
-import androidx.room.Query
+import androidx.room.*
 import live.adabe.fiesty.models.Building
 
 @Dao
@@ -20,6 +17,9 @@ interface BuildingDAO {
 
     @Insert
     fun addBuildings(vararg buildings: Building)
+
+    @Update
+    fun updateBuilding(building: Building)
 
     @Delete
     fun deleteBuilding(building: Building)

@@ -9,11 +9,13 @@ import live.adabe.fiesty.models.Building
 import live.adabe.fiesty.navigation.NavigationService
 import live.adabe.fiesty.util.StringConstants
 import live.adabe.fiesty.util.listen
+import timber.log.Timber
 
 class BuildingAdapter(
     private val buildings: List<Building>,
     private val navigationService: NavigationService
 ) : RecyclerView.Adapter<BuildingAdapter.BuildingViewHolder>() {
+
     class BuildingViewHolder(private val binding: BuildingItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(building: Building) {
@@ -35,6 +37,7 @@ class BuildingAdapter(
                 putString(StringConstants.BUILDING_ADDRESS, building.address)
                 putLong(StringConstants.BUILDING_RATE, building.energyRate)
                 navigationService.openBuildingScreen(this)
+                Timber.d("item clicked")
             }
         }
     }

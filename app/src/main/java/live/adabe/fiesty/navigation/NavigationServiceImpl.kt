@@ -19,7 +19,7 @@ class NavigationServiceImpl(cicerone: Cicerone<Router>): NavigationService {
 
 
     override fun openHomeScreen() {
-        navigateTo(Screens.HomeScreen())
+        newRootScreen(Screens.HomeScreen())
     }
 
     override fun openSignUpScreen(bundle: Bundle?) {

@@ -1,6 +1,5 @@
 package live.adabe.fiesty.di
 
-import android.content.Context
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -14,7 +13,7 @@ import ru.terrakok.cicerone.Router
 @Module
 class NavigationModule {
     @Provides
-    fun provideCicerone(): Cicerone<Router>{
+    fun provideCicerone(): Cicerone<Router> {
         return Cicerone.create()
     }
 

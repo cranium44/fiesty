@@ -9,6 +9,7 @@ import live.adabe.fiesty.databinding.ActivityMainBinding
 import live.adabe.fiesty.db.Preferences
 import live.adabe.fiesty.navigation.NavigationService
 import live.adabe.fiesty.ui.signup.SignUpViewModel
+import timber.log.Timber
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -27,10 +28,10 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         binding = ActivityMainBinding.inflate(layoutInflater)
-        Log.d("MAIN", preferences.getId().toString())
-        if (preferences.getId() == 0){
+        Timber.d(preferences.getId().toString())
+        if (preferences.getId() == 0) {
             navigationService.openSignUpScreen()
-        }else{
+        } else {
             navigationService.openHomeScreen()
         }
         setContentView(binding.root)

@@ -39,7 +39,9 @@ class Screens {
 
     class BuildingDetailsScreen(private val bundle: Bundle?) : SupportAppScreen() {
         override fun getFragment(): Fragment {
-            return BuildingFragment().apply { arguments = bundle }
+            val fragment = BuildingFragment()
+             fragment.arguments = bundle
+            return fragment
         }
     }
 

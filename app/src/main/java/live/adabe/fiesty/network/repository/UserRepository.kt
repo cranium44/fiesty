@@ -8,6 +8,7 @@ import live.adabe.fiesty.db.Preferences
 import live.adabe.fiesty.models.network.user.UserRequest
 import live.adabe.fiesty.models.network.user.UserResponse
 import live.adabe.fiesty.network.api.UserAPI
+import timber.log.Timber
 import javax.inject.Inject
 
 class UserRepository @Inject constructor(
@@ -25,10 +26,10 @@ class UserRepository @Inject constructor(
                 val response = userAPI.createUser(userRequest)
                 saveUserInfo(response)
                 success.postValue(true)
-                Log.d(TAG, response.id.toString())
+                Timber.d(response.id.toString())
 
             } catch (t: Throwable) {
-                Log.e(TAG, t.message.toString())
+                Timber.e(t.message.toString())
                 success.postValue(false)
             }
         }
@@ -53,7 +54,7 @@ class UserRepository @Inject constructor(
                 } else {
                 }
             } catch (t: Throwable) {
-                Log.e(TAG, t.message.toString())
+                Timber.e(t.message.toString())
             }
         }
     }
@@ -68,12 +69,13 @@ class UserRepository @Inject constructor(
                 } else {
                 }
             } catch (t: Throwable) {
-                Log.e(TAG, t.message.toString())
+                Timber.e(t.message.toString())
             }
         }
     }
 
     fun getUserID(): Int = preferences.getId()
 
+    fun getUserFirstName(): String? = preferences.getFirstName()
 
 }

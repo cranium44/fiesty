@@ -44,7 +44,7 @@ class SignUpFragment : Fragment() {
         }
     }
 
-    fun getInput(): UserRequest {
+    private fun getInput(): UserRequest {
         binding.run {
             return UserRequest(
                 firstName = firstNameInput.editText?.text.toString(),
