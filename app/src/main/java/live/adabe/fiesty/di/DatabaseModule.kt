@@ -17,10 +17,6 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 @Module
 class DatabaseModule {
-    @Provides
-    fun providePreferences(application: Application): Preferences {
-        return Preferences(application)
-    }
 
     @Provides
     fun provideDb(@ApplicationContext applicationContext: Context): Database {

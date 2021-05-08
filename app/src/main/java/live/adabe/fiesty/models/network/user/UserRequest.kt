@@ -5,5 +5,4 @@ data class UserRequest(
     val lastName: String,
     val email: String,
     val password: String,
-    val energyRate: Long
 )
