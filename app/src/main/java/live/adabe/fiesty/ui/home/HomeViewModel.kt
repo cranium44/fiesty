@@ -47,7 +47,7 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-    fun setBundle(screenBundle: Bundle) {
+    fun setBundle(screenBundle: Bundle?) {
         bundle.postValue(screenBundle)
     }
 

@@ -8,6 +8,4 @@ data class BuildingResponse(
     val name: String,
     val address: String,
     val energyRate: Long,
-    val user: UserResponse?,
-    val rooms: List<RoomResponse>?
 )

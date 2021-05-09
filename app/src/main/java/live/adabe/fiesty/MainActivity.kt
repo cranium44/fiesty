@@ -31,7 +31,10 @@ class MainActivity : AppCompatActivity() {
         viewModel = ViewModelProvider(this)[HomeViewModel::class.java]
         Timber.d(preferences.getId().toString())
         viewModel.screen.observe(this, { screenName ->
-            navigateToScreen(screenName)
+            viewModel.bundle.observe(this, { bundle ->
+                navigateToScreen(screenName, bundle)
+            })
+
         })
         if (preferences.getId() == 0) {
             navigationService.openSignUpScreen()
@@ -51,13 +54,14 @@ class MainActivity : AppCompatActivity() {
         navigationService.attachToActivity(this)
     }
 
-    private fun navigateToScreen(screenName: String) {
+    private fun navigateToScreen(screenName: String, bundle: Bundle?) {
         when (screenName) {
             StringConstants.HOME_SCREEN -> navigationService.openHomeScreen()
-            StringConstants.BUILDING_DETAILS_SCREEN -> navigationService.openBuildingScreen(null)
+            StringConstants.BUILDING_CREATE_SCREEN -> navigationService.openBuildingCreateScreen(bundle)
             StringConstants.PROFILE_SCREEN -> navigationService.openProfileScreen()
             StringConstants.SIGNUP_SCREEN -> navigationService.openSignUpScreen()
-            StringConstants.ROOM_SCREEN -> navigationService.openRoomScreen(null)
+            StringConstants.ROOM_SCREEN -> navigationService.openRoomScreen(bundle)
+            StringConstants.BUILDING_DETAILS_SCREEN -> navigationService.openBuildingDetailsScreen(bundle)
         }
     }
 }

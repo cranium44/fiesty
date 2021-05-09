@@ -12,7 +12,7 @@ import ru.terrakok.cicerone.Router
 import ru.terrakok.cicerone.Screen
 import ru.terrakok.cicerone.android.support.SupportAppNavigator
 
-class NavigationServiceImpl(cicerone: Cicerone<Router>): NavigationService {
+class NavigationServiceImpl(cicerone: Cicerone<Router>) : NavigationService {
 
     private val router = cicerone.router
     private val navigationHolder = cicerone.navigatorHolder
@@ -43,7 +43,11 @@ class NavigationServiceImpl(cicerone: Cicerone<Router>): NavigationService {
         navigateTo(Screens.ProfileScreen())
     }
 
-    override fun openBuildingScreen(bundle: Bundle?) {
+    override fun openBuildingCreateScreen(bundle: Bundle?) {
+        navigateTo(Screens.BuildingCreateScreen(bundle))
+    }
+
+    override fun openBuildingDetailsScreen(bundle: Bundle?) {
         navigateTo(Screens.BuildingDetailsScreen(bundle))
     }
 

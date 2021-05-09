@@ -2,7 +2,8 @@ package live.adabe.fiesty.navigation
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
-import live.adabe.fiesty.ui.building.BuildingFragment
+import live.adabe.fiesty.ui.building.BuildingCreateFragment
+import live.adabe.fiesty.ui.building.BuildingDetailsFragment
 import live.adabe.fiesty.ui.home.HomeFragment
 import live.adabe.fiesty.ui.login.LoginFragment
 import live.adabe.fiesty.ui.profile.ProfileFragment
@@ -37,10 +38,10 @@ class Screens {
         }
     }
 
-    class BuildingDetailsScreen(private val bundle: Bundle?) : SupportAppScreen() {
+    class BuildingCreateScreen(private val bundle: Bundle?) : SupportAppScreen() {
         override fun getFragment(): Fragment {
-            val fragment = BuildingFragment()
-             fragment.arguments = bundle
+            val fragment = BuildingCreateFragment()
+            fragment.arguments = bundle
             return fragment
         }
     }
@@ -48,4 +49,13 @@ class Screens {
     class RoomScreen(private val bundle: Bundle?) : SupportAppScreen() {
         override fun getFragment(): Fragment = RoomFragment().apply { arguments = bundle }
     }
+
+    class BuildingDetailsScreen(private val bundle: Bundle?) : SupportAppScreen() {
+        override fun getFragment(): Fragment {
+            val fragment = BuildingDetailsFragment()
+            fragment.arguments = bundle
+            return fragment
+        }
+    }
+
 }

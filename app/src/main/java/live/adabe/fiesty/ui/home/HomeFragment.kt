@@ -13,6 +13,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import live.adabe.fiesty.databinding.FragmentHomeBinding
 import live.adabe.fiesty.db.Preferences
+import live.adabe.fiesty.models.Building
 import live.adabe.fiesty.navigation.NavigationService
 import live.adabe.fiesty.ui.adapters.BuildingAdapter
 import live.adabe.fiesty.util.Converter
@@ -52,11 +53,10 @@ class HomeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.addBuilding.setOnClickListener {
-            viewModel.setScreen(StringConstants.BUILDING_DETAILS_SCREEN)
-            CoroutineScope(Dispatchers.Main).launch {
-                navigationService.openSignUpScreen(bundle = null)
+            viewModel.run{
+                setBundle(null)
+                setScreen(StringConstants.BUILDING_CREATE_SCREEN)
             }
-            Timber.d("button clicked")
         }
         viewModel.run {
             buildings.observe(viewLifecycleOwner, { buildings_ ->
@@ -65,16 +65,32 @@ class HomeFragment : Fragment() {
                     binding.noDataText.visibility = View.GONE
                     binding.buildingRecycler.visibility = View.VISIBLE
                     buildingAdapter =
-                        BuildingAdapter(Converter.getBuildingList(buildings_), navigationService)
+                        BuildingAdapter(Converter.getBuildingList(buildings_), listener)
                     binding.buildingRecycler.apply {
                         adapter = buildingAdapter
                         this.adapter?.notifyDataSetChanged()
                     }
-                }else{
+                } else {
                     binding.noDataText.visibility = View.VISIBLE
                     binding.buildingRecycler.visibility = View.INVISIBLE
                 }
             })
         }
+    }
+
+    private val listener = object : BuildingAdapter.BuildingItemClickListener {
+        override fun onClick(building: Building) {
+            with(Bundle()) {
+                putString(StringConstants.BUILDING_NAME, building.name)
+                putInt(StringConstants.BUILDING_ID, building.buildId)
+                putString(StringConstants.BUILDING_ADDRESS, building.address)
+                putLong(StringConstants.BUILDING_RATE, building.energyRate)
+                viewModel.apply {
+                    setBundle(this@with)
+                    setScreen(StringConstants.BUILDING_DETAILS_SCREEN)
+                }
+            }
+        }
+
     }
 }

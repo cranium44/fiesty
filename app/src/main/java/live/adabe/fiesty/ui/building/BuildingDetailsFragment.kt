@@ -33,11 +33,18 @@ class BuildingDetailsFragment : Fragment() {
         binding = FragmentBuildingDetailsBinding.inflate(inflater, container, false)
         viewModel = ViewModelProvider(requireActivity())[HomeViewModel::class.java]
         initViews()
+        observeViewModel()
         return binding.root
     }
 
     private fun initViews() {
-        binding.roomRecycler.layoutManager = LinearLayoutManager(requireContext())
+        binding.apply {
+            roomRecycler.layoutManager = LinearLayoutManager(requireContext())
+            arguments?.let { args ->
+                buildingNameTv.text = args.getString(StringConstants.BUILDING_NAME)
+                buildingAddressTv.text = args.getString(StringConstants.BUILDING_ADDRESS)
+            }
+        }
     }
 
     fun observeViewModel(){

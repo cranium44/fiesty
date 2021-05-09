@@ -12,7 +12,7 @@ import live.adabe.fiesty.models.Building
 import live.adabe.fiesty.ui.home.HomeViewModel
 
 @AndroidEntryPoint
-class BuildingFragment : Fragment() {
+class BuildingCreateFragment : Fragment() {
 
     lateinit var binding: FragmentBuildingBinding
     lateinit var viewModel: HomeViewModel
