@@ -7,4 +7,11 @@ object StringConstants {
     const val BUILDING_RATE = "building_rate"
     const val ROOM_NAME = "room_name"
     const val ROOM_ID = "room_id"
+
+    //screens
+    const val HOME_SCREEN = "home"
+    const val BUILDING_DETAILS_SCREEN = "building_details"
+    const val ROOM_SCREEN = "room"
+    const val SIGNUP_SCREEN = "signup"
+    const val PROFILE_SCREEN = "profile"
 }
