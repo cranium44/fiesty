@@ -11,20 +11,20 @@ interface RoomAPI {
     suspend fun createRoom(
         @Path("buildingId") buildingId: Int,
         @Body roomRequest: RoomRequest
-    ): LiveData<RoomResponse>
+    ): RoomResponse
 
     @GET(NetworkConstants.ROOM_GET_ENDPOINT)
-    suspend fun getRoom(@Path("roomId") roomId: Int): LiveData<RoomResponse>
+    suspend fun getRoom(@Path("roomId") roomId: Int): RoomResponse
 
     @GET(NetworkConstants.ROOM_GETALL_ENDPOINT)
-    suspend fun getAllRooms(@Path("buildingId") buildingId: Int): LiveData<List<RoomResponse>>
+    suspend fun getAllRooms(@Path("buildingId") buildingId: Int): List<RoomResponse>
 
     @PUT(NetworkConstants.ROOM_UPDATE_ENDPOINT)
     suspend fun updateRoom(
         @Path("roomId") roomId: Int,
         @Path("buildingId") buildingId: Int,
         @Body roomRequest: RoomRequest
-    ): LiveData<RoomResponse>
+    ): RoomResponse
 
     @DELETE(NetworkConstants.ROOM_DELETE_ENDPOINT)
     suspend fun deleteRoom(@Path("roomId") roomId: Int)
