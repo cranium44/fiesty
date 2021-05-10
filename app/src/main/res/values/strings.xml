@@ -2,4 +2,30 @@
     <string name="app_name">Fiesty</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="log_in">Log In</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="submit">Submit</string>
+    <string name="first_name">First Name</string>
+    <string name="last_name">Last Name</string>
+    <string name="already_have_an_account">Already have an account?</string>
+    <string name="don_t_have_an_account">Don\'t have an account?</string>
+    <string name="hello">Hello,</string>
+    <string name="image">image</string>
+    <string name="your_stats_are">Your stats are:</string>
+    <string name="add_new_building">Add new Building</string>
+    <string name="building_name">Building Name</string>
+    <string name="building_address">Building Address</string>
+    <string name="energy_rate">Energy Rate</string>
+    <string name="no_buildings">You have no buildings now</string>
+    <string name="add_room">Add Room</string>
+    <string name="edit">Edit</string>
+    <string name="rooms">Rooms</string>
+    <string name="name">Name:</string>
+    <string name="devices">Devices:</string>
+    <string name="no_room_data">There is no room data at the moment.</string>
+    <string name="kwh">kWh</string>
+    <string name="create_new_room">Create New Room</string>
+    <string name="room_name">Room name</string>
 </resources>
