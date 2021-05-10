@@ -20,17 +20,16 @@ class UserRepository @Inject constructor(
         const val TAG = "USER_REPOSITORY"
     }
 
-    suspend fun createUser(userRequest: UserRequest, success: MutableLiveData<Boolean>) {
-        withContext(Dispatchers.IO) {
-            try {
+    suspend fun createUser(userRequest: UserRequest) : UserResponse?{
+        return withContext(Dispatchers.IO) {
+           return@withContext try {
                 val response = userAPI.createUser(userRequest)
                 saveUserInfo(response)
-                success.postValue(true)
                 Timber.d(response.id.toString())
-
+                response
             } catch (t: Throwable) {
                 Timber.e(t.message.toString())
-                success.postValue(false)
+                null
             }
         }
     }

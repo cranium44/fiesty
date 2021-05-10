@@ -10,6 +10,8 @@ import dagger.hilt.android.AndroidEntryPoint
 import live.adabe.fiesty.databinding.FragmentBuildingBinding
 import live.adabe.fiesty.models.Building
 import live.adabe.fiesty.ui.home.HomeViewModel
+import live.adabe.fiesty.util.StringConstants
+import timber.log.Timber
 
 @AndroidEntryPoint
 class BuildingCreateFragment : Fragment() {
@@ -24,9 +26,28 @@ class BuildingCreateFragment : Fragment() {
         binding = FragmentBuildingBinding.inflate(inflater, container, false)
         viewModel = ViewModelProvider(requireActivity())[HomeViewModel::class.java]
         binding.saveButton.setOnClickListener {
-            viewModel.saveBuilding(getInput())
+            viewModel.run {
+                arguments?.let {args->
+                    if(args.getString(StringConstants.MODE) == StringConstants.EDIT_MODE){
+                        updateBuilding(args.getInt(StringConstants.BUILDING_ID), getInput())
+                    }else{
+                        saveBuilding(getInput())
+                    }
+                }
+                buildingResponse.observe(viewLifecycleOwner,{response ->
+                    if (response != null){
+                        setScreen(StringConstants.HOME_SCREEN)
+                    }
+                })
+            }
         }
+        initViews()
         return binding.root
+    }
+
+    override fun onResume() {
+        super.onResume()
+        initViews()
     }
 
     private fun getInput(): Building{
@@ -40,4 +61,23 @@ class BuildingCreateFragment : Fragment() {
         }
     }
 
+    private fun initViews() {
+        arguments?.let{args->
+            Timber.d(args.getString(StringConstants.MODE))
+            if(args.getString(StringConstants.MODE) == StringConstants.EDIT_MODE){
+
+                binding.run {
+                    buildingName.editText?.setText(args.getString(StringConstants.BUILDING_NAME))
+                    buildingAddress.editText?.setText(args.getString(StringConstants.BUILDING_ADDRESS))
+                    buildingEnergyRate.editText?.setText(args.getInt(StringConstants.BUILDING_RATE).toString())
+                }
+            }else{
+                binding.run {
+                    buildingName.editText?.setText("")
+                    buildingAddress.editText?.setText("")
+                    buildingEnergyRate.editText?.setText("")
+                }
+            }
+        }
+    }
 }

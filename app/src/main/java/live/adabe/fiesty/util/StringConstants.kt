@@ -1,6 +1,7 @@
 package live.adabe.fiesty.util
 
 object StringConstants {
+
     const val BUILDING_NAME = "building_name"
     const val BUILDING_ID = "building_id"
     const val BUILDING_ADDRESS = "building_address"
@@ -16,4 +17,9 @@ object StringConstants {
     const val ROOM_SCREEN = "room"
     const val SIGNUP_SCREEN = "signup"
     const val PROFILE_SCREEN = "profile"
+
+    //mode
+    const val EDIT_MODE = "edit"
+    const val MODE = "mode"
+    const val CREATE_MODE = "create"
 }

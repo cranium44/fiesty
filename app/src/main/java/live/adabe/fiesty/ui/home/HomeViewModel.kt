@@ -25,9 +25,11 @@ class HomeViewModel @Inject constructor(
     private var _buildings = MutableLiveData<List<BuildingResponse>>()
     val buildings: LiveData<List<BuildingResponse>> = _buildings
     var screen = MutableLiveData<String>()
-    var bundle = MutableLiveData<Bundle>()
+    var bundle = MutableLiveData<Bundle?>()
     private var _rooms = MutableLiveData<List<Room>>()
     val rooms: LiveData<List<Room>> = _rooms
+
+    var buildingResponse = MutableLiveData<BuildingResponse?>()
 
 
     init {
@@ -37,13 +39,18 @@ class HomeViewModel @Inject constructor(
             } catch (t: Throwable) {
                 Timber.e(t.message.toString())
             }
-
         }
     }
 
     fun saveBuilding(building: Building) {
         viewModelScope.launch {
-            buildingRepository.createBuilding(Converter.convertBuildingToBuildingRequest(building))
+            buildingResponse.postValue(
+                buildingRepository.createBuilding(
+                    Converter.convertBuildingToBuildingRequest(
+                        building
+                    )
+                )
+            )
         }
     }
 
@@ -55,9 +62,26 @@ class HomeViewModel @Inject constructor(
         screen.postValue(screenName)
     }
 
-    fun getBuildingRooms(buildingId: Int){
-        viewModelScope.launch{
+    fun getBuildingRooms(buildingId: Int) {
+        viewModelScope.launch {
             _rooms.postValue(roomRepository.getRooms(buildingId))
+        }
+    }
+
+    fun getBuildings() {
+        viewModelScope.launch {
+            _buildings.postValue(buildingRepository.getAllUserBuildings())
+        }
+    }
+
+    fun updateBuilding(buildingId: Int, building: Building) {
+        viewModelScope.launch {
+            buildingResponse.postValue(
+                buildingRepository.updateBuilding(
+                    buildingId,
+                    Converter.convertBuildingToBuildingRequest(building)
+                )
+            )
         }
     }
 

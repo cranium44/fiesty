@@ -8,9 +8,6 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 import live.adabe.fiesty.databinding.FragmentHomeBinding
 import live.adabe.fiesty.db.Preferences
 import live.adabe.fiesty.models.Building
@@ -53,28 +50,40 @@ class HomeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.addBuilding.setOnClickListener {
-            viewModel.run{
-                setBundle(null)
-                setScreen(StringConstants.BUILDING_CREATE_SCREEN)
+            viewModel.run {
+                with(Bundle()){
+                    putString(StringConstants.MODE, StringConstants.CREATE_MODE)
+                    setBundle(this@with)
+                    setScreen(StringConstants.BUILDING_CREATE_SCREEN)
+                }
             }
         }
         viewModel.run {
             buildings.observe(viewLifecycleOwner, { buildings_ ->
                 Timber.d(buildings_.size.toString())
                 if (buildings_ != null) {
-                    binding.noDataText.visibility = View.GONE
-                    binding.buildingRecycler.visibility = View.VISIBLE
-                    buildingAdapter =
-                        BuildingAdapter(Converter.getBuildingList(buildings_), listener)
-                    binding.buildingRecycler.apply {
-                        adapter = buildingAdapter
-                        this.adapter?.notifyDataSetChanged()
+                    if (buildings_.isNotEmpty()) {
+                        binding.noDataText.visibility = View.GONE
+                        binding.buildingRecycler.visibility = View.VISIBLE
+                        buildingAdapter =
+                            BuildingAdapter(Converter.getBuildingList(buildings_), listener)
+                        binding.buildingRecycler.apply {
+                            adapter = buildingAdapter
+                            this.adapter?.notifyDataSetChanged()
+                        }
                     }
                 } else {
                     binding.noDataText.visibility = View.VISIBLE
                     binding.buildingRecycler.visibility = View.INVISIBLE
                 }
             })
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        viewModel.run {
+            getBuildings()
         }
     }
 
@@ -91,6 +100,5 @@ class HomeFragment : Fragment() {
                 }
             }
         }
-
     }
 }

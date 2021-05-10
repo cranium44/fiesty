@@ -8,7 +8,6 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
-import live.adabe.fiesty.R
 import live.adabe.fiesty.databinding.FragmentBuildingDetailsBinding
 import live.adabe.fiesty.navigation.NavigationService
 import live.adabe.fiesty.ui.adapters.RoomAdapter
@@ -43,19 +42,64 @@ class BuildingDetailsFragment : Fragment() {
             arguments?.let { args ->
                 buildingNameTv.text = args.getString(StringConstants.BUILDING_NAME)
                 buildingAddressTv.text = args.getString(StringConstants.BUILDING_ADDRESS)
+                energyRateTv.text = args.getLong(StringConstants.BUILDING_RATE).toString()
+            }
+            addRoomBtn.setOnClickListener {
+                arguments?.let { args ->
+                    viewModel.apply {
+                        with(Bundle()) {
+                            putInt(
+                                StringConstants.BUILDING_ID,
+                                args.getInt(StringConstants.BUILDING_ID)
+                            )
+                            setBundle(this@with)
+                            setScreen(StringConstants.ROOM_SCREEN)
+                        }
+                    }
+                }
+            }
+            editBuildingBtn.setOnClickListener {
+                arguments?.let { args ->
+                    with(Bundle()) {
+                        putInt(
+                            StringConstants.BUILDING_ID,
+                            args.getInt(StringConstants.BUILDING_ID)
+                        )
+                        putString(
+                            StringConstants.BUILDING_NAME,
+                            args.getString(StringConstants.BUILDING_NAME)
+                        )
+                        putString(
+                            StringConstants.BUILDING_ADDRESS,
+                            args.getString(StringConstants.BUILDING_ADDRESS)
+                        )
+                        putString(
+                            StringConstants.MODE,
+                            StringConstants.EDIT_MODE
+                        )
+                        putLong(
+                            StringConstants.BUILDING_RATE,
+                            args.getLong(StringConstants.BUILDING_RATE)
+                        )
+                        viewModel.run {
+                            setBundle(this@with)
+                            setScreen(StringConstants.BUILDING_CREATE_SCREEN)
+                        }
+                    }
+                }
             }
         }
     }
 
-    fun observeViewModel(){
+    private fun observeViewModel() {
         arguments?.let { viewModel.getBuildingRooms(it.getInt(StringConstants.BUILDING_ID)) }
-        viewModel.rooms.observe(viewLifecycleOwner,{
-            if (it == null || it.isEmpty() ){
+        viewModel.rooms.observe(viewLifecycleOwner, {
+            if (it == null || it.isEmpty()) {
                 binding.apply {
                     roomNoData.visibility = View.VISIBLE
                     roomRecycler.visibility = View.INVISIBLE
                 }
-            }else{
+            } else {
                 roomAdapter = RoomAdapter(it, navigationService)
                 binding.apply {
                     roomNoData.visibility = View.GONE

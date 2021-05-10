@@ -9,6 +9,7 @@ import live.adabe.fiesty.models.Building
 import live.adabe.fiesty.models.network.building.BuildingRequest
 import live.adabe.fiesty.models.network.building.BuildingResponse
 import live.adabe.fiesty.network.api.BuildingAPI
+import timber.log.Timber
 import javax.inject.Inject
 
 class BuildingRepository @Inject constructor(
@@ -21,7 +22,12 @@ class BuildingRepository @Inject constructor(
 
     suspend fun getAllUserBuildings(): List<BuildingResponse> {
         return withContext(Dispatchers.IO) {
-            return@withContext buildingAPI.getAllUserBuildings(preferences.getId())
+            return@withContext try{
+                buildingAPI.getAllUserBuildings(preferences.getId())
+            }catch (t: Throwable){
+                Timber.e(t.message.toString())
+                emptyList()
+            }
         }
     }
 
