@@ -26,4 +26,6 @@
     <string name="devices">Devices:</string>
     <string name="no_room_data">There is no room data at the moment.</string>
     <string name="kwh">kWh</string>
+    <string name="create_new_room">Create New Room</string>
+    <string name="room_name">Room name</string>
 </resources>
