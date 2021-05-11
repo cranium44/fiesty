@@ -7,7 +7,7 @@ import live.adabe.fiesty.databinding.RoomItemBinding
 import live.adabe.fiesty.models.Room
 import javax.inject.Inject
 
-class RoomAdapter @Inject constructor(
+class RoomAdapter (
     private val rooms: List<Room>,
     private val listener: RoomItemClickListener
 ) : RecyclerView.Adapter<RoomAdapter.RoomViewHolder>() {
@@ -24,7 +24,9 @@ class RoomAdapter @Inject constructor(
                 root.setOnClickListener {
                     listener.onItemClick(room)
                 }
-
+                deleteRoomButton.setOnClickListener {
+                    listener.onItemDelete(room)
+                }
             }
         }
     }

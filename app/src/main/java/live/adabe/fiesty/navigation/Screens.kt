@@ -7,6 +7,7 @@ import live.adabe.fiesty.ui.building.BuildingDetailsFragment
 import live.adabe.fiesty.ui.home.HomeFragment
 import live.adabe.fiesty.ui.login.LoginFragment
 import live.adabe.fiesty.ui.profile.ProfileFragment
+import live.adabe.fiesty.ui.room.RoomDetailsFragment
 import live.adabe.fiesty.ui.room.RoomFragment
 import live.adabe.fiesty.ui.signup.SignUpFragment
 import ru.terrakok.cicerone.android.support.SupportAppScreen
@@ -46,13 +47,21 @@ class Screens {
         }
     }
 
-    class RoomScreen(private val bundle: Bundle?) : SupportAppScreen() {
+    class RoomCreateScreen(private val bundle: Bundle?) : SupportAppScreen() {
         override fun getFragment(): Fragment = RoomFragment().apply { arguments = bundle }
     }
 
     class BuildingDetailsScreen(private val bundle: Bundle?) : SupportAppScreen() {
         override fun getFragment(): Fragment {
             val fragment = BuildingDetailsFragment()
+            fragment.arguments = bundle
+            return fragment
+        }
+    }
+
+    class RoomDetailsScreen(private val bundle: Bundle?) : SupportAppScreen() {
+        override fun getFragment(): Fragment {
+            val fragment = RoomDetailsFragment()
             fragment.arguments = bundle
             return fragment
         }

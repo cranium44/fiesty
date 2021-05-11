@@ -60,8 +60,9 @@ class MainActivity : AppCompatActivity() {
             StringConstants.BUILDING_CREATE_SCREEN -> navigationService.openBuildingCreateScreen(bundle)
             StringConstants.PROFILE_SCREEN -> navigationService.openProfileScreen()
             StringConstants.SIGNUP_SCREEN -> navigationService.openSignUpScreen()
-            StringConstants.ROOM_SCREEN -> navigationService.openRoomScreen(bundle)
             StringConstants.BUILDING_DETAILS_SCREEN -> navigationService.openBuildingDetailsScreen(bundle)
+            StringConstants.ROOM_CREATE_SCREEN -> navigationService.openRoomCreateScreen(bundle)
+            StringConstants.ROOM_DETAILS_SCREEN -> navigationService.openRoomDetailsScreen(bundle)
         }
     }
 }
