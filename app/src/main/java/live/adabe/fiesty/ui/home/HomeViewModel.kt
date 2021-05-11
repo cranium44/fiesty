@@ -24,12 +24,15 @@ class HomeViewModel @Inject constructor(
     ViewModel() {
     private var _buildings = MutableLiveData<List<BuildingResponse>>()
     val buildings: LiveData<List<BuildingResponse>> = _buildings
+
     var screen = MutableLiveData<String>()
     var bundle = MutableLiveData<Bundle?>()
+
     private var _rooms = MutableLiveData<List<Room>>()
     val rooms: LiveData<List<Room>> = _rooms
 
     var buildingResponse = MutableLiveData<BuildingResponse?>()
+    var deleteSuccessLiveData = MutableLiveData<Boolean>()
 
 
     init {
@@ -82,6 +85,12 @@ class HomeViewModel @Inject constructor(
                     Converter.convertBuildingToBuildingRequest(building)
                 )
             )
+        }
+    }
+
+    fun deleteBuilding(buildingId: Int){
+        viewModelScope.launch{
+            deleteSuccessLiveData.postValue(buildingRepository.deleteBuilding(buildingId))
         }
     }
 

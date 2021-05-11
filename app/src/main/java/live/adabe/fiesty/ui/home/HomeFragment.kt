@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -51,7 +52,7 @@ class HomeFragment : Fragment() {
 
         binding.addBuilding.setOnClickListener {
             viewModel.run {
-                with(Bundle()){
+                with(Bundle()) {
                     putString(StringConstants.MODE, StringConstants.CREATE_MODE)
                     setBundle(this@with)
                     setScreen(StringConstants.BUILDING_CREATE_SCREEN)
@@ -77,6 +78,13 @@ class HomeFragment : Fragment() {
                     binding.buildingRecycler.visibility = View.INVISIBLE
                 }
             })
+            deleteSuccessLiveData.observe(viewLifecycleOwner, { result ->
+                if (result) {
+                    Toast.makeText(requireContext(), "Deleted Successfully!", Toast.LENGTH_SHORT)
+                        .show()
+                    getBuildings()
+                }
+            })
         }
     }
 
@@ -98,6 +106,12 @@ class HomeFragment : Fragment() {
                     setBundle(this@with)
                     setScreen(StringConstants.BUILDING_DETAILS_SCREEN)
                 }
+            }
+        }
+
+        override fun onDelete(building: Building) {
+            viewModel.run {
+                deleteBuilding(building.buildId)
             }
         }
     }

@@ -34,7 +34,18 @@ class BuildingRepository @Inject constructor(
     suspend fun updateBuilding(id: Int, buildingRequest: BuildingRequest) =
         buildingAPI.updateBuilding(preferences.getId(), id, buildingRequest = buildingRequest)
 
-    suspend fun deleteBuilding(id: Int) = buildingAPI.deleteBuilding(id)
+    suspend fun deleteBuilding(id: Int) : Boolean{
+        return withContext(Dispatchers.IO){
+            return@withContext try{
+                val response = buildingAPI.deleteBuilding(id)
+                //response.isNotEmpty()
+                true
+            }catch (t: Throwable){
+                Timber.e(t.message.toString())
+                false
+            }
+        }
+    }
 
     suspend fun saveBuildingToDb(building: Building) {
         withContext(Dispatchers.IO) {
