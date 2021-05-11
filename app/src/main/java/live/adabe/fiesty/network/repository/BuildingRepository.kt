@@ -38,8 +38,7 @@ class BuildingRepository @Inject constructor(
         return withContext(Dispatchers.IO){
             return@withContext try{
                 val response = buildingAPI.deleteBuilding(id)
-                //response.isNotEmpty()
-                true
+                response.isNotEmpty()
             }catch (t: Throwable){
                 Timber.e(t.message.toString())
                 false
@@ -55,7 +54,6 @@ class BuildingRepository @Inject constructor(
 
     suspend fun getBuildingsFromDb(): LiveData<List<Building>> {
         return withContext(Dispatchers.IO) {
-
             return@withContext buildingDAO.getAllBuildings()
         }
     }

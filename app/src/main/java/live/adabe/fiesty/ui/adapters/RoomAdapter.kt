@@ -5,30 +5,33 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import live.adabe.fiesty.databinding.RoomItemBinding
 import live.adabe.fiesty.models.Room
-import live.adabe.fiesty.navigation.NavigationService
-import live.adabe.fiesty.util.listen
 import javax.inject.Inject
 
 class RoomAdapter @Inject constructor(
     private val rooms: List<Room>,
-    private val navigationService: NavigationService
+    private val listener: RoomItemClickListener
 ) : RecyclerView.Adapter<RoomAdapter.RoomViewHolder>() {
 
-    class RoomViewHolder(private val binding: RoomItemBinding) :
+    class RoomViewHolder(
+        private val binding: RoomItemBinding,
+        private val listener: RoomItemClickListener
+    ) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(room: Room) {
             binding.apply {
                 roomNameRv.text = room.name
                 deviceCountRv.text = room.numberOfDevices.toString()
+                root.setOnClickListener {
+                    listener.onItemClick(room)
+                }
+
             }
         }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RoomViewHolder {
         val binding = RoomItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return RoomViewHolder(binding).listen { position, type ->
-            navigationService.openRoomScreen(null)
-        }
+        return RoomViewHolder(binding, listener)
     }
 
     override fun onBindViewHolder(holder: RoomViewHolder, position: Int) {
@@ -37,5 +40,10 @@ class RoomAdapter @Inject constructor(
 
     override fun getItemCount(): Int {
         return rooms.size
+    }
+
+    interface RoomItemClickListener {
+        fun onItemClick(room: Room)
+        fun onItemDelete(room: Room)
     }
 }
