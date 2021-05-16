@@ -33,7 +33,8 @@ class HomeViewModel @Inject constructor(
     val rooms: LiveData<List<Room>> = _rooms
 
     var buildingResponse = MutableLiveData<BuildingResponse?>()
-    var deleteSuccessLiveData = MutableLiveData<Boolean>()
+    var buildingDeleteSuccessLiveData = MutableLiveData<Boolean>()
+    var buildingGetLiveData = MutableLiveData<BuildingResponse?>()
 
     var roomResponse = MutableLiveData<Room?>()
     var deleteRoomLiveData = MutableLiveData<Boolean>()
@@ -80,6 +81,12 @@ class HomeViewModel @Inject constructor(
         }
     }
 
+    fun getBuilding(buildingId: Int) {
+        viewModelScope.launch {
+            buildingGetLiveData.postValue(buildingRepository.getBuilding(buildingId))
+        }
+    }
+
     fun updateBuilding(buildingId: Int, building: Building) {
         viewModelScope.launch {
             buildingResponse.postValue(
@@ -93,7 +100,7 @@ class HomeViewModel @Inject constructor(
 
     fun deleteBuilding(buildingId: Int) {
         viewModelScope.launch {
-            deleteSuccessLiveData.postValue(buildingRepository.deleteBuilding(buildingId))
+            buildingDeleteSuccessLiveData.postValue(buildingRepository.deleteBuilding(buildingId))
         }
     }
 

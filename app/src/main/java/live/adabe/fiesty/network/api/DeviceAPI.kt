@@ -11,21 +11,21 @@ interface DeviceAPI {
     suspend fun createDevice(
         @Path("roomId") roomId: Int,
         @Body deviceRequest: DeviceRequest
-    ): LiveData<DeviceResponse>
+    ): DeviceResponse
 
     @GET(NetworkConstants.DEVICE_GET_ENDPOINT)
-    suspend fun getDevice(@Path("id") id: Int): LiveData<DeviceResponse>
+    suspend fun getDevice(@Path("id") id: Int): DeviceResponse
 
     @GET(NetworkConstants.DEVICE_GETALL_ENDPOINT)
-    suspend fun getAllDevices(@Path("roomId") roomId: Int): LiveData<List<DeviceResponse>>
+    suspend fun getAllDevices(@Path("roomId") roomId: Int): List<DeviceResponse>
 
     @PUT(NetworkConstants.DEVICE_UPDATE_ENDPOINT)
     suspend fun updateDevice(
         @Path("roomId") roomId: Int,
         @Path("id") id: Int,
         @Body deviceRequest: DeviceRequest
-    ): LiveData<DeviceResponse>
+    ): DeviceResponse
 
     @DELETE(NetworkConstants.DEVICE_DELETE_ENDPOINT)
-    suspend fun deleteDevice(@Path("id") id: Int)
+    suspend fun deleteDevice(@Path("id") id: Int): String
 }

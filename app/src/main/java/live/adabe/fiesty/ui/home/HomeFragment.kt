@@ -78,7 +78,7 @@ class HomeFragment : Fragment() {
                     binding.buildingRecycler.visibility = View.INVISIBLE
                 }
             })
-            deleteSuccessLiveData.observe(viewLifecycleOwner, { result ->
+            buildingDeleteSuccessLiveData.observe(viewLifecycleOwner, { result ->
                 if (result) {
                     Toast.makeText(requireContext(), "Deleted Successfully!", Toast.LENGTH_SHORT)
                         .show()

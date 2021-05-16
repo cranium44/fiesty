@@ -1,6 +1,7 @@
 package live.adabe.fiesty
 
 import android.os.Bundle
+import android.os.PersistableBundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import dagger.hilt.android.AndroidEntryPoint
@@ -42,6 +43,10 @@ class MainActivity : AppCompatActivity() {
             navigationService.openHomeScreen()
         }
         setContentView(binding.root)
+    }
+
+    override fun onSaveInstanceState(outState: Bundle, outPersistentState: PersistableBundle) {
+        super.onSaveInstanceState(outState, outPersistentState)
     }
 
     override fun onPause() {
