@@ -29,4 +29,8 @@
     <string name="create_new_room">Create New Room</string>
     <string name="room_name">Room name</string>
     <string name="number_of_devices">Number of devices</string>
+    <string name="save">Save</string>
+    <string name="room_details">Room Details</string>
+    <string name="add_device">Add Device</string>
+    <string name="edit_room">Edit Room</string>
 </resources>

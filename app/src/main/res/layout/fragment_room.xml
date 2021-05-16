@@ -22,6 +22,8 @@
         android:id="@+id/room_name_input"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        app:boxBackgroundColor="@android:color/transparent"
+        android:background="@android:color/transparent"
         app:layout_constraintBottom_toTopOf="@+id/number_of_appliances_input"
         app:layout_constraintEnd_toStartOf="@+id/guideline12"
         app:layout_constraintStart_toStartOf="@+id/guideline11"
@@ -37,6 +39,9 @@
         android:id="@+id/number_of_appliances_input"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        app:boxBackgroundColor="@android:color/transparent"
+        android:background="@android:color/transparent"
         app:layout_constraintBottom_toTopOf="@+id/guideline13"
         app:layout_constraintEnd_toStartOf="@+id/guideline12"
         app:layout_constraintHorizontal_bias="0.5"
@@ -49,14 +54,16 @@
             android:hint="@string/number_of_devices" />
     </com.google.android.material.textfield.TextInputLayout>
 
-    <ImageButton
+    <Button
         android:id="@+id/save_room_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:backgroundTint="@color/teal_700"
-        android:contentDescription="@string/name"
-        android:src="@android:drawable/ic_menu_save"
-        android:tint="@color/white"
+        android:textColor="@color/white"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:textSize="22sp"
+        android:text="@string/save"
+        android:paddingHorizontal="60dp"
+        android:background="@drawable/input_bg"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/guideline12"
         app:layout_constraintStart_toStartOf="@+id/guideline11"
