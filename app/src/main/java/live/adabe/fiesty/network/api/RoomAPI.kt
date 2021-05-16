@@ -27,5 +27,5 @@ interface RoomAPI {
     ): RoomResponse
 
     @DELETE(NetworkConstants.ROOM_DELETE_ENDPOINT)
-    suspend fun deleteRoom(@Path("roomId") roomId: Int)
+    suspend fun deleteRoom(@Path("roomId") roomId: Int): String
 }

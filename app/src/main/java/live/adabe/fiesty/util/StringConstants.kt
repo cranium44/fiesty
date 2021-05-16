@@ -14,7 +14,8 @@ object StringConstants {
     const val HOME_SCREEN = "home"
     const val BUILDING_CREATE_SCREEN = "building_create"
     const val BUILDING_DETAILS_SCREEN = "building_details"
-    const val ROOM_SCREEN = "room"
+    const val ROOM_DETAILS_SCREEN = "room_details"
+    const val ROOM_CREATE_SCREEN = "room_create"
     const val SIGNUP_SCREEN = "signup"
     const val PROFILE_SCREEN = "profile"
 

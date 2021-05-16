@@ -10,6 +10,7 @@ import kotlinx.coroutines.launch
 import live.adabe.fiesty.models.Building
 import live.adabe.fiesty.models.Room
 import live.adabe.fiesty.models.network.building.BuildingResponse
+import live.adabe.fiesty.models.network.room.RoomRequest
 import live.adabe.fiesty.network.repository.BuildingRepository
 import live.adabe.fiesty.network.repository.RoomRepository
 import live.adabe.fiesty.util.Converter
@@ -24,13 +25,19 @@ class HomeViewModel @Inject constructor(
     ViewModel() {
     private var _buildings = MutableLiveData<List<BuildingResponse>>()
     val buildings: LiveData<List<BuildingResponse>> = _buildings
+
     var screen = MutableLiveData<String>()
     var bundle = MutableLiveData<Bundle?>()
+
     private var _rooms = MutableLiveData<List<Room>>()
     val rooms: LiveData<List<Room>> = _rooms
 
     var buildingResponse = MutableLiveData<BuildingResponse?>()
+    var buildingDeleteSuccessLiveData = MutableLiveData<Boolean>()
+    var buildingGetLiveData = MutableLiveData<BuildingResponse?>()
 
+    var roomResponse = MutableLiveData<Room?>()
+    var deleteRoomLiveData = MutableLiveData<Boolean>()
 
     init {
         viewModelScope.launch {
@@ -74,6 +81,12 @@ class HomeViewModel @Inject constructor(
         }
     }
 
+    fun getBuilding(buildingId: Int) {
+        viewModelScope.launch {
+            buildingGetLiveData.postValue(buildingRepository.getBuilding(buildingId))
+        }
+    }
+
     fun updateBuilding(buildingId: Int, building: Building) {
         viewModelScope.launch {
             buildingResponse.postValue(
@@ -82,6 +95,30 @@ class HomeViewModel @Inject constructor(
                     Converter.convertBuildingToBuildingRequest(building)
                 )
             )
+        }
+    }
+
+    fun deleteBuilding(buildingId: Int) {
+        viewModelScope.launch {
+            buildingDeleteSuccessLiveData.postValue(buildingRepository.deleteBuilding(buildingId))
+        }
+    }
+
+    fun createRoom(buildingId: Int, roomRequest: RoomRequest) {
+        viewModelScope.launch {
+            roomResponse.postValue(roomRepository.createRoom(buildingId, roomRequest))
+        }
+    }
+
+    fun deleteRoom(roomId: Int) {
+        viewModelScope.launch {
+            deleteRoomLiveData.postValue(roomRepository.deleteRoom(roomId))
+        }
+    }
+
+    fun updateRoom(roomId: Int, buildingId: Int, roomRequest: RoomRequest) {
+        viewModelScope.launch {
+            roomResponse.postValue(roomRepository.updateRoom(roomId, buildingId, roomRequest))
         }
     }
 

@@ -1,6 +1,7 @@
 package live.adabe.fiesty
 
 import android.os.Bundle
+import android.os.PersistableBundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import dagger.hilt.android.AndroidEntryPoint
@@ -44,6 +45,10 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
     }
 
+    override fun onSaveInstanceState(outState: Bundle, outPersistentState: PersistableBundle) {
+        super.onSaveInstanceState(outState, outPersistentState)
+    }
+
     override fun onPause() {
         navigationService.detachFromActivity()
         super.onPause()
@@ -60,8 +65,9 @@ class MainActivity : AppCompatActivity() {
             StringConstants.BUILDING_CREATE_SCREEN -> navigationService.openBuildingCreateScreen(bundle)
             StringConstants.PROFILE_SCREEN -> navigationService.openProfileScreen()
             StringConstants.SIGNUP_SCREEN -> navigationService.openSignUpScreen()
-            StringConstants.ROOM_SCREEN -> navigationService.openRoomScreen(bundle)
             StringConstants.BUILDING_DETAILS_SCREEN -> navigationService.openBuildingDetailsScreen(bundle)
+            StringConstants.ROOM_CREATE_SCREEN -> navigationService.openRoomCreateScreen(bundle)
+            StringConstants.ROOM_DETAILS_SCREEN -> navigationService.openRoomDetailsScreen(bundle)
         }
     }
 }

@@ -24,6 +24,9 @@ class BuildingAdapter(
                 root.setOnClickListener {
                     listener.onClick(building)
                 }
+                deleteButton.setOnClickListener {
+                    listener.onDelete(building)
+                }
             }
         }
 
@@ -35,17 +38,7 @@ class BuildingAdapter(
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BuildingViewHolder {
         val binding =
             BuildingItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return BuildingViewHolder(binding, listener)//.listen { position, _ ->
-//            val building = buildings[position]
-//            with(Bundle()){
-//                putString(StringConstants.BUILDING_NAME, building.name)
-//                putInt(StringConstants.BUILDING_ID, building.buildId)
-//                putString(StringConstants.BUILDING_ADDRESS, building.address)
-//                putLong(StringConstants.BUILDING_RATE, building.energyRate)
-//                navigationService.openBuildingScreen(this)
-//                Timber.d("item clicked")
-//            }
-        //      }
+        return BuildingViewHolder(binding, listener)
     }
 
     override fun onBindViewHolder(holder: BuildingViewHolder, position: Int) {
@@ -58,5 +51,6 @@ class BuildingAdapter(
 
     interface BuildingItemClickListener {
         fun onClick(building: Building)
+        fun onDelete(building: Building)
     }
 }

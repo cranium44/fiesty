@@ -14,7 +14,7 @@ object Converter {
         }
     }
 
-    private fun convertBuildingResponseToBuilding(buildingResponse: BuildingResponse): Building{
+    private fun convertBuildingResponseToBuilding(buildingResponse: BuildingResponse): Building {
         return Building(
             buildId = buildingResponse.id,
             name = buildingResponse.name,

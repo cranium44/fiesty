@@ -51,8 +51,12 @@ class NavigationServiceImpl(cicerone: Cicerone<Router>) : NavigationService {
         navigateTo(Screens.BuildingDetailsScreen(bundle))
     }
 
-    override fun openRoomScreen(bundle: Bundle?) {
-        navigateTo(Screens.RoomScreen(bundle))
+    override fun openRoomCreateScreen(bundle: Bundle?) {
+        navigateTo(Screens.RoomCreateScreen(bundle))
+    }
+
+    override fun openRoomDetailsScreen(bundle: Bundle?) {
+        navigateTo(Screens.RoomDetailsScreen(bundle))
     }
 
     private fun navigateTo(screen: Screen) {

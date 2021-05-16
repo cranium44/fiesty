@@ -22,11 +22,21 @@ class BuildingRepository @Inject constructor(
 
     suspend fun getAllUserBuildings(): List<BuildingResponse> {
         return withContext(Dispatchers.IO) {
-            return@withContext try{
+            return@withContext try {
                 buildingAPI.getAllUserBuildings(preferences.getId())
-            }catch (t: Throwable){
+            } catch (t: Throwable) {
                 Timber.e(t.message.toString())
                 emptyList()
+            }
+        }
+    }
+
+    suspend fun getBuilding(buildingId: Int): BuildingResponse? {
+        return withContext(Dispatchers.IO) {
+            return@withContext try {
+                buildingAPI.getUserBuilding(preferences.getId(), buildingId)
+            } catch (t: Throwable) {
+                null
             }
         }
     }
@@ -34,7 +44,17 @@ class BuildingRepository @Inject constructor(
     suspend fun updateBuilding(id: Int, buildingRequest: BuildingRequest) =
         buildingAPI.updateBuilding(preferences.getId(), id, buildingRequest = buildingRequest)
 
-    suspend fun deleteBuilding(id: Int) = buildingAPI.deleteBuilding(id)
+    suspend fun deleteBuilding(id: Int): Boolean {
+        return withContext(Dispatchers.IO) {
+            return@withContext try {
+                val response = buildingAPI.deleteBuilding(id)
+                response.isNotEmpty()
+            } catch (t: Throwable) {
+                Timber.e(t.message.toString())
+                false
+            }
+        }
+    }
 
     suspend fun saveBuildingToDb(building: Building) {
         withContext(Dispatchers.IO) {
@@ -44,7 +64,6 @@ class BuildingRepository @Inject constructor(
 
     suspend fun getBuildingsFromDb(): LiveData<List<Building>> {
         return withContext(Dispatchers.IO) {
-
             return@withContext buildingDAO.getAllBuildings()
         }
     }

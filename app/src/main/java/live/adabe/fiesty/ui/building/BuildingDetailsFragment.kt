@@ -9,11 +9,14 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
 import live.adabe.fiesty.databinding.FragmentBuildingDetailsBinding
+import live.adabe.fiesty.models.Room
 import live.adabe.fiesty.navigation.NavigationService
 import live.adabe.fiesty.ui.adapters.RoomAdapter
 import live.adabe.fiesty.ui.home.HomeViewModel
 import live.adabe.fiesty.util.StringConstants
+import timber.log.Timber
 import javax.inject.Inject
+import kotlin.properties.Delegates
 
 @AndroidEntryPoint
 class BuildingDetailsFragment : Fragment() {
@@ -23,17 +26,48 @@ class BuildingDetailsFragment : Fragment() {
     lateinit var binding: FragmentBuildingDetailsBinding
     lateinit var viewModel: HomeViewModel
     lateinit var roomAdapter: RoomAdapter
+    var id : Int? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        // Inflate the layout for this fragment
         binding = FragmentBuildingDetailsBinding.inflate(inflater, container, false)
         viewModel = ViewModelProvider(requireActivity())[HomeViewModel::class.java]
         initViews()
         observeViewModel()
+        arguments?.let {
+            id = it.getInt(StringConstants.BUILDING_ID)
+        }
         return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        savedInstanceState?.let {
+            Timber.d("STATE RES")
+            binding.apply {
+                buildingNameTv.text = it.getString(StringConstants.BUILDING_NAME)
+                buildingAddressTv.text = it.getString(StringConstants.BUILDING_ADDRESS)
+                energyRateTv.text = it.getLong(StringConstants.BUILDING_RATE).toString()
+            }
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        id?.let{
+            viewModel.run {
+                getBuilding(it)
+                buildingGetLiveData.observe(viewLifecycleOwner, {response ->
+                    binding.apply {
+                        buildingNameTv.text = response?.name
+                        buildingAddressTv.text = response?.address
+                        energyRateTv.text = response?.energyRate.toString()
+                    }
+                })
+            }
+        }
     }
 
     private fun initViews() {
@@ -53,7 +87,7 @@ class BuildingDetailsFragment : Fragment() {
                                 args.getInt(StringConstants.BUILDING_ID)
                             )
                             setBundle(this@with)
-                            setScreen(StringConstants.ROOM_SCREEN)
+                            setScreen(StringConstants.ROOM_CREATE_SCREEN)
                         }
                     }
                 }
@@ -100,7 +134,7 @@ class BuildingDetailsFragment : Fragment() {
                     roomRecycler.visibility = View.INVISIBLE
                 }
             } else {
-                roomAdapter = RoomAdapter(it, navigationService)
+                roomAdapter = RoomAdapter(it, listener)
                 binding.apply {
                     roomNoData.visibility = View.GONE
                     roomRecycler.visibility = View.VISIBLE
@@ -111,5 +145,35 @@ class BuildingDetailsFragment : Fragment() {
                 }
             }
         })
+    }
+
+    private val listener = object : RoomAdapter.RoomItemClickListener {
+        override fun onItemClick(room: Room) {
+            with(Bundle()) {
+                putInt(StringConstants.ROOM_ID, room.rmId)
+                arguments?.let {
+                    putInt(
+                        StringConstants.BUILDING_ID,
+                        it.getInt(StringConstants.BUILDING_ID)
+                    )
+                    putString(StringConstants.BUILDING_NAME,
+                    it.getString(StringConstants.BUILDING_NAME))
+                }
+                putString(StringConstants.ROOM_NAME, room.name)
+                putInt(StringConstants.ROOM_DEVICE_COUNT, room.numberOfDevices)
+                viewModel.run {
+                    setBundle(this@with)
+                    setScreen(StringConstants.ROOM_DETAILS_SCREEN)
+                    Timber.d("item ${room.name} clicked")
+                }
+            }
+        }
+
+        override fun onItemDelete(room: Room) {
+            viewModel.run {
+                deleteRoom(room.rmId)
+            }
+        }
+
     }
 }

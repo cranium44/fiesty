@@ -20,9 +20,9 @@ object NetworkConstants {
     //room
     const val ROOM_CREATE_ENDPOINT = "room/createRoom/{buildingId}"
     const val ROOM_UPDATE_ENDPOINT = "room/createRoom/{roomId}/{buildingId}"
-    const val ROOM_GET_ENDPOINT = "room/getroom/{roomId}"
-    const val ROOM_GETALL_ENDPOINT = "room/getAllRooms/{buildingId}"
-    const val ROOM_DELETE_ENDPOINT = "room/deleteRoom/{roomId}"
+    const val ROOM_GET_ENDPOINT = "room/room/getroom/{roomId}"
+    const val ROOM_GETALL_ENDPOINT = "room/room/getAllRooms/{buildingId}"
+    const val ROOM_DELETE_ENDPOINT = "room/room/deleteRoom/{roomId}"
 
     //device
     const val DEVICE_CREATE_ENDPOINT = "appliance/{roomId}"

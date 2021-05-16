@@ -11,5 +11,4 @@ data class DeviceResponse(
     val duration: Duration,
     val startTime: Instant,
     val endTime: Instant,
-    val room: RoomResponse
 )

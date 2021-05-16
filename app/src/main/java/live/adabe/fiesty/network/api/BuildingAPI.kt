@@ -30,6 +30,6 @@ interface BuildingAPI {
     ): BuildingResponse
 
     @DELETE(NetworkConstants.BUILDING_DELETE_ENDPOINT)
-    suspend fun deleteBuilding(@Path("id") id: Int)
+    suspend fun deleteBuilding(@Path("id") id: Int): String
 
 }
