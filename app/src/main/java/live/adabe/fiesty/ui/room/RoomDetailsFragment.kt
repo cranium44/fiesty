@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
 import live.adabe.fiesty.R
 import live.adabe.fiesty.databinding.FragmentRoomDetailsBinding
+import live.adabe.fiesty.models.Device
 import live.adabe.fiesty.ui.adapters.BuildingAdapter
 import live.adabe.fiesty.ui.adapters.DeviceAdapter
 import live.adabe.fiesty.ui.home.HomeViewModel
@@ -41,6 +42,17 @@ class RoomDetailsFragment : Fragment() {
             }
             deviceRv.layoutManager = LinearLayoutManager(requireContext())
         }
+    }
+
+    private val listener = object : DeviceAdapter.DeviceItemClickListener{
+        override fun onItemClick(device: Device) {
+
+        }
+
+        override fun onItemDelete(device: Device) {
+
+        }
+
     }
 
 }
