@@ -17,6 +17,7 @@ class RoomFragment : Fragment() {
 
     private lateinit var binding: FragmentRoomBinding
     lateinit var viewModel: HomeViewModel
+    private lateinit var mode: String
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -24,7 +25,11 @@ class RoomFragment : Fragment() {
     ): View {
         binding = FragmentRoomBinding.inflate(inflater, container, false)
         viewModel = ViewModelProvider(requireActivity())[HomeViewModel::class.java]
+        arguments?.let {
+            mode = it.getString(StringConstants.MODE).toString()
+        }
         initViews()
+        observeViewModel()
         return binding.root
     }
 
@@ -39,10 +44,21 @@ class RoomFragment : Fragment() {
             }
             saveRoomButton.setOnClickListener {
                 arguments?.let { args ->
-                    viewModel.createRoom(
-                        args.getInt(StringConstants.BUILDING_ID),
-                        getInput()
-                    )
+                    when (mode) {
+                        StringConstants.CREATE_MODE -> {
+                            viewModel.createRoom(
+                                args.getInt(StringConstants.BUILDING_ID),
+                                getInput()
+                            )
+                        }
+                        StringConstants.EDIT_MODE -> {
+                            viewModel.updateRoom(
+                                args.getInt(StringConstants.ROOM_ID),
+                                args.getInt(StringConstants.BUILDING_ID),
+                                getInput()
+                            )
+                        }
+                    }
                 }
             }
         }
@@ -61,7 +77,14 @@ class RoomFragment : Fragment() {
         viewModel.run {
             roomResponse.observe(viewLifecycleOwner, { room ->
                 room?.let {
-
+                    with(Bundle()) {
+                        putInt(StringConstants.ROOM_ID, it.rmId)
+                        putInt(StringConstants.BUILDING_ID, it.buildingId)
+                        putString(StringConstants.ROOM_NAME, it.name)
+                        putInt(StringConstants.ROOM_DEVICE_COUNT, it.numberOfDevices)
+                        setBundle(this@with)
+                        setScreen(StringConstants.ROOM_DETAILS_SCREEN)
+                    }
                 }
             })
         }
