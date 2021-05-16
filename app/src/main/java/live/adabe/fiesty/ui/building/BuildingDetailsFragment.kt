@@ -131,7 +131,9 @@ class BuildingDetailsFragment : Fragment() {
         }
 
         override fun onItemDelete(room: Room) {
-            TODO("Not yet implemented")
+            viewModel.run {
+                deleteRoom(room.rmId)
+            }
         }
 
     }

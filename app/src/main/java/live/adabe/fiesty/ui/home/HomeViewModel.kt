@@ -10,6 +10,7 @@ import kotlinx.coroutines.launch
 import live.adabe.fiesty.models.Building
 import live.adabe.fiesty.models.Room
 import live.adabe.fiesty.models.network.building.BuildingResponse
+import live.adabe.fiesty.models.network.room.RoomRequest
 import live.adabe.fiesty.network.repository.BuildingRepository
 import live.adabe.fiesty.network.repository.RoomRepository
 import live.adabe.fiesty.util.Converter
@@ -34,6 +35,8 @@ class HomeViewModel @Inject constructor(
     var buildingResponse = MutableLiveData<BuildingResponse?>()
     var deleteSuccessLiveData = MutableLiveData<Boolean>()
 
+    var roomResponse = MutableLiveData<Room?>()
+    var deleteRoomLiveData = MutableLiveData<Boolean>()
 
     init {
         viewModelScope.launch {
@@ -88,9 +91,27 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-    fun deleteBuilding(buildingId: Int){
-        viewModelScope.launch{
+    fun deleteBuilding(buildingId: Int) {
+        viewModelScope.launch {
             deleteSuccessLiveData.postValue(buildingRepository.deleteBuilding(buildingId))
+        }
+    }
+
+    fun createRoom(buildingId: Int, roomRequest: RoomRequest) {
+        viewModelScope.launch {
+            roomResponse.postValue(roomRepository.createRoom(buildingId, roomRequest))
+        }
+    }
+
+    fun deleteRoom(roomId: Int) {
+        viewModelScope.launch {
+            deleteRoomLiveData.postValue(roomRepository.deleteRoom(roomId))
+        }
+    }
+
+    fun updateRoom(roomId: Int, buildingId: Int, roomRequest: RoomRequest) {
+        viewModelScope.launch {
+            roomResponse.postValue(roomRepository.updateRoom(roomId, buildingId, roomRequest))
         }
     }
 
