@@ -4,6 +4,8 @@ import android.os.Bundle
 import androidx.fragment.app.Fragment
 import live.adabe.fiesty.ui.building.BuildingCreateFragment
 import live.adabe.fiesty.ui.building.BuildingDetailsFragment
+import live.adabe.fiesty.ui.device.DeviceCreateFragment
+import live.adabe.fiesty.ui.device.DeviceDetailsFragment
 import live.adabe.fiesty.ui.home.HomeFragment
 import live.adabe.fiesty.ui.login.LoginFragment
 import live.adabe.fiesty.ui.profile.ProfileFragment
@@ -19,11 +21,9 @@ class Screens {
         }
     }
 
-    class LoginScreen(private val bundle: Bundle?) : SupportAppScreen() {
+    class LoginScreen() : SupportAppScreen() {
         override fun getFragment(): Fragment {
-            val fragment = LoginFragment()
-            fragment.arguments = bundle
-            return fragment
+            return LoginFragment()
         }
     }
 
@@ -62,6 +62,22 @@ class Screens {
     class RoomDetailsScreen(private val bundle: Bundle?) : SupportAppScreen() {
         override fun getFragment(): Fragment {
             val fragment = RoomDetailsFragment()
+            fragment.arguments = bundle
+            return fragment
+        }
+    }
+
+    class DeviceCreateScreen(private val bundle: Bundle?): SupportAppScreen(){
+        override fun getFragment(): Fragment {
+            val fragment = DeviceCreateFragment()
+            fragment.arguments = bundle
+            return fragment
+        }
+    }
+
+    class DeviceDetailScreen(private val bundle: Bundle?): SupportAppScreen(){
+        override fun getFragment(): Fragment {
+            val fragment = DeviceDetailsFragment()
             fragment.arguments = bundle
             return fragment
         }

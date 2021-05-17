@@ -17,7 +17,10 @@ object StringConstants {
     const val ROOM_DETAILS_SCREEN = "room_details"
     const val ROOM_CREATE_SCREEN = "room_create"
     const val SIGNUP_SCREEN = "signup"
+    const val LOGIN_SCREEN = "login"
     const val PROFILE_SCREEN = "profile"
+    const val DEVICE_DETAILS_SCREEN = "device_details"
+    const val DEVICE_CREATE_SCREEN = "device_create"
 
     //mode
     const val EDIT_MODE = "edit"

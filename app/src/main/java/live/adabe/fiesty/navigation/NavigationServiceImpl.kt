@@ -22,21 +22,12 @@ class NavigationServiceImpl(cicerone: Cicerone<Router>) : NavigationService {
         newRootScreen(Screens.HomeScreen())
     }
 
-    override fun openSignUpScreen(bundle: Bundle?) {
+    override fun openSignUpScreen() {
         navigateTo(Screens.SignUpScreen())
     }
 
-    override fun attachToActivity(context: Context) {
-        context as MainActivity
-        navigationHolder.setNavigator(SupportAppNavigator(context, R.id.nav_host_fragment))
-    }
-
-    override fun detachFromActivity() {
-        navigationHolder.removeNavigator()
-    }
-
-    override fun createChain(vararg screens: Screen) {
-        router.run { newChain(*screens) }
+    override fun openLoginScreen() {
+        newRootScreen(Screens.LoginScreen())
     }
 
     override fun openProfileScreen() {
@@ -57,6 +48,27 @@ class NavigationServiceImpl(cicerone: Cicerone<Router>) : NavigationService {
 
     override fun openRoomDetailsScreen(bundle: Bundle?) {
         navigateTo(Screens.RoomDetailsScreen(bundle))
+    }
+
+    override fun openDeviceCreateScreen(bundle: Bundle?) {
+        navigateTo(Screens.DeviceCreateScreen(bundle))
+    }
+
+    override fun openDeviceDetailsScreen(bundle: Bundle?) {
+        navigateTo(Screens.DeviceDetailScreen(bundle))
+    }
+
+    override fun attachToActivity(context: Context) {
+        context as MainActivity
+        navigationHolder.setNavigator(SupportAppNavigator(context, R.id.nav_host_fragment))
+    }
+
+    override fun detachFromActivity() {
+        navigationHolder.removeNavigator()
+    }
+
+    override fun createChain(vararg screens: Screen) {
+        router.run { newChain(*screens) }
     }
 
     private fun navigateTo(screen: Screen) {
