@@ -6,9 +6,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import dagger.hilt.android.AndroidEntryPoint
 import live.adabe.fiesty.databinding.FragmentDeviceCreateBinding
 
-
+@AndroidEntryPoint
 class DeviceCreateFragment : Fragment() {
 
     private lateinit var binding: FragmentDeviceCreateBinding
@@ -18,11 +19,11 @@ class DeviceCreateFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentDeviceCreateBinding.inflate(inflater, container, false)
-
+        initViews()
         return binding.root
     }
 
-    fun initViews() {
+    private fun initViews() {
         binding.apply {
             startTimeLayout.setOnClickListener {
                 val timePickerDialog = TimePickerDialog(requireActivity(), { _, hourOfDay, minute ->

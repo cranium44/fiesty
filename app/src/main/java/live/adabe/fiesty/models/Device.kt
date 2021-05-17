@@ -15,5 +15,5 @@ data class Device(
     val duration: Long,
     val startTime: Long,
     val stopTime: Long,
-    val energyUse: Double,
+    val rating: Double,
 )
