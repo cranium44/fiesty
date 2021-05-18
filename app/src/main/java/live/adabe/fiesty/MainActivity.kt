@@ -62,12 +62,21 @@ class MainActivity : AppCompatActivity() {
     private fun navigateToScreen(screenName: String, bundle: Bundle?) {
         when (screenName) {
             StringConstants.HOME_SCREEN -> navigationService.openHomeScreen()
-            StringConstants.BUILDING_CREATE_SCREEN -> navigationService.openBuildingCreateScreen(bundle)
+            StringConstants.LOGIN_SCREEN -> navigationService.openLoginScreen()
             StringConstants.PROFILE_SCREEN -> navigationService.openProfileScreen()
             StringConstants.SIGNUP_SCREEN -> navigationService.openSignUpScreen()
-            StringConstants.BUILDING_DETAILS_SCREEN -> navigationService.openBuildingDetailsScreen(bundle)
+            StringConstants.BUILDING_CREATE_SCREEN -> navigationService.openBuildingCreateScreen(
+                bundle
+            )
+            StringConstants.BUILDING_DETAILS_SCREEN -> navigationService.openBuildingDetailsScreen(
+                bundle
+            )
             StringConstants.ROOM_CREATE_SCREEN -> navigationService.openRoomCreateScreen(bundle)
             StringConstants.ROOM_DETAILS_SCREEN -> navigationService.openRoomDetailsScreen(bundle)
+            StringConstants.DEVICE_CREATE_SCREEN -> navigationService.openDeviceCreateScreen(bundle)
+            StringConstants.DEVICE_DETAILS_SCREEN -> navigationService.openDeviceDetailsScreen(
+                bundle
+            )
         }
     }
 }

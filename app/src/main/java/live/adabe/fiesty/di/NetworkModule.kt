@@ -1,6 +1,5 @@
 package live.adabe.fiesty.di
 
-import android.app.Application
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import dagger.Module
@@ -38,7 +37,6 @@ class NetworkModule {
 
     @Provides
     fun provideOkHttpClient(
-        application: Application,
         httpLoggingInterceptor: HttpLoggingInterceptor
     ): OkHttpClient {
         return OkHttpClient.Builder().callTimeout(10, TimeUnit.MINUTES)

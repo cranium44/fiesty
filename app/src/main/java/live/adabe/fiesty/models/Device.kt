@@ -13,7 +13,7 @@ data class Device(
     val roomId: Int,
     val name: String,
     val duration: Long,
-    val startTime: Long,
-    val stopTime: Long,
-    val energyUse: Double,
+    val startTime: String,
+    val stopTime: String,
+    val rating: Double,
 )

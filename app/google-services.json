@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "695139851936",
+    "project_id": "fiesty-7354b",
+    "storage_bucket": "fiesty-7354b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:695139851936:android:0b9a22e50f969c5797b3c5",
+        "android_client_info": {
+          "package_name": "live.adabe.fiesty"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "695139851936-ism6qiseisv9l42gf3gvggj6cvuqf09v.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyASUMI6NnG4EIk2QOEeoCAarpRWRsq5yeE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "695139851936-ism6qiseisv9l42gf3gvggj6cvuqf09v.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

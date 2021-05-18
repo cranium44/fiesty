@@ -7,13 +7,9 @@ import ru.terrakok.cicerone.Screen
 interface NavigationService {
     fun openHomeScreen()
 
-    fun openSignUpScreen(bundle: Bundle? = null)
+    fun openSignUpScreen()
 
-    fun attachToActivity(context: Context)
-
-    fun detachFromActivity()
-
-    fun createChain(vararg screens: Screen)
+    fun openLoginScreen()
 
     fun openProfileScreen()
 
@@ -24,5 +20,15 @@ interface NavigationService {
     fun openRoomCreateScreen(bundle: Bundle?)
 
     fun openRoomDetailsScreen(bundle: Bundle?)
+
+    fun openDeviceCreateScreen(bundle: Bundle?)
+
+    fun openDeviceDetailsScreen(bundle: Bundle?)
+
+    fun attachToActivity(context: Context)
+
+    fun detachFromActivity()
+
+    fun createChain(vararg screens: Screen)
 
 }

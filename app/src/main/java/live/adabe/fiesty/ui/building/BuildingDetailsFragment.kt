@@ -16,7 +16,6 @@ import live.adabe.fiesty.ui.home.HomeViewModel
 import live.adabe.fiesty.util.StringConstants
 import timber.log.Timber
 import javax.inject.Inject
-import kotlin.properties.Delegates
 
 @AndroidEntryPoint
 class BuildingDetailsFragment : Fragment() {
@@ -26,7 +25,7 @@ class BuildingDetailsFragment : Fragment() {
     lateinit var binding: FragmentBuildingDetailsBinding
     lateinit var viewModel: HomeViewModel
     lateinit var roomAdapter: RoomAdapter
-    var id : Int? = null
+    var id: Int? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -56,10 +55,10 @@ class BuildingDetailsFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        id?.let{
+        id?.let {
             viewModel.run {
                 getBuilding(it)
-                buildingGetLiveData.observe(viewLifecycleOwner, {response ->
+                buildingGetLiveData.observe(viewLifecycleOwner, { response ->
                     binding.apply {
                         buildingNameTv.text = response?.name
                         buildingAddressTv.text = response?.address
@@ -86,6 +85,7 @@ class BuildingDetailsFragment : Fragment() {
                                 StringConstants.BUILDING_ID,
                                 args.getInt(StringConstants.BUILDING_ID)
                             )
+                            putString(StringConstants.MODE, StringConstants.CREATE_MODE)
                             setBundle(this@with)
                             setScreen(StringConstants.ROOM_CREATE_SCREEN)
                         }
@@ -156,8 +156,10 @@ class BuildingDetailsFragment : Fragment() {
                         StringConstants.BUILDING_ID,
                         it.getInt(StringConstants.BUILDING_ID)
                     )
-                    putString(StringConstants.BUILDING_NAME,
-                    it.getString(StringConstants.BUILDING_NAME))
+                    putString(
+                        StringConstants.BUILDING_NAME,
+                        it.getString(StringConstants.BUILDING_NAME)
+                    )
                 }
                 putString(StringConstants.ROOM_NAME, room.name)
                 putInt(StringConstants.ROOM_DEVICE_COUNT, room.numberOfDevices)

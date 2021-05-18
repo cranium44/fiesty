@@ -19,7 +19,7 @@ class DeviceAdapter(
         fun bind(device: Device) {
             binding.apply {
                 deviceNameRv.text = device.name
-                deviceItemRating.text = device.energyUse.toString()
+                deviceItemRating.text = device.rating.toString()
 
                 deviceItemDelete.setOnClickListener {
                     listener.onItemDelete(device)

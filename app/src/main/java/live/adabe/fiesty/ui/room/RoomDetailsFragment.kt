@@ -1,17 +1,15 @@
 package live.adabe.fiesty.ui.room
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
-import live.adabe.fiesty.R
 import live.adabe.fiesty.databinding.FragmentRoomDetailsBinding
 import live.adabe.fiesty.models.Device
-import live.adabe.fiesty.ui.adapters.BuildingAdapter
 import live.adabe.fiesty.ui.adapters.DeviceAdapter
 import live.adabe.fiesty.ui.home.HomeViewModel
 import live.adabe.fiesty.util.StringConstants
@@ -41,12 +39,21 @@ class RoomDetailsFragment : Fragment() {
                 roomBuildingNameTv.text = args.getString(StringConstants.BUILDING_NAME)
             }
             deviceRv.layoutManager = LinearLayoutManager(requireContext())
+            addDeviceBtn.setOnClickListener {
+                viewModel.run {
+                    setBundle(null)
+                    setScreen(StringConstants.DEVICE_CREATE_SCREEN)
+                }
+            }
         }
     }
 
-    private val listener = object : DeviceAdapter.DeviceItemClickListener{
+    private val listener = object : DeviceAdapter.DeviceItemClickListener {
         override fun onItemClick(device: Device) {
-
+            viewModel.run {
+                setBundle(null)
+                setScreen(StringConstants.DEVICE_DETAILS_SCREEN)
+            }
         }
 
         override fun onItemDelete(device: Device) {

@@ -1,10 +1,15 @@
 package live.adabe.fiesty.util
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import live.adabe.fiesty.models.Building
+import live.adabe.fiesty.models.Device
 import live.adabe.fiesty.models.Room
 import live.adabe.fiesty.models.network.building.BuildingRequest
 import live.adabe.fiesty.models.network.building.BuildingResponse
+import live.adabe.fiesty.models.network.device.DeviceResponse
 import live.adabe.fiesty.models.network.room.RoomResponse
+import java.time.LocalTime
 
 object Converter {
 
@@ -38,5 +43,23 @@ object Converter {
             numberOfDevices = roomResponse.numberOfDevices,
             name = roomResponse.name
         )
+    }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    fun convertDeviceResponseToDevice(deviceResponse: DeviceResponse): Device {
+        return Device(
+            deviceId = deviceResponse.id,
+            roomId = deviceResponse.roomId,
+            startTime = deviceResponse.startTime.toString(),
+            stopTime = deviceResponse.stopTime.toString(),
+            duration = deviceResponse.duration.toMillis(),
+            rating = deviceResponse.rating,
+            name = deviceResponse.name
+        )
+    }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    fun getTime(hours: Int, minutes: Int): LocalTime {
+        return LocalTime.of(hours, minutes)
     }
 }

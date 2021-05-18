@@ -6,9 +6,10 @@ import java.time.Instant
 
 data class DeviceResponse(
     val id: Int,
+    val roomId: Int,
     val name: String,
     val rating: Double,
     val duration: Duration,
     val startTime: Instant,
-    val endTime: Instant,
+    val stopTime: Instant,
 )
