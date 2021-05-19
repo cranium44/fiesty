@@ -26,7 +26,7 @@ platform :android do
 
     firebase_app_distribution(
       app: "1:695139851936:android:0b9a22e50f969c5797b3c5",
-      groups: "fiesty internal",
+      groups: "fiesty-internal",
       firebase_cli_token: "1//03GMz_XGad29qCgYIARAAGAMSNwF-L9IrNkmBocy9GmPkM3y6sVRpDN9I_SiTipofA1NtUj5_i90_OHvAev-X7aicj8ufJ559T6k",
       release_notes: options[:build_number],
       debug: true
