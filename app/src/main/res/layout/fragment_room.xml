@@ -57,7 +57,6 @@
 
     <Button
         android:id="@+id/save_room_button"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@drawable/input_bg"

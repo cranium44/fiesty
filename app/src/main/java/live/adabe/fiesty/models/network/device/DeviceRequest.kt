@@ -9,5 +9,5 @@ data class DeviceRequest(
     val rating: Double,
     val duration: Duration,
     val startTime: LocalTime,
-    val endTime: LocalTime
+    val stopTime: LocalTime
 )
