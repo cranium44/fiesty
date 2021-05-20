@@ -60,7 +60,7 @@ class DeviceRepository @Inject constructor(private val deviceAPI: DeviceAPI) {
     suspend fun deleteDevice(deviceId: Int): Boolean {
         return withContext(Dispatchers.IO) {
             return@withContext try {
-                deviceAPI.deleteDevice(deviceId).isNotEmpty()
+                deviceAPI.deleteDevice(deviceId).isSuccessful
             } catch (t: Throwable) {
                 Timber.e(t.message.toString())
                 false

@@ -1,7 +1,5 @@
 package live.adabe.fiesty.network.repository
 
-import android.util.Log
-import androidx.lifecycle.MutableLiveData
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import live.adabe.fiesty.db.Preferences
@@ -16,13 +14,9 @@ class UserRepository @Inject constructor(
     private val preferences: Preferences
 ) {
 
-    companion object {
-        const val TAG = "USER_REPOSITORY"
-    }
-
-    suspend fun createUser(userRequest: UserRequest) : UserResponse?{
+    suspend fun createUser(userRequest: UserRequest): UserResponse? {
         return withContext(Dispatchers.IO) {
-           return@withContext try {
+            return@withContext try {
                 val response = userAPI.createUser(userRequest)
                 saveUserInfo(response)
                 Timber.d(response.id.toString())
@@ -74,7 +68,4 @@ class UserRepository @Inject constructor(
     }
 
     fun getUserID(): Int = preferences.getId()
-
-    fun getUserFirstName(): String? = preferences.getFirstName()
-
 }

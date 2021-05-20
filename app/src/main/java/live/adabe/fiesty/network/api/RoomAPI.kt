@@ -1,9 +1,9 @@
 package live.adabe.fiesty.network.api
 
-import androidx.lifecycle.LiveData
 import live.adabe.fiesty.models.network.room.RoomRequest
 import live.adabe.fiesty.models.network.room.RoomResponse
 import live.adabe.fiesty.network.NetworkConstants
+import retrofit2.Response
 import retrofit2.http.*
 
 interface RoomAPI {
@@ -27,5 +27,5 @@ interface RoomAPI {
     ): RoomResponse
 
     @DELETE(NetworkConstants.ROOM_DELETE_ENDPOINT)
-    suspend fun deleteRoom(@Path("roomId") roomId: Int): String
+    suspend fun deleteRoom(@Path("roomId") roomId: Int): Response<Any>
 }

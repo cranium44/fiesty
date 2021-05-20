@@ -26,6 +26,17 @@ class RoomRepository @Inject constructor(private val roomAPI: RoomAPI) {
         }
     }
 
+    suspend fun getRoom(roomId: Int): Room?{
+        return withContext(Dispatchers.IO){
+            return@withContext try{
+                Converter.convertRoomResponseToRoom(roomAPI.getRoom(roomId))
+            }catch (t: Throwable){
+                Timber.e(t.message.toString())
+                null
+            }
+        }
+    }
+
     suspend fun createRoom(buildingId: Int, roomRequest: RoomRequest): Room?{
         return withContext(Dispatchers.IO){
             return@withContext try{
@@ -40,7 +51,7 @@ class RoomRepository @Inject constructor(private val roomAPI: RoomAPI) {
     suspend fun deleteRoom(roomId: Int): Boolean{
         return withContext(Dispatchers.IO){
             return@withContext try{
-                roomAPI.deleteRoom(roomId).isNotEmpty()
+                roomAPI.deleteRoom(roomId).isSuccessful
             }catch (t: Throwable){
                 Timber.e(t.message.toString())
                 false
