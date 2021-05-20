@@ -48,7 +48,7 @@ class BuildingRepository @Inject constructor(
         return withContext(Dispatchers.IO) {
             return@withContext try {
                 val response = buildingAPI.deleteBuilding(id)
-                response.isNotEmpty()
+                response.code() == 200
             } catch (t: Throwable) {
                 Timber.e(t.message.toString())
                 false

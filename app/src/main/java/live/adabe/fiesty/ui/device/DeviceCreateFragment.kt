@@ -13,11 +13,12 @@ import dagger.hilt.android.AndroidEntryPoint
 import live.adabe.fiesty.databinding.FragmentDeviceCreateBinding
 import live.adabe.fiesty.models.network.device.DeviceRequest
 import live.adabe.fiesty.ui.home.HomeViewModel
-import live.adabe.fiesty.util.Converter
 import live.adabe.fiesty.util.StringConstants
 import live.adabe.fiesty.util.updateTime
 import java.time.Duration
-import java.time.LocalTime
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
+import java.util.*
 
 @AndroidEntryPoint
 class DeviceCreateFragment : Fragment() {
@@ -27,8 +28,8 @@ class DeviceCreateFragment : Fragment() {
     lateinit var deviceViewModel: DeviceViewModel
     lateinit var homeViewModel: HomeViewModel
 
-    private lateinit var startTime: LocalTime
-    private lateinit var stopTime: LocalTime
+    private lateinit var startTime: LocalDateTime
+    private lateinit var stopTime: LocalDateTime
     private var roomId: Int? = null
     private var mode = StringConstants.CREATE_MODE
 
@@ -42,7 +43,7 @@ class DeviceCreateFragment : Fragment() {
         arguments?.let {
             roomId = it.getInt(StringConstants.ROOM_ID)
         }
-        obseveData()
+        observeData()
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             initViews()
         }
@@ -55,7 +56,11 @@ class DeviceCreateFragment : Fragment() {
             startTimeLayout.setOnClickListener {
                 val timePickerDialog = TimePickerDialog(requireActivity(), { _, hourOfDay, minute ->
                     startTimeTv.text = updateTime(hourOfDay, minute)
-                    startTime = Converter.getTime(hourOfDay, minute)
+                    with(LocalDateTime.now()) {
+                        withHour(hourOfDay)
+                        withMinute(minute)
+                        startTime = this@with
+                    }
                 }, 8, 0, false)
                 timePickerDialog.show()
             }
@@ -63,7 +68,11 @@ class DeviceCreateFragment : Fragment() {
             stopTimeLayout.setOnClickListener {
                 val timePickerDialog = TimePickerDialog(requireActivity(), { _, hourOfDay, minute ->
                     stopTimeTv.text = updateTime(hourOfDay, minute)
-                    stopTime = Converter.getTime(hourOfDay, minute)
+                    with(LocalDateTime.now()) {
+                        withHour(hourOfDay)
+                        withMinute(minute)
+                        stopTime = this@with
+                    }
                 }, 8, 0, false)
                 timePickerDialog.show()
             }
@@ -76,8 +85,8 @@ class DeviceCreateFragment : Fragment() {
                                 name = binding.deviceNameInput.editText?.text.toString(),
                                 rating = binding.deviceRatingInput.editText?.text.toString()
                                     .toDouble(),
-                                startTime = startTime,
-                                stopTime = stopTime,
+                                startTime = startTime.format(DateTimeFormatter.ISO_DATE_TIME),
+                                stopTime = stopTime.format(DateTimeFormatter.ISO_DATE_TIME),
                                 duration = Duration.between(startTime, stopTime)
                             )
                             deviceViewModel.createDevice(deviceRequest = deviceRequest, roomId = id)
@@ -87,8 +96,8 @@ class DeviceCreateFragment : Fragment() {
                                 name = binding.deviceNameInput.editText?.text.toString(),
                                 rating = binding.deviceRatingInput.editText?.text.toString()
                                     .toDouble(),
-                                startTime = startTime,
-                                stopTime = stopTime,
+                                startTime = startTime.format(DateTimeFormatter.ISO_DATE_TIME),
+                                stopTime = stopTime.format(DateTimeFormatter.ISO_DATE_TIME),
                                 duration = Duration.between(startTime, stopTime)
                             )
                             deviceViewModel.updateDevice(
@@ -104,7 +113,7 @@ class DeviceCreateFragment : Fragment() {
         }
     }
 
-    private fun obseveData() {
+    private fun observeData() {
         deviceViewModel.run {
             devicesLiveData.observe(viewLifecycleOwner, {
                 it?.let {

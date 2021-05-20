@@ -57,6 +57,10 @@ class RoomDetailsFragment : Fragment() {
             deviceListLiveData.observe(viewLifecycleOwner, {devices->
                 if(devices.isNotEmpty()){
                     deviceAdapter = DeviceAdapter(devices, listener)
+                    binding.deviceRv.run {
+                        adapter = deviceAdapter
+                        adapter?.notifyDataSetChanged()
+                    }
                 }
             })
         }
