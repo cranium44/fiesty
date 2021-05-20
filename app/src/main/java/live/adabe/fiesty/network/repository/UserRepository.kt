@@ -3,6 +3,7 @@ package live.adabe.fiesty.network.repository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import live.adabe.fiesty.db.Preferences
+import live.adabe.fiesty.models.network.user.LoginRequest
 import live.adabe.fiesty.models.network.user.UserRequest
 import live.adabe.fiesty.models.network.user.UserResponse
 import live.adabe.fiesty.network.api.UserAPI
@@ -19,7 +20,19 @@ class UserRepository @Inject constructor(
             return@withContext try {
                 val response = userAPI.createUser(userRequest)
                 saveUserInfo(response)
-                Timber.d(response.id.toString())
+                response
+            } catch (t: Throwable) {
+                Timber.e(t.message.toString())
+                null
+            }
+        }
+    }
+
+    suspend fun loginUser(loginRequest: LoginRequest): UserResponse? {
+        return withContext(Dispatchers.IO) {
+            return@withContext try {
+                val response = userAPI.loginUser(loginRequest)
+                saveUserInfo(response)
                 response
             } catch (t: Throwable) {
                 Timber.e(t.message.toString())

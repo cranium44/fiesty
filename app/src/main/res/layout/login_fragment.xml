@@ -9,7 +9,7 @@
 
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/first_name_input"
+        android:id="@+id/email_input"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -60,7 +60,7 @@
         android:textColor="@color/black"
         android:textSize="32sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/first_name_input"
+        app:layout_constraintBottom_toTopOf="@+id/email_input"
         app:layout_constraintEnd_toStartOf="@+id/signup_guideline_end"
         app:layout_constraintStart_toStartOf="@+id/signup_guideline_start"
         app:layout_constraintTop_toTopOf="parent" />

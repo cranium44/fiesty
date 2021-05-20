@@ -11,11 +11,12 @@ import live.adabe.fiesty.network.repository.UserRepository
 import javax.inject.Inject
 
 @HiltViewModel
-class SignUpViewModel @Inject constructor(private val userRepository: UserRepository) : ViewModel() {
+class SignUpViewModel @Inject constructor(private val userRepository: UserRepository) :
+    ViewModel() {
 
     val responseLiveData = MutableLiveData<UserResponse?>()
-    fun createUser(userRequest: UserRequest){
-        viewModelScope.launch{
+    fun createUser(userRequest: UserRequest) {
+        viewModelScope.launch {
             responseLiveData.postValue(userRepository.createUser(userRequest))
         }
     }
