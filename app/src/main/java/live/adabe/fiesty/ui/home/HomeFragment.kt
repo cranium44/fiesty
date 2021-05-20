@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
+import live.adabe.fiesty.R
 import live.adabe.fiesty.databinding.FragmentHomeBinding
 import live.adabe.fiesty.db.Preferences
 import live.adabe.fiesty.models.Building
@@ -42,7 +43,7 @@ class HomeFragment : Fragment() {
         viewModel = ViewModelProvider(requireActivity())[HomeViewModel::class.java]
         binding.apply {
             buildingRecycler.layoutManager = LinearLayoutManager(requireContext())
-            welcomeText.text = "${welcomeText.text.toString()} ${preferences.getFirstName()}"
+            welcomeText.text = getString(R.string.welcome_text, preferences.getFirstName(), preferences.getLastName())
         }
         return binding.root
     }

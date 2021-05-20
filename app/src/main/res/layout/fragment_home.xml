@@ -10,13 +10,14 @@
 
     <TextView
         android:id="@+id/welcome_text"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:text="@string/hello"
         android:textColor="@color/black"
         android:textSize="25sp"
         android:textStyle="bold"
+        app:layout_constraintEnd_toStartOf="@+id/display_pic"
         app:layout_constraintStart_toStartOf="@+id/home_start_guideline"
         app:layout_constraintTop_toTopOf="parent" />
 

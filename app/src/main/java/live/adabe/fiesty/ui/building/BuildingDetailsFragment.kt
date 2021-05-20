@@ -24,7 +24,7 @@ class BuildingDetailsFragment : Fragment() {
 
     lateinit var binding: FragmentBuildingDetailsBinding
     lateinit var viewModel: HomeViewModel
-    lateinit var roomAdapter: RoomAdapter
+    private lateinit var roomAdapter: RoomAdapter
     var id: Int? = null
 
     override fun onCreateView(

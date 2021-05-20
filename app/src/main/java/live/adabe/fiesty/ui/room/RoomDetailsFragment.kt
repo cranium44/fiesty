@@ -11,6 +11,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import live.adabe.fiesty.databinding.FragmentRoomDetailsBinding
 import live.adabe.fiesty.models.Device
 import live.adabe.fiesty.ui.adapters.DeviceAdapter
+import live.adabe.fiesty.ui.device.DeviceViewModel
 import live.adabe.fiesty.ui.home.HomeViewModel
 import live.adabe.fiesty.util.StringConstants
 
@@ -20,6 +21,7 @@ class RoomDetailsFragment : Fragment() {
     private lateinit var binding: FragmentRoomDetailsBinding
     private lateinit var deviceAdapter: DeviceAdapter
     lateinit var viewModel: HomeViewModel
+    lateinit var deviceViewModel: DeviceViewModel
 
 
     override fun onCreateView(
@@ -28,7 +30,9 @@ class RoomDetailsFragment : Fragment() {
     ): View {
         binding = FragmentRoomDetailsBinding.inflate(inflater, container, false)
         viewModel = ViewModelProvider(requireActivity())[HomeViewModel::class.java]
+        deviceViewModel = ViewModelProvider(requireActivity())[DeviceViewModel::class.java]
         initViews()
+        observeData()
         return binding.root
     }
 
@@ -48,16 +52,29 @@ class RoomDetailsFragment : Fragment() {
         }
     }
 
+    private fun observeData(){
+        deviceViewModel.run {
+            deviceListLiveData.observe(viewLifecycleOwner, {devices->
+                if(devices.isNotEmpty()){
+                    deviceAdapter = DeviceAdapter(devices, listener)
+                }
+            })
+        }
+    }
+
     private val listener = object : DeviceAdapter.DeviceItemClickListener {
         override fun onItemClick(device: Device) {
             viewModel.run {
-                setBundle(null)
-                setScreen(StringConstants.DEVICE_DETAILS_SCREEN)
+                with(Bundle()){
+                    putInt(StringConstants.DEVICE_ID, device.deviceId)
+                    setBundle(this@with)
+                    setScreen(StringConstants.DEVICE_DETAILS_SCREEN)
+                }
             }
         }
 
         override fun onItemDelete(device: Device) {
-
+            deviceViewModel.deleteDevice(device.deviceId)
         }
 
     }
