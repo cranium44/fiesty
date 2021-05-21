@@ -39,4 +39,5 @@
     <string name="create_device">Create Device</string>
     <string name="buildings">Buildings:</string>
     <string name="welcome_text">Hello, %1$s %2$s</string>
+    <string name="phone_number">Phone Number</string>
 </resources>

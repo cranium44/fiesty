@@ -46,39 +46,27 @@ class UserRepository @Inject constructor(
             setEmail(response_.email)
             setFirstName(response_.firstName)
             setLastName(response_.lastName)
+            setPhoneNumber(response_.phoneNumber)
             setId(response_.id)
             setIsLoggedIn(true)
         }
     }
 
-    suspend fun getUser() {
-        withContext(Dispatchers.IO) {
-            try {
+    fun logout() {
+        preferences.clearAll()
+    }
+
+    suspend fun updateUser(userRequest: UserRequest): UserResponse? {
+        return withContext(Dispatchers.IO) {
+            return@withContext try {
                 val id = preferences.getId()
-                if (id != 0) {
-                    userAPI.getUser(id)
-                } else {
-                }
+                val response = userAPI.updateUser(id, userRequest)
+                saveUserInfo(response)
+                response
             } catch (t: Throwable) {
                 Timber.e(t.message.toString())
+                null
             }
         }
     }
-
-    suspend fun updateUser(userRequest: UserRequest) {
-        withContext(Dispatchers.IO) {
-            try {
-                val id = preferences.getId()
-                if (id != 0) {
-                    val response = userAPI.updateUser(id, userRequest)
-                    saveUserInfo(response)
-                } else {
-                }
-            } catch (t: Throwable) {
-                Timber.e(t.message.toString())
-            }
-        }
-    }
-
-    fun getUserID(): Int = preferences.getId()
 }

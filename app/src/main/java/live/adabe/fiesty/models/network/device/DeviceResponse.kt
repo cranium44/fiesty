@@ -1,6 +1,5 @@
 package live.adabe.fiesty.models.network.device
 
-import live.adabe.fiesty.models.network.room.RoomResponse
 import java.time.Duration
 import java.time.Instant
 
@@ -12,4 +11,5 @@ data class DeviceResponse(
     val duration: Duration,
     val startTime: Instant,
     val stopTime: Instant,
+    val energyUse: Double,
 )

@@ -37,7 +37,7 @@ class RoomFragment : Fragment() {
         binding.run {
             arguments?.let { args ->
                 roomNameInput.editText?.setText(args.getString(StringConstants.ROOM_NAME))
-                numberOfAppliancesInput.editText?.setText(args.getString(StringConstants.ROOM_DEVICE_COUNT))
+                numberOfAppliancesInput.editText?.setText(args.getInt(StringConstants.ROOM_DEVICE_COUNT))
             }?.run {
                 roomNameInput.editText?.setText("")
                 numberOfAppliancesInput.editText?.setText("")
@@ -75,7 +75,7 @@ class RoomFragment : Fragment() {
 
     private fun observeViewModel() {
         viewModel.run {
-            roomResponse.observe(viewLifecycleOwner, { room ->
+            updateRoomResponse.observe(viewLifecycleOwner, { room ->
                 room?.let {
                     with(Bundle()) {
                         putInt(StringConstants.ROOM_ID, it.rmId)
@@ -85,6 +85,11 @@ class RoomFragment : Fragment() {
                         setBundle(this@with)
                         setScreen(StringConstants.ROOM_DETAILS_SCREEN)
                     }
+                }
+            })
+            createRoomResponse.observe(viewLifecycleOwner, {
+                it?.let {
+                    setScreen(StringConstants.BUILDING_DETAILS_SCREEN)
                 }
             })
         }

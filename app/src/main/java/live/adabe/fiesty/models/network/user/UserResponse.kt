@@ -8,4 +8,6 @@ data class UserResponse(
     @SerializedName("lastname")
     val lastName: String,
     val email: String,
-    val password: String,)
+    val password: String,
+    val phoneNumber: String
+)

@@ -36,7 +36,8 @@ class HomeViewModel @Inject constructor(
     var buildingDeleteSuccessLiveData = MutableLiveData<Boolean>()
     var buildingGetLiveData = MutableLiveData<BuildingResponse?>()
 
-    var roomResponse = MutableLiveData<Room?>()
+    var createRoomResponse = MutableLiveData<Room?>()
+    var updateRoomResponse = MutableLiveData<Room?>()
     var deleteRoomLiveData = MutableLiveData<Boolean>()
 
     init {
@@ -106,7 +107,7 @@ class HomeViewModel @Inject constructor(
 
     fun createRoom(buildingId: Int, roomRequest: RoomRequest) {
         viewModelScope.launch {
-            roomResponse.postValue(roomRepository.createRoom(buildingId, roomRequest))
+            createRoomResponse.postValue(roomRepository.createRoom(buildingId, roomRequest))
         }
     }
 
@@ -118,7 +119,7 @@ class HomeViewModel @Inject constructor(
 
     fun updateRoom(roomId: Int, buildingId: Int, roomRequest: RoomRequest) {
         viewModelScope.launch {
-            roomResponse.postValue(roomRepository.updateRoom(roomId, buildingId, roomRequest))
+            updateRoomResponse.postValue(roomRepository.updateRoom(roomId, buildingId, roomRequest))
         }
     }
 

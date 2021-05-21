@@ -68,7 +68,8 @@ class SignUpFragment : Fragment() {
                 firstName = firstNameInput.editText?.text.toString(),
                 lastName = lastNameInput.editText?.text.toString(),
                 email = emailInput.editText?.text.toString(),
-                password = passwordInput.editText?.text.toString()
+                password = passwordInput.editText?.text.toString(),
+                phoneNumber = phoneIput.editText?.text.toString(),
             )
         }
     }
