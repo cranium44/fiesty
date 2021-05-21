@@ -36,8 +36,21 @@ class RoomFragment : Fragment() {
     private fun initViews() {
         binding.run {
             arguments?.let { args ->
-                roomNameInput.editText?.setText(args.getString(StringConstants.ROOM_NAME))
-                numberOfAppliancesInput.editText?.setText(args.getInt(StringConstants.ROOM_DEVICE_COUNT))
+                when(mode){
+                    StringConstants.EDIT_MODE->{
+                        roomNameInput.editText?.setText(args.getString(StringConstants.ROOM_NAME))
+                        numberOfAppliancesInput.editText?.setText(args.getInt(StringConstants.ROOM_DEVICE_COUNT))
+                    }
+                    StringConstants.CREATE_MODE ->{
+                        roomNameInput.editText?.setText("")
+                        numberOfAppliancesInput.editText?.setText("")
+                    }
+                    else -> {
+                        roomNameInput.editText?.setText("")
+                        numberOfAppliancesInput.editText?.setText("")
+                    }
+                }
+
             }?.run {
                 roomNameInput.editText?.setText("")
                 numberOfAppliancesInput.editText?.setText("")
