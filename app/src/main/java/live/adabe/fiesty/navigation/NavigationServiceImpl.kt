@@ -23,7 +23,7 @@ class NavigationServiceImpl(cicerone: Cicerone<Router>) : NavigationService {
     }
 
     override fun openSignUpScreen() {
-        navigateTo(Screens.SignUpScreen())
+        newRootScreen(Screens.SignUpScreen())
     }
 
     override fun openLoginScreen() {

@@ -5,7 +5,7 @@ import android.content.Context
 import android.content.SharedPreferences
 import javax.inject.Inject
 
-class Preferences @Inject constructor(private val application: Application) {
+class Preferences @Inject constructor(application: Application) {
     private var sharedPreferences: SharedPreferences =
         application.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE)
 

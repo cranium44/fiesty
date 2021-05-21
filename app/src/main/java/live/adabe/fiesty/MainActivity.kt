@@ -31,6 +31,7 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         viewModel = ViewModelProvider(this)[HomeViewModel::class.java]
         Timber.d(preferences.getId().toString())
+        Timber.d(preferences.isLoggedIn().toString())
         viewModel.screen.observe(this, { screenName ->
             viewModel.bundle.observe(this, { bundle ->
                 navigateToScreen(screenName, bundle)
@@ -38,7 +39,7 @@ class MainActivity : AppCompatActivity() {
 
         })
         if (preferences.getId() == 0) {
-            navigationService.openSignUpScreen()
+            navigationService.openLoginScreen()
         } else {
             navigationService.openHomeScreen()
         }

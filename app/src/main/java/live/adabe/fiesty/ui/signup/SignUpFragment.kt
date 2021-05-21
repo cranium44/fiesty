@@ -39,6 +39,12 @@ class SignUpFragment : Fragment() {
             it.text = "Loading"
             viewModel.createUser(getInput())
         }
+        binding.goToLogin.setOnClickListener {
+            homeViewModel.run {
+                setBundle(null)
+                setScreen(StringConstants.LOGIN_SCREEN)
+            }
+        }
         return binding.root
     }
 
