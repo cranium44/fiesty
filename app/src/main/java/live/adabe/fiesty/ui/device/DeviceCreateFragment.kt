@@ -15,9 +15,7 @@ import live.adabe.fiesty.models.network.device.DeviceRequest
 import live.adabe.fiesty.ui.home.HomeViewModel
 import live.adabe.fiesty.util.StringConstants
 import live.adabe.fiesty.util.updateTime
-import java.time.Duration
-import java.time.LocalDateTime
-import java.time.format.DateTimeFormatter
+import java.time.*
 import java.util.*
 
 @AndroidEntryPoint
@@ -85,8 +83,8 @@ class DeviceCreateFragment : Fragment() {
                                 name = binding.deviceNameInput.editText?.text.toString(),
                                 rating = binding.deviceRatingInput.editText?.text.toString()
                                     .toDouble(),
-                                startTime = startTime.format(DateTimeFormatter.ISO_DATE_TIME),
-                                stopTime = stopTime.format(DateTimeFormatter.ISO_DATE_TIME),
+                                startTime = getInstantFromLocalDateTime(startTime).toString(),
+                                stopTime = getInstantFromLocalDateTime(stopTime).toString(),
                                 duration = Duration.between(startTime, stopTime)
                             )
                             deviceViewModel.createDevice(deviceRequest = deviceRequest, roomId = id)
@@ -96,8 +94,8 @@ class DeviceCreateFragment : Fragment() {
                                 name = binding.deviceNameInput.editText?.text.toString(),
                                 rating = binding.deviceRatingInput.editText?.text.toString()
                                     .toDouble(),
-                                startTime = startTime.format(DateTimeFormatter.ISO_DATE_TIME),
-                                stopTime = stopTime.format(DateTimeFormatter.ISO_DATE_TIME),
+                                startTime = getInstantFromLocalDateTime(startTime).toString(),
+                                stopTime = getInstantFromLocalDateTime(stopTime).toString(),
                                 duration = Duration.between(startTime, stopTime)
                             )
                             deviceViewModel.updateDevice(
@@ -124,6 +122,11 @@ class DeviceCreateFragment : Fragment() {
                 }
             })
         }
+    }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    private fun getInstantFromLocalDateTime(localDateTime: LocalDateTime): Instant {
+        return localDateTime.toInstant(ZoneOffset.UTC)
     }
 
 

@@ -49,7 +49,15 @@ class RoomDetailsFragment : Fragment() {
             }
             deviceRv.layoutManager = LinearLayoutManager(requireContext())
             addDeviceBtn.setOnClickListener {
-                navigationService.openDeviceCreateScreen(null)
+                with(Bundle()){
+                    arguments?.let { args->
+                        putInt( StringConstants.ROOM_ID,
+                            args.getInt(StringConstants.ROOM_ID)
+                        )
+                        putString(StringConstants.MODE, StringConstants.CREATE_MODE)
+                        navigationService.openDeviceCreateScreen(this)
+                    }
+                }
             }
         }
     }

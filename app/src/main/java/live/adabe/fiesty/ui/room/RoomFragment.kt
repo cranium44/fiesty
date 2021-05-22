@@ -12,6 +12,7 @@ import live.adabe.fiesty.models.network.room.RoomRequest
 import live.adabe.fiesty.navigation.NavigationService
 import live.adabe.fiesty.ui.home.HomeViewModel
 import live.adabe.fiesty.util.StringConstants
+import timber.log.Timber
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -106,6 +107,7 @@ class RoomFragment : Fragment() {
             })
             createRoomResponse.observe(viewLifecycleOwner, {
                 it?.let {
+                    Timber.d(it.name)
                     navigationService.openBuildingDetailsScreen(null)
                 }
             })
