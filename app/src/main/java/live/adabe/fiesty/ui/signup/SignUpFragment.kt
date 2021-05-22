@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -12,8 +11,6 @@ import dagger.hilt.android.AndroidEntryPoint
 import live.adabe.fiesty.databinding.SignUpFragmentBinding
 import live.adabe.fiesty.models.network.user.UserRequest
 import live.adabe.fiesty.navigation.NavigationService
-import live.adabe.fiesty.ui.home.HomeViewModel
-import live.adabe.fiesty.util.StringConstants
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -24,7 +21,7 @@ class SignUpFragment : Fragment() {
     lateinit var navigationService: NavigationService
     private lateinit var binding: SignUpFragmentBinding
     lateinit var viewModel: SignUpViewModel
-    lateinit var homeViewModel: HomeViewModel
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -32,18 +29,12 @@ class SignUpFragment : Fragment() {
     ): View {
         binding = SignUpFragmentBinding.inflate(inflater, container, false)
         viewModel = ViewModelProvider(requireActivity())[SignUpViewModel::class.java]
-        homeViewModel = ViewModelProvider(requireActivity())[HomeViewModel::class.java]
         observeViewModel()
         binding.button.setOnClickListener {
-            it as Button
-            it.text = "Loading"
             viewModel.createUser(getInput())
         }
         binding.goToLogin.setOnClickListener {
-            homeViewModel.run {
-                setBundle(null)
-                setScreen(StringConstants.LOGIN_SCREEN)
-            }
+            navigationService.openLoginScreen()
         }
         return binding.root
     }
@@ -53,10 +44,7 @@ class SignUpFragment : Fragment() {
             responseLiveData.observe(requireActivity(), { userResponse ->
                 if (userResponse != null) {
                     Timber.d("response successful")
-                    homeViewModel.run {
-                        setBundle(null)
-                        setScreen(StringConstants.HOME_SCREEN)
-                    }
+                    navigationService.openHomeScreen()
                 } else {
                     Toast.makeText(
                         requireContext(),

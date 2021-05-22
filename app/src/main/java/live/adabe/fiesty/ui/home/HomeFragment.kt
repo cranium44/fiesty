@@ -52,17 +52,10 @@ class HomeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.addBuilding.setOnClickListener {
-            viewModel.run {
-                with(Bundle()) {
-                    putString(StringConstants.MODE, StringConstants.CREATE_MODE)
-                    setBundle(this@with)
-                    setScreen(StringConstants.BUILDING_CREATE_SCREEN)
-                }
-            }
+            navigationService.openBuildingCreateScreen(null)
         }
         viewModel.run {
             buildings.observe(viewLifecycleOwner, { buildings_ ->
-                Timber.d(buildings_.size.toString())
                 if (buildings_ != null) {
                     if (buildings_.isNotEmpty()) {
                         binding.noDataText.visibility = View.GONE
@@ -103,10 +96,7 @@ class HomeFragment : Fragment() {
                 putInt(StringConstants.BUILDING_ID, building.buildId)
                 putString(StringConstants.BUILDING_ADDRESS, building.address)
                 putLong(StringConstants.BUILDING_RATE, building.energyRate)
-                viewModel.apply {
-                    setBundle(this@with)
-                    setScreen(StringConstants.BUILDING_DETAILS_SCREEN)
-                }
+                navigationService.openBuildingDetailsScreen(this@with)
             }
         }
 
