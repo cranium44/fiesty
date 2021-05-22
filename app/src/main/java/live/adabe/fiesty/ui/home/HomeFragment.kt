@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
+import live.adabe.fiesty.R
 import live.adabe.fiesty.databinding.FragmentHomeBinding
 import live.adabe.fiesty.db.Preferences
 import live.adabe.fiesty.models.Building
@@ -42,7 +43,7 @@ class HomeFragment : Fragment() {
         viewModel = ViewModelProvider(requireActivity())[HomeViewModel::class.java]
         binding.apply {
             buildingRecycler.layoutManager = LinearLayoutManager(requireContext())
-            welcomeText.text = "${welcomeText.text.toString()} ${preferences.getFirstName()}"
+            welcomeText.text = getString(R.string.welcome_text, preferences.getFirstName(), preferences.getLastName())
         }
         return binding.root
     }
@@ -51,17 +52,10 @@ class HomeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.addBuilding.setOnClickListener {
-            viewModel.run {
-                with(Bundle()) {
-                    putString(StringConstants.MODE, StringConstants.CREATE_MODE)
-                    setBundle(this@with)
-                    setScreen(StringConstants.BUILDING_CREATE_SCREEN)
-                }
-            }
+            navigationService.openBuildingCreateScreen(null)
         }
         viewModel.run {
             buildings.observe(viewLifecycleOwner, { buildings_ ->
-                Timber.d(buildings_.size.toString())
                 if (buildings_ != null) {
                     if (buildings_.isNotEmpty()) {
                         binding.noDataText.visibility = View.GONE
@@ -102,10 +96,7 @@ class HomeFragment : Fragment() {
                 putInt(StringConstants.BUILDING_ID, building.buildId)
                 putString(StringConstants.BUILDING_ADDRESS, building.address)
                 putLong(StringConstants.BUILDING_RATE, building.energyRate)
-                viewModel.apply {
-                    setBundle(this@with)
-                    setScreen(StringConstants.BUILDING_DETAILS_SCREEN)
-                }
+                navigationService.openBuildingDetailsScreen(this@with)
             }
         }
 

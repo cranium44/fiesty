@@ -9,10 +9,10 @@
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/building_name"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:background="@android:color/transparent"
         app:boxBackgroundColor="@android:color/transparent"
         app:layout_constraintBottom_toTopOf="@+id/building_address"
@@ -30,9 +30,9 @@
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/building_address"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:background="@android:color/transparent"
         app:boxBackgroundColor="@android:color/transparent"
         app:layout_constraintBottom_toTopOf="@+id/building_energy_rate"
@@ -50,9 +50,9 @@
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/building_energy_rate"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:background="@android:color/transparent"
         app:boxBackgroundColor="@android:color/transparent"
         app:layout_constraintBottom_toTopOf="@+id/guideline8"

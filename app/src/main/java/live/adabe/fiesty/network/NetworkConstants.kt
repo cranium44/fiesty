@@ -9,6 +9,7 @@ object NetworkConstants {
     const val USER_GET_ENDPOINT = "findUser/{id}"
     const val USER_UPDATE_ENDPOINT = "updateUser/{id}"
     const val USER_DELETE_ENDPOINT = "deleteUser/{id}"
+    const val USER_LOGIN_ENDPOIT = "loginUser"
 
     //building
     const val BUILDING_CREATE_ENDPOINT = "energy/building/{userId}"

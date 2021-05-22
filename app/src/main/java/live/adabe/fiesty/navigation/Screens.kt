@@ -21,19 +21,19 @@ class Screens {
         }
     }
 
-    class LoginScreen() : SupportAppScreen() {
+    class LoginScreen : SupportAppScreen() {
         override fun getFragment(): Fragment {
             return LoginFragment()
         }
     }
 
-    class SignUpScreen() : SupportAppScreen() {
+    class SignUpScreen : SupportAppScreen() {
         override fun getFragment(): Fragment {
             return SignUpFragment()
         }
     }
 
-    class ProfileScreen() : SupportAppScreen() {
+    class ProfileScreen : SupportAppScreen() {
         override fun getFragment(): Fragment {
             return ProfileFragment()
         }

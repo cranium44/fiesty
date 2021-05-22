@@ -9,10 +9,13 @@
 
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/first_name_input"
+        android:id="@+id/email_input"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="24dp"
+        android:background="@android:color/transparent"
+        app:boxBackgroundColor="@android:color/transparent"
         app:layout_constraintBottom_toTopOf="@+id/password_input"
         app:layout_constraintEnd_toStartOf="@+id/signup_guideline_end"
         app:layout_constraintStart_toStartOf="@+id/signup_guideline_start">
@@ -21,28 +24,31 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:backgroundTint="@color/white"
-            android:textColor="@color/black"
+            android:hint="@string/email"
             android:inputType="textEmailAddress"
-            android:hint="@string/email" />
+            android:textColor="@color/black" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/password_input"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
-        app:passwordToggleEnabled="true"
+        android:background="@android:color/transparent"
+        app:boxBackgroundColor="@android:color/transparent"
         app:layout_constraintBottom_toTopOf="@+id/guideline3"
         app:layout_constraintEnd_toStartOf="@+id/signup_guideline_end"
-        app:layout_constraintStart_toStartOf="@+id/signup_guideline_start">
+        app:layout_constraintStart_toStartOf="@+id/signup_guideline_start"
+        app:passwordToggleEnabled="true">
 
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:backgroundTint="@color/white"
-            android:textColor="@color/black"
+            android:hint="@string/password"
             android:inputType="textPassword"
-            android:hint="@string/password" />
+            android:textColor="@color/black" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <TextView
@@ -54,7 +60,7 @@
         android:textColor="@color/black"
         android:textSize="32sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/first_name_input"
+        app:layout_constraintBottom_toTopOf="@+id/email_input"
         app:layout_constraintEnd_toStartOf="@+id/signup_guideline_end"
         app:layout_constraintStart_toStartOf="@+id/signup_guideline_start"
         app:layout_constraintTop_toTopOf="parent" />
@@ -83,11 +89,13 @@
         app:layout_constraintTop_toBottomOf="@id/login_button" />
 
     <TextView
-        android:id="@+id/textView6"
+        android:id="@+id/go_to_signup"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:text="@string/sign_up"
+        android:textSize="16sp"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="@+id/textView2"
         app:layout_constraintStart_toStartOf="@+id/textView2"
         app:layout_constraintTop_toBottomOf="@+id/textView2" />
@@ -96,8 +104,8 @@
         android:id="@+id/guideline3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintGuide_percent="0.6"
-        android:orientation="horizontal" />
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.6" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/signup_guideline_end"

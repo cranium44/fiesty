@@ -9,11 +9,17 @@ import androidx.lifecycle.ViewModelProvider
 import dagger.hilt.android.AndroidEntryPoint
 import live.adabe.fiesty.databinding.FragmentRoomBinding
 import live.adabe.fiesty.models.network.room.RoomRequest
+import live.adabe.fiesty.navigation.NavigationService
 import live.adabe.fiesty.ui.home.HomeViewModel
 import live.adabe.fiesty.util.StringConstants
+import timber.log.Timber
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class RoomFragment : Fragment() {
+
+    @Inject
+    lateinit var navigationService: NavigationService
 
     private lateinit var binding: FragmentRoomBinding
     lateinit var viewModel: HomeViewModel
@@ -36,8 +42,21 @@ class RoomFragment : Fragment() {
     private fun initViews() {
         binding.run {
             arguments?.let { args ->
-                roomNameInput.editText?.setText(args.getString(StringConstants.ROOM_NAME))
-                numberOfAppliancesInput.editText?.setText(args.getString(StringConstants.ROOM_DEVICE_COUNT))
+                when (mode) {
+                    StringConstants.EDIT_MODE -> {
+                        roomNameInput.editText?.setText(args.getString(StringConstants.ROOM_NAME))
+                        numberOfAppliancesInput.editText?.setText(args.getInt(StringConstants.ROOM_DEVICE_COUNT))
+                    }
+                    StringConstants.CREATE_MODE -> {
+                        roomNameInput.editText?.setText("")
+                        numberOfAppliancesInput.editText?.setText("")
+                    }
+                    else -> {
+                        roomNameInput.editText?.setText("")
+                        numberOfAppliancesInput.editText?.setText("")
+                    }
+                }
+
             }?.run {
                 roomNameInput.editText?.setText("")
                 numberOfAppliancesInput.editText?.setText("")
@@ -75,16 +94,21 @@ class RoomFragment : Fragment() {
 
     private fun observeViewModel() {
         viewModel.run {
-            roomResponse.observe(viewLifecycleOwner, { room ->
+            updateRoomResponse.observe(viewLifecycleOwner, { room ->
                 room?.let {
                     with(Bundle()) {
                         putInt(StringConstants.ROOM_ID, it.rmId)
                         putInt(StringConstants.BUILDING_ID, it.buildingId)
                         putString(StringConstants.ROOM_NAME, it.name)
                         putInt(StringConstants.ROOM_DEVICE_COUNT, it.numberOfDevices)
-                        setBundle(this@with)
-                        setScreen(StringConstants.ROOM_DETAILS_SCREEN)
+                        navigationService.openRoomDetailsScreen(this@with)
                     }
+                }
+            })
+            createRoomResponse.observe(viewLifecycleOwner, {
+                it?.let {
+                    Timber.d(it.name)
+                    navigationService.openBuildingDetailsScreen(null)
                 }
             })
         }

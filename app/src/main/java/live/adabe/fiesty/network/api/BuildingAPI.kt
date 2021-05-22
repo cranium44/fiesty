@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import live.adabe.fiesty.models.network.building.BuildingRequest
 import live.adabe.fiesty.models.network.building.BuildingResponse
 import live.adabe.fiesty.network.NetworkConstants
+import retrofit2.Response
 import retrofit2.http.*
 
 interface BuildingAPI {
@@ -30,6 +31,6 @@ interface BuildingAPI {
     ): BuildingResponse
 
     @DELETE(NetworkConstants.BUILDING_DELETE_ENDPOINT)
-    suspend fun deleteBuilding(@Path("id") id: Int): String
+    suspend fun deleteBuilding(@Path("id") id: Int): Response<Any>
 
 }

@@ -9,12 +9,17 @@ import androidx.lifecycle.ViewModelProvider
 import dagger.hilt.android.AndroidEntryPoint
 import live.adabe.fiesty.databinding.FragmentBuildingBinding
 import live.adabe.fiesty.models.Building
+import live.adabe.fiesty.navigation.NavigationService
 import live.adabe.fiesty.ui.home.HomeViewModel
 import live.adabe.fiesty.util.StringConstants
 import timber.log.Timber
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class BuildingCreateFragment : Fragment() {
+
+    @Inject
+    lateinit var navigationService: NavigationService
 
     lateinit var binding: FragmentBuildingBinding
     lateinit var viewModel: HomeViewModel
@@ -36,7 +41,7 @@ class BuildingCreateFragment : Fragment() {
                 }
                 buildingResponse.observe(viewLifecycleOwner,{response ->
                     if (response != null){
-                        setScreen(StringConstants.HOME_SCREEN)
+                        navigationService.openHomeScreen()
                     }
                 })
             }

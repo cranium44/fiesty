@@ -9,6 +9,7 @@ object StringConstants {
     const val ROOM_NAME = "room_name"
     const val ROOM_ID = "room_id"
     const val ROOM_DEVICE_COUNT = "device_count"
+    const val DEVICE_ID = "device_id"
 
     //screens
     const val HOME_SCREEN = "home"

@@ -11,15 +11,12 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import dagger.hilt.android.AndroidEntryPoint
 import live.adabe.fiesty.databinding.FragmentDeviceCreateBinding
-import live.adabe.fiesty.models.Device
 import live.adabe.fiesty.models.network.device.DeviceRequest
-import live.adabe.fiesty.ui.adapters.DeviceAdapter
-import live.adabe.fiesty.util.Converter
+import live.adabe.fiesty.ui.home.HomeViewModel
 import live.adabe.fiesty.util.StringConstants
 import live.adabe.fiesty.util.updateTime
-import java.time.Duration
-import java.time.LocalTime
-import java.time.temporal.TemporalUnit
+import java.time.*
+import java.util.*
 
 @AndroidEntryPoint
 class DeviceCreateFragment : Fragment() {
@@ -27,11 +24,11 @@ class DeviceCreateFragment : Fragment() {
     private lateinit var binding: FragmentDeviceCreateBinding
 
     lateinit var deviceViewModel: DeviceViewModel
-    private lateinit var deviceAdapter: DeviceAdapter
+    lateinit var homeViewModel: HomeViewModel
 
-    private lateinit var startTime: LocalTime
-    private lateinit var stopTime: LocalTime
-    private var roomId:Int? = null
+    private lateinit var startTime: LocalDateTime
+    private lateinit var stopTime: LocalDateTime
+    private var roomId: Int? = null
     private var mode = StringConstants.CREATE_MODE
 
     override fun onCreateView(
@@ -40,10 +37,11 @@ class DeviceCreateFragment : Fragment() {
     ): View {
         binding = FragmentDeviceCreateBinding.inflate(inflater, container, false)
         deviceViewModel = ViewModelProvider(requireActivity())[DeviceViewModel::class.java]
-        arguments?.let{
+        homeViewModel = ViewModelProvider(requireActivity())[HomeViewModel::class.java]
+        arguments?.let {
             roomId = it.getInt(StringConstants.ROOM_ID)
         }
-        observeViewModel()
+        observeData()
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             initViews()
         }
@@ -56,7 +54,11 @@ class DeviceCreateFragment : Fragment() {
             startTimeLayout.setOnClickListener {
                 val timePickerDialog = TimePickerDialog(requireActivity(), { _, hourOfDay, minute ->
                     startTimeTv.text = updateTime(hourOfDay, minute)
-                    startTime = Converter.getTime(hourOfDay, minute)
+                    with(LocalDateTime.now()) {
+                        withHour(hourOfDay)
+                        withMinute(minute)
+                        startTime = this@with
+                    }
                 }, 8, 0, false)
                 timePickerDialog.show()
             }
@@ -64,19 +66,43 @@ class DeviceCreateFragment : Fragment() {
             stopTimeLayout.setOnClickListener {
                 val timePickerDialog = TimePickerDialog(requireActivity(), { _, hourOfDay, minute ->
                     stopTimeTv.text = updateTime(hourOfDay, minute)
-                    stopTime = Converter.getTime(hourOfDay, minute)
+                    with(LocalDateTime.now()) {
+                        withHour(hourOfDay)
+                        withMinute(minute)
+                        stopTime = this@with
+                    }
                 }, 8, 0, false)
                 timePickerDialog.show()
             }
 
             saveDeviceBtn.setOnClickListener {
-                roomId?.let{id->
-                    when(mode){
-                        StringConstants.CREATE_MODE->{
-
+                roomId?.let { id ->
+                    when (mode) {
+                        StringConstants.CREATE_MODE -> {
+                            val deviceRequest = DeviceRequest(
+                                name = binding.deviceNameInput.editText?.text.toString(),
+                                rating = binding.deviceRatingInput.editText?.text.toString()
+                                    .toDouble(),
+                                startTime = getInstantFromLocalDateTime(startTime).toString(),
+                                stopTime = getInstantFromLocalDateTime(stopTime).toString(),
+                                duration = Duration.between(startTime, stopTime)
+                            )
+                            deviceViewModel.createDevice(deviceRequest = deviceRequest, roomId = id)
                         }
-                        StringConstants.EDIT_MODE-> {
-
+                        StringConstants.EDIT_MODE -> {
+                            val deviceRequest = DeviceRequest(
+                                name = binding.deviceNameInput.editText?.text.toString(),
+                                rating = binding.deviceRatingInput.editText?.text.toString()
+                                    .toDouble(),
+                                startTime = getInstantFromLocalDateTime(startTime).toString(),
+                                stopTime = getInstantFromLocalDateTime(stopTime).toString(),
+                                duration = Duration.between(startTime, stopTime)
+                            )
+                            deviceViewModel.updateDevice(
+                                deviceRequest = deviceRequest,
+                                roomId = id,
+                                deviceId = requireArguments().getInt(StringConstants.DEVICE_ID)
+                            )
                         }
                     }
                 }
@@ -85,29 +111,23 @@ class DeviceCreateFragment : Fragment() {
         }
     }
 
-    private fun getInput(){
-
-    }
-
-    private fun observeViewModel(){
+    private fun observeData() {
         deviceViewModel.run {
-            deviceListLiveData.observe(viewLifecycleOwner, { devices ->
-                if(devices.isNotEmpty()){
-                    deviceAdapter = DeviceAdapter(devices,listener)
+            devicesLiveData.observe(viewLifecycleOwner, {
+                it?.let {
+                    homeViewModel.run {
+                        setBundle(null)
+                        setScreen(StringConstants.ROOM_DETAILS_SCREEN)
+                    }
                 }
             })
         }
     }
 
-    private val listener = object: DeviceAdapter.DeviceItemClickListener{
-        override fun onItemClick(device: Device) {
-
-        }
-
-        override fun onItemDelete(device: Device) {
-
-        }
-
+    @RequiresApi(Build.VERSION_CODES.O)
+    private fun getInstantFromLocalDateTime(localDateTime: LocalDateTime): Instant {
+        return localDateTime.toInstant(ZoneOffset.UTC)
     }
+
 
 }

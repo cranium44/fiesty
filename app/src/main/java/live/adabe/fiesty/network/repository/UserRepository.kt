@@ -1,10 +1,9 @@
 package live.adabe.fiesty.network.repository
 
-import android.util.Log
-import androidx.lifecycle.MutableLiveData
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import live.adabe.fiesty.db.Preferences
+import live.adabe.fiesty.models.network.user.LoginRequest
 import live.adabe.fiesty.models.network.user.UserRequest
 import live.adabe.fiesty.models.network.user.UserResponse
 import live.adabe.fiesty.network.api.UserAPI
@@ -16,16 +15,24 @@ class UserRepository @Inject constructor(
     private val preferences: Preferences
 ) {
 
-    companion object {
-        const val TAG = "USER_REPOSITORY"
-    }
-
-    suspend fun createUser(userRequest: UserRequest) : UserResponse?{
+    suspend fun createUser(userRequest: UserRequest): UserResponse? {
         return withContext(Dispatchers.IO) {
-           return@withContext try {
+            return@withContext try {
                 val response = userAPI.createUser(userRequest)
                 saveUserInfo(response)
-                Timber.d(response.id.toString())
+                response
+            } catch (t: Throwable) {
+                Timber.e(t.message.toString())
+                null
+            }
+        }
+    }
+
+    suspend fun loginUser(loginRequest: LoginRequest): UserResponse? {
+        return withContext(Dispatchers.IO) {
+            return@withContext try {
+                val response = userAPI.loginUser(loginRequest)
+                saveUserInfo(response)
                 response
             } catch (t: Throwable) {
                 Timber.e(t.message.toString())
@@ -39,42 +46,27 @@ class UserRepository @Inject constructor(
             setEmail(response_.email)
             setFirstName(response_.firstName)
             setLastName(response_.lastName)
+            setPhoneNumber(response_.phoneNumber)
             setId(response_.id)
             setIsLoggedIn(true)
         }
     }
 
-    suspend fun getUser() {
-        withContext(Dispatchers.IO) {
-            try {
+    fun logout() {
+        preferences.clearAll()
+    }
+
+    suspend fun updateUser(userRequest: UserRequest): UserResponse? {
+        return withContext(Dispatchers.IO) {
+            return@withContext try {
                 val id = preferences.getId()
-                if (id != 0) {
-                    userAPI.getUser(id)
-                } else {
-                }
+                val response = userAPI.updateUser(id, userRequest)
+                saveUserInfo(response)
+                response
             } catch (t: Throwable) {
                 Timber.e(t.message.toString())
+                null
             }
         }
     }
-
-    suspend fun updateUser(userRequest: UserRequest) {
-        withContext(Dispatchers.IO) {
-            try {
-                val id = preferences.getId()
-                if (id != 0) {
-                    val response = userAPI.updateUser(id, userRequest)
-                    saveUserInfo(response)
-                } else {
-                }
-            } catch (t: Throwable) {
-                Timber.e(t.message.toString())
-            }
-        }
-    }
-
-    fun getUserID(): Int = preferences.getId()
-
-    fun getUserFirstName(): String? = preferences.getFirstName()
-
 }

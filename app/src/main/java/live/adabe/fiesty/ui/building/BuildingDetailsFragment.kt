@@ -24,7 +24,7 @@ class BuildingDetailsFragment : Fragment() {
 
     lateinit var binding: FragmentBuildingDetailsBinding
     lateinit var viewModel: HomeViewModel
-    lateinit var roomAdapter: RoomAdapter
+    private lateinit var roomAdapter: RoomAdapter
     var id: Int? = null
 
     override fun onCreateView(
@@ -86,8 +86,7 @@ class BuildingDetailsFragment : Fragment() {
                                 args.getInt(StringConstants.BUILDING_ID)
                             )
                             putString(StringConstants.MODE, StringConstants.CREATE_MODE)
-                            setBundle(this@with)
-                            setScreen(StringConstants.ROOM_CREATE_SCREEN)
+                            navigationService.openRoomCreateScreen(this@with)
                         }
                     }
                 }
@@ -115,10 +114,7 @@ class BuildingDetailsFragment : Fragment() {
                             StringConstants.BUILDING_RATE,
                             args.getLong(StringConstants.BUILDING_RATE)
                         )
-                        viewModel.run {
-                            setBundle(this@with)
-                            setScreen(StringConstants.BUILDING_CREATE_SCREEN)
-                        }
+                        navigationService.openBuildingCreateScreen(this@with)
                     }
                 }
             }
@@ -163,11 +159,7 @@ class BuildingDetailsFragment : Fragment() {
                 }
                 putString(StringConstants.ROOM_NAME, room.name)
                 putInt(StringConstants.ROOM_DEVICE_COUNT, room.numberOfDevices)
-                viewModel.run {
-                    setBundle(this@with)
-                    setScreen(StringConstants.ROOM_DETAILS_SCREEN)
-                    Timber.d("item ${room.name} clicked")
-                }
+                navigationService.openRoomDetailsScreen(this@with)
             }
         }
 

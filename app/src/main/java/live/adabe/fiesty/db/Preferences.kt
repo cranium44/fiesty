@@ -5,7 +5,7 @@ import android.content.Context
 import android.content.SharedPreferences
 import javax.inject.Inject
 
-class Preferences @Inject constructor(private val application: Application) {
+class Preferences @Inject constructor(application: Application) {
     private var sharedPreferences: SharedPreferences =
         application.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE)
 
@@ -15,6 +15,7 @@ class Preferences @Inject constructor(private val application: Application) {
         private const val LAST_NAME = "last_name"
         private const val EMAIL = "email"
         private const val ID = "id"
+        private const val PHONE = "phone"
         private const val LOGGED_IN_KEY = "logged_in"
     }
 
@@ -28,6 +29,13 @@ class Preferences @Inject constructor(private val application: Application) {
     fun setFirstName(firstName: String){
         with(sharedPreferences.edit()){
             putString(FIRST_NAME, firstName)
+            apply()
+        }
+    }
+
+    fun setPhoneNumber(phone: String){
+        with(sharedPreferences.edit()){
+            putString(PHONE, phone)
             apply()
         }
     }
@@ -58,6 +66,8 @@ class Preferences @Inject constructor(private val application: Application) {
     fun getId() = sharedPreferences.getInt(ID, 0)
 
     fun getFirstName() = sharedPreferences.getString(FIRST_NAME, "")
+
+    fun getPhoneNumber() = sharedPreferences.getString(PHONE, "")
 
     fun getLastName() = sharedPreferences.getString(LAST_NAME, "")
 

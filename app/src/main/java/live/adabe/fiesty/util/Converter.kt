@@ -57,9 +57,4 @@ object Converter {
             name = deviceResponse.name
         )
     }
-
-    @RequiresApi(Build.VERSION_CODES.O)
-    fun getTime(hours: Int, minutes: Int): LocalTime {
-        return LocalTime.of(hours, minutes)
-    }
 }
