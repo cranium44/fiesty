@@ -7,7 +7,7 @@ import java.time.LocalTime
 data class DeviceRequest(
     val name: String,
     val rating: Double,
-    val duration: Duration,
+    @Transient val duration: Duration,
     val startTime: String,
     val stopTime: String
 )
