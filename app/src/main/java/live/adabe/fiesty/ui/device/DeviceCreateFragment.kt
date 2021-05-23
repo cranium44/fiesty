@@ -12,14 +12,19 @@ import androidx.lifecycle.ViewModelProvider
 import dagger.hilt.android.AndroidEntryPoint
 import live.adabe.fiesty.databinding.FragmentDeviceCreateBinding
 import live.adabe.fiesty.models.network.device.DeviceRequest
+import live.adabe.fiesty.navigation.NavigationService
 import live.adabe.fiesty.ui.home.HomeViewModel
 import live.adabe.fiesty.util.StringConstants
 import live.adabe.fiesty.util.updateTime
 import java.time.*
 import java.util.*
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class DeviceCreateFragment : Fragment() {
+
+    @Inject
+    lateinit var navigationService: NavigationService
 
     private lateinit var binding: FragmentDeviceCreateBinding
 
@@ -115,9 +120,9 @@ class DeviceCreateFragment : Fragment() {
         deviceViewModel.run {
             devicesLiveData.observe(viewLifecycleOwner, {
                 it?.let {
-                    homeViewModel.run {
-                        setBundle(null)
-                        setScreen(StringConstants.ROOM_DETAILS_SCREEN)
+                    with(Bundle()){
+                        roomId?.let { it1 -> putInt(StringConstants.ROOM_ID, it1) }
+                        navigationService.openRoomDetailsScreen(this@with)
                     }
                 }
             })

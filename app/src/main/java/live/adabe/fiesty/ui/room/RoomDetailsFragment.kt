@@ -1,9 +1,11 @@
 package live.adabe.fiesty.ui.room
 
+import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -36,16 +38,20 @@ class RoomDetailsFragment : Fragment() {
         binding = FragmentRoomDetailsBinding.inflate(inflater, container, false)
         viewModel = ViewModelProvider(requireActivity())[HomeViewModel::class.java]
         deviceViewModel = ViewModelProvider(requireActivity())[DeviceViewModel::class.java]
-        initViews()
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            initViews()
+        }
         observeData()
         return binding.root
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     private fun initViews() {
         binding.run {
             arguments?.let { args ->
                 roomNameTv.text = args.getString(StringConstants.ROOM_NAME) ?: ""
                 roomBuildingNameTv.text = args.getString(StringConstants.BUILDING_NAME) ?: ""
+                deviceViewModel.getDevices(args.getInt(StringConstants.ROOM_ID))
             }
             deviceRv.layoutManager = LinearLayoutManager(requireContext())
             addDeviceBtn.setOnClickListener {

@@ -40,4 +40,6 @@
     <string name="buildings">Buildings:</string>
     <string name="welcome_text">Hello, %1$s %2$s</string>
     <string name="phone_number">Phone Number</string>
+    <string name="device_details">Device Details</string>
+    <string name="select_time">Select time</string>
 </resources>

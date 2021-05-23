@@ -109,6 +109,7 @@ class RoomFragment : Fragment() {
                 it?.let {
                     Timber.d(it.name)
                     navigationService.openBuildingDetailsScreen(null)
+                    createRoomResponse.postValue(null)
                 }
             })
         }
