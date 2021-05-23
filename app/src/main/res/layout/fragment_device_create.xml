@@ -85,7 +85,7 @@
             android:layout_height="wrap_content"
             android:textColor="@color/black"
             android:textSize="18sp"
-            tools:text="13:56" />
+            android:text="@string/select_time" />
 
     </LinearLayout>
 
@@ -115,7 +115,7 @@
             android:layout_height="wrap_content"
             android:textColor="@color/black"
             android:textSize="18sp"
-            tools:text="13:56" />
+            android:text="@string/select_time" />
     </LinearLayout>
 
     <Button
