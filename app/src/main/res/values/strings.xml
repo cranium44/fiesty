@@ -45,4 +45,6 @@
     <string name="energy_use">Energy Use</string>
     <string name="enable_alarm">Enable alarm</string>
     <string name="enable_notification">Enable notification</string>
+    <string name="total_energy_use">Total Energy Use:</string>
+    <string name="there_is_no_device_data_at_the_moment">There is no device data at the moment</string>
 </resources>

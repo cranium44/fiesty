@@ -117,6 +117,7 @@ class DeviceCreateFragment : Fragment() {
                     with(Bundle()) {
                         roomId?.let { it1 -> putInt(StringConstants.ROOM_ID, it1) }
                         navigationService.openRoomDetailsScreen(this@with)
+                        devicesLiveData.postValue(null)
                     }
                 }
             })

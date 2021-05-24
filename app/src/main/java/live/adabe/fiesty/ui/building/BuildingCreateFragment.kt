@@ -27,23 +27,24 @@ class BuildingCreateFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View{
+    ): View {
         binding = FragmentBuildingBinding.inflate(inflater, container, false)
         viewModel = ViewModelProvider(requireActivity())[HomeViewModel::class.java]
         binding.saveButton.setOnClickListener {
             viewModel.run {
-                arguments?.let {args->
+                arguments?.let { args ->
                     Timber.d(args.getString(StringConstants.MODE))
-                    if(args.getString(StringConstants.MODE) == StringConstants.EDIT_MODE){
+                    if (args.getString(StringConstants.MODE) == StringConstants.EDIT_MODE) {
                         updateBuilding(args.getInt(StringConstants.BUILDING_ID), getInput())
-                    }else{
+                    } else {
                         Timber.d(args.getString(StringConstants.MODE))
                         saveBuilding(getInput())
                     }
                 }
-                buildingResponse.observe(viewLifecycleOwner,{response ->
-                    if (response != null){
+                buildingResponse.observe(viewLifecycleOwner, { response ->
+                    if (response != null) {
                         navigationService.openHomeScreen()
+                        buildingResponse.postValue(null)
                     }
                 })
             }
@@ -57,8 +58,8 @@ class BuildingCreateFragment : Fragment() {
         initViews()
     }
 
-    private fun getInput(): Building{
-        binding.run{
+    private fun getInput(): Building {
+        binding.run {
             return Building(
                 buildId = 0,
                 name = buildingName.editText?.text.toString(),
@@ -69,16 +70,18 @@ class BuildingCreateFragment : Fragment() {
     }
 
     private fun initViews() {
-        arguments?.let{args->
+        arguments?.let { args ->
             Timber.d(args.getString(StringConstants.MODE))
-            if(args.getString(StringConstants.MODE) == StringConstants.EDIT_MODE){
+            if (args.getString(StringConstants.MODE) == StringConstants.EDIT_MODE) {
 
                 binding.run {
                     buildingName.editText?.setText(args.getString(StringConstants.BUILDING_NAME))
                     buildingAddress.editText?.setText(args.getString(StringConstants.BUILDING_ADDRESS))
-                    buildingEnergyRate.editText?.setText(args.getInt(StringConstants.BUILDING_RATE).toString())
+                    buildingEnergyRate.editText?.setText(
+                        args.getInt(StringConstants.BUILDING_RATE).toString()
+                    )
                 }
-            }else{
+            } else {
                 binding.run {
                     buildingName.editText?.setText("")
                     buildingAddress.editText?.setText("")

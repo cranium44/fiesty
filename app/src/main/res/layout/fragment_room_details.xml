@@ -26,6 +26,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
+        android:layout_marginTop="50dp"
         android:text="@string/name"
         android:textColor="@color/black"
         android:textSize="18sp"
@@ -48,36 +49,34 @@
         android:id="@+id/textView17"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="64dp"
-        android:text="@string/building_name"
+        android:text="@string/devices"
         android:textColor="@color/black"
         android:textSize="18sp"
-        app:layout_constraintStart_toStartOf="@+id/textView16"
-        app:layout_constraintTop_toBottomOf="@+id/room_name_tv" />
+        app:layout_constraintBottom_toTopOf="@+id/guideline21"
+        app:layout_constraintStart_toStartOf="@+id/textView16" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/device_rv"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginStart="32dp"
-        android:layout_marginTop="32dp"
         android:layout_marginEnd="32dp"
         app:layout_constraintBottom_toTopOf="@+id/guideline14"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/room_building_name_tv" />
+        app:layout_constraintTop_toBottomOf="@+id/textView17" />
 
     <TextView
-        android:id="@+id/room_building_name_tv"
+        android:id="@+id/no_device_data"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
         android:textColor="@color/black"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="@+id/textView17"
-        app:layout_constraintTop_toBottomOf="@+id/textView17"
-        tools:text="White Chairs" />
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="@+id/device_rv"
+        app:layout_constraintEnd_toEndOf="@+id/device_rv"
+        app:layout_constraintStart_toStartOf="@+id/device_rv"
+        app:layout_constraintTop_toTopOf="@+id/device_rv"
+        android:text="@string/there_is_no_device_data_at_the_moment" />
 
     <Button
         android:id="@+id/add_device_btn"
@@ -108,6 +107,13 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         app:layout_constraintGuide_percent="0.75923395" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline21"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.35" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
