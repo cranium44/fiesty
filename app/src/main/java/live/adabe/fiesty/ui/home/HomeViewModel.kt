@@ -62,14 +62,6 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-    fun setBundle(screenBundle: Bundle?) {
-        bundle.postValue(screenBundle)
-    }
-
-    fun setScreen(screenName: String) {
-        screen.postValue(screenName)
-    }
-
     fun getBuildingRooms(buildingId: Int) {
         viewModelScope.launch {
             _rooms.postValue(roomRepository.getRooms(buildingId))

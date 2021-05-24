@@ -52,7 +52,11 @@ class HomeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.addBuilding.setOnClickListener {
-            navigationService.openBuildingCreateScreen(null)
+            with(Bundle()){
+                putString(StringConstants.MODE, StringConstants.CREATE_MODE)
+                navigationService.openBuildingCreateScreen(this@with)
+            }
+
         }
         viewModel.run {
             buildings.observe(viewLifecycleOwner, { buildings_ ->
