@@ -9,6 +9,7 @@ import timber.log.Timber
 import javax.inject.Inject
 
 class DeviceRepository @Inject constructor(private val deviceAPI: DeviceAPI) {
+
     suspend fun createDevice(roomId: Int, deviceRequest: DeviceRequest): DeviceResponse? {
         return withContext(Dispatchers.IO) {
             return@withContext try {

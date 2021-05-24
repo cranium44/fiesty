@@ -54,10 +54,12 @@ class DeviceViewModel @Inject constructor(private val deviceRepository: DeviceRe
 
 
     @RequiresApi(Build.VERSION_CODES.O)
-    fun updateDevice(roomId: Int,
-                     deviceId: Int,
-                     deviceRequest: DeviceRequest){
-        viewModelScope.launch{
+    fun updateDevice(
+        roomId: Int,
+        deviceId: Int,
+        deviceRequest: DeviceRequest
+    ) {
+        viewModelScope.launch {
             deviceUpdateResponseLiveData.postValue(
                 deviceRepository.updateDevice(roomId, deviceId, deviceRequest)?.let {
                     Converter.convertDeviceResponseToDevice(it)
@@ -65,9 +67,9 @@ class DeviceViewModel @Inject constructor(private val deviceRepository: DeviceRe
             )
         }
     }
-    
-    fun deleteDevice(deviceId: Int){
-        viewModelScope.launch{
+
+    fun deleteDevice(deviceId: Int) {
+        viewModelScope.launch {
             isDeviceDeleteSuccessful.postValue(deviceRepository.deleteDevice(deviceId))
         }
     }

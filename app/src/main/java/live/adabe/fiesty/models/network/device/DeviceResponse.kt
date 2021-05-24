@@ -4,12 +4,11 @@ import java.time.Duration
 import java.time.Instant
 
 data class DeviceResponse(
-    val id: Int,
-    val roomId: Int,
-    val name: String,
-    val rating: Double,
-    val duration: Duration,
-    val startTime: Instant,
-    val stopTime: Instant,
-    val energyUse: Double,
+    var applianceName: String,
+    var deviceRating: Double,
+    var duration: Any?,
+    var energyUse: Double,
+    var id: Int,
+    var startTime: String,
+    var stopTime: String
 )

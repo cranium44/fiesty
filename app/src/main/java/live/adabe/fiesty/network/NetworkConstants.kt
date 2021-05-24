@@ -27,7 +27,7 @@ object NetworkConstants {
 
     //device
     const val DEVICE_CREATE_ENDPOINT = "appliance/{roomId}"
-    const val DEVICE_GETALL_ENDPOINT = "appliance/{roomId}"
+    const val DEVICE_GETALL_ENDPOINT = "appliances/{roomId}"
     const val DEVICE_GET_ENDPOINT = "appliance/{id}"
     const val DEVICE_UPDATE_ENDPOINT = "appliance/{roomId}/{id}"
     const val DEVICE_DELETE_ENDPOINT = "appliance/{id}"
