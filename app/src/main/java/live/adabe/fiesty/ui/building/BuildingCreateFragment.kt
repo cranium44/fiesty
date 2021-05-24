@@ -33,9 +33,11 @@ class BuildingCreateFragment : Fragment() {
         binding.saveButton.setOnClickListener {
             viewModel.run {
                 arguments?.let {args->
+                    Timber.d(args.getString(StringConstants.MODE))
                     if(args.getString(StringConstants.MODE) == StringConstants.EDIT_MODE){
                         updateBuilding(args.getInt(StringConstants.BUILDING_ID), getInput())
                     }else{
+                        Timber.d(args.getString(StringConstants.MODE))
                         saveBuilding(getInput())
                     }
                 }
