@@ -2,8 +2,6 @@ package live.adabe.fiesty.models
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import java.time.Duration
-import java.time.Instant
 
 
 @Entity
@@ -16,4 +14,5 @@ data class Device(
     val startTime: String,
     val stopTime: String,
     val rating: Double,
+    val energyUse: Double,
 )

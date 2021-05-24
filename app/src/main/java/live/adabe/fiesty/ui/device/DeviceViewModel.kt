@@ -11,6 +11,7 @@ import live.adabe.fiesty.models.Device
 import live.adabe.fiesty.models.network.device.DeviceRequest
 import live.adabe.fiesty.network.repository.DeviceRepository
 import live.adabe.fiesty.util.Converter
+import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
@@ -37,9 +38,13 @@ class DeviceViewModel @Inject constructor(private val deviceRepository: DeviceRe
     @RequiresApi(Build.VERSION_CODES.O)
     fun getDevices(roomId: Int) {
         viewModelScope.launch {
+
             deviceListLiveData.postValue(
                 deviceRepository.getDevices(roomId)
                     .map { response -> Converter.convertDeviceResponseToDevice(response) })
+            Timber.d(
+                deviceListLiveData.value?.get(0)?.name
+            )
         }
     }
 
@@ -54,10 +59,12 @@ class DeviceViewModel @Inject constructor(private val deviceRepository: DeviceRe
 
 
     @RequiresApi(Build.VERSION_CODES.O)
-    fun updateDevice(roomId: Int,
-                     deviceId: Int,
-                     deviceRequest: DeviceRequest){
-        viewModelScope.launch{
+    fun updateDevice(
+        roomId: Int,
+        deviceId: Int,
+        deviceRequest: DeviceRequest
+    ) {
+        viewModelScope.launch {
             deviceUpdateResponseLiveData.postValue(
                 deviceRepository.updateDevice(roomId, deviceId, deviceRequest)?.let {
                     Converter.convertDeviceResponseToDevice(it)
@@ -65,9 +72,9 @@ class DeviceViewModel @Inject constructor(private val deviceRepository: DeviceRe
             )
         }
     }
-    
-    fun deleteDevice(deviceId: Int){
-        viewModelScope.launch{
+
+    fun deleteDevice(deviceId: Int) {
+        viewModelScope.launch {
             isDeviceDeleteSuccessful.postValue(deviceRepository.deleteDevice(deviceId))
         }
     }

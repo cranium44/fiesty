@@ -42,4 +42,7 @@
     <string name="phone_number">Phone Number</string>
     <string name="device_details">Device Details</string>
     <string name="select_time">Select time</string>
+    <string name="energy_use">Energy Use</string>
+    <string name="enable_alarm">Enable alarm</string>
+    <string name="enable_notification">Enable notification</string>
 </resources>

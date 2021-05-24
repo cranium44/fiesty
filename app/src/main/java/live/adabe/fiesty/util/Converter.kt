@@ -9,7 +9,6 @@ import live.adabe.fiesty.models.network.building.BuildingRequest
 import live.adabe.fiesty.models.network.building.BuildingResponse
 import live.adabe.fiesty.models.network.device.DeviceResponse
 import live.adabe.fiesty.models.network.room.RoomResponse
-import java.time.LocalTime
 
 object Converter {
 
@@ -49,12 +48,13 @@ object Converter {
     fun convertDeviceResponseToDevice(deviceResponse: DeviceResponse): Device {
         return Device(
             deviceId = deviceResponse.id,
-            roomId = deviceResponse.roomId,
-            startTime = deviceResponse.startTime.toString(),
-            stopTime = deviceResponse.stopTime.toString(),
-            duration = deviceResponse.duration.toMillis(),
-            rating = deviceResponse.rating,
-            name = deviceResponse.name
+            roomId = 0,
+            startTime = deviceResponse.startTime,
+            stopTime = deviceResponse.stopTime,
+            duration = 0,
+            rating = deviceResponse.deviceRating,
+            name = deviceResponse.applianceName,
+            energyUse = deviceResponse.energyUse
         )
     }
 }

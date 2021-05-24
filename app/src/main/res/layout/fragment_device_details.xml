@@ -12,7 +12,9 @@
         android:id="@+id/textView19"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
         android:text="@string/device_details"
+        android:textSize="25sp"
         app:layout_constraintEnd_toStartOf="@+id/guideline19"
         app:layout_constraintStart_toStartOf="@+id/guideline18"
         app:layout_constraintTop_toTopOf="parent" />
@@ -23,15 +25,21 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="60dp"
         android:text="@string/name"
+        android:textColor="@color/black"
+        android:textSize="18sp"
+        android:textStyle="bold"
         app:layout_constraintStart_toStartOf="@+id/guideline18"
         app:layout_constraintTop_toBottomOf="@+id/textView19" />
 
     <TextView
         android:id="@+id/device_name_display"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
+        android:textColor="@color/black"
+        android:textSize="18sp"
         app:layout_constraintBaseline_toBaselineOf="@+id/textView20"
+        app:layout_constraintEnd_toStartOf="@+id/guideline19"
         app:layout_constraintStart_toEndOf="@+id/textView20"
         tools:text="Iron" />
 
@@ -41,15 +49,21 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="50dp"
         android:text="@string/device_rating"
+        android:textColor="@color/black"
+        android:textSize="18sp"
+        android:textStyle="bold"
         app:layout_constraintStart_toStartOf="@+id/guideline18"
         app:layout_constraintTop_toBottomOf="@+id/textView20" />
 
     <TextView
         android:id="@+id/device_rating_display"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
+        android:textColor="@color/black"
+        android:textSize="18sp"
         app:layout_constraintBaseline_toBaselineOf="@+id/textView22"
+        app:layout_constraintEnd_toStartOf="@+id/guideline19"
         app:layout_constraintStart_toEndOf="@+id/textView22"
         tools:text="1200" />
 
@@ -59,17 +73,23 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="50dp"
         android:text="@string/start_time"
+        android:textColor="@color/black"
+        android:textSize="18sp"
+        android:textStyle="bold"
         app:layout_constraintStart_toStartOf="@+id/guideline18"
         app:layout_constraintTop_toBottomOf="@+id/textView22" />
 
     <TextView
         android:id="@+id/start_time_display"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        tools:text="17:35"
+        android:textColor="@color/black"
+        android:textSize="18sp"
         app:layout_constraintBaseline_toBaselineOf="@+id/textView24"
-        app:layout_constraintStart_toEndOf="@+id/textView24" />
+        app:layout_constraintEnd_toStartOf="@+id/guideline19"
+        app:layout_constraintStart_toEndOf="@+id/textView24"
+        tools:text="17:35" />
 
     <TextView
         android:id="@+id/textView26"
@@ -77,6 +97,9 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="50dp"
         android:text="@string/end_time"
+        android:textColor="@color/black"
+        android:textSize="18sp"
+        android:textStyle="bold"
         app:layout_constraintStart_toStartOf="@+id/guideline18"
         app:layout_constraintTop_toBottomOf="@+id/textView24" />
 
@@ -85,9 +108,53 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        tools:text="22:00"
+        android:textColor="@color/black"
+        android:textSize="18sp"
         app:layout_constraintBaseline_toBaselineOf="@+id/textView26"
-        app:layout_constraintStart_toEndOf="@+id/textView26" />
+        app:layout_constraintStart_toEndOf="@+id/textView26"
+        tools:text="22:00" />
+
+    <TextView
+        android:id="@+id/energy_use_display"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:textColor="@color/black"
+        android:textSize="18sp"
+        app:layout_constraintBaseline_toBaselineOf="@+id/textView28"
+        app:layout_constraintEnd_toStartOf="@+id/guideline19"
+        app:layout_constraintStart_toEndOf="@+id/textView28"
+        tools:text="19.0" />
+
+    <TextView
+        android:id="@+id/textView28"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:text="@string/energy_use"
+        android:textColor="@color/black"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="@+id/guideline18"
+        app:layout_constraintTop_toBottomOf="@+id/textView26" />
+
+    <CheckBox
+        android:id="@+id/alarm_checkBox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:text="@string/enable_alarm"
+        app:layout_constraintStart_toStartOf="@+id/guideline18"
+        app:layout_constraintTop_toBottomOf="@+id/textView28" />
+
+    <CheckBox
+        android:id="@+id/notification_checkbox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/enable_notification"
+        app:layout_constraintStart_toStartOf="@+id/guideline18"
+        app:layout_constraintTop_toBottomOf="@+id/alarm_checkBox"
+        tools:checked="true" />
 
     <Button
         android:id="@+id/edit_device_btn"
