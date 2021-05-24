@@ -59,11 +59,8 @@ class DeviceCreateFragment : Fragment() {
             startTimeLayout.setOnClickListener {
                 val timePickerDialog = TimePickerDialog(requireActivity(), { _, hourOfDay, minute ->
                     startTimeTv.text = updateTime(hourOfDay, minute)
-                    with(LocalDateTime.now()) {
-                        withHour(hourOfDay)
-                        withMinute(minute)
-                        startTime = this@with
-                    }
+                    startTime =
+                        LocalDateTime.now().withHour(hourOfDay).withMinute(minute).withSecond(0)
                 }, 8, 0, false)
                 timePickerDialog.show()
             }
@@ -71,11 +68,8 @@ class DeviceCreateFragment : Fragment() {
             stopTimeLayout.setOnClickListener {
                 val timePickerDialog = TimePickerDialog(requireActivity(), { _, hourOfDay, minute ->
                     stopTimeTv.text = updateTime(hourOfDay, minute)
-                    with(LocalDateTime.now()) {
-                        withHour(hourOfDay)
-                        withMinute(minute)
-                        stopTime = this@with
-                    }
+                    stopTime =
+                        LocalDateTime.now().withHour(hourOfDay).withMinute(minute).withSecond(0)
                 }, 8, 0, false)
                 timePickerDialog.show()
             }
@@ -120,7 +114,7 @@ class DeviceCreateFragment : Fragment() {
         deviceViewModel.run {
             devicesLiveData.observe(viewLifecycleOwner, {
                 it?.let {
-                    with(Bundle()){
+                    with(Bundle()) {
                         roomId?.let { it1 -> putInt(StringConstants.ROOM_ID, it1) }
                         navigationService.openRoomDetailsScreen(this@with)
                     }

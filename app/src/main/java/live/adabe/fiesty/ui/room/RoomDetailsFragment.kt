@@ -86,6 +86,11 @@ class RoomDetailsFragment : Fragment() {
         override fun onItemClick(device: Device) {
             with(Bundle()) {
                 putInt(StringConstants.DEVICE_ID, device.deviceId)
+                arguments?.getInt(StringConstants.ROOM_ID)?.let {
+                    putInt(StringConstants.ROOM_ID,
+                        it
+                    )
+                }
                 navigationService.openDeviceDetailsScreen(this@with)
             }
         }
