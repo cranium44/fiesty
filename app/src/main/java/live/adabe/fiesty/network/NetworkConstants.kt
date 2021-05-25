@@ -33,7 +33,7 @@ object NetworkConstants {
     const val DEVICE_DELETE_ENDPOINT = "appliance/{id}"
 
     //energy
-    const val ENERGY_ROOM_ENDPOINT = "energy/{roomId}"
+    const val ENERGY_ROOM_ENDPOINT = "energy/{buildingId}/{roomId}"
     const val ENERGY_BUILDING_ENDPOINT = "building/{buildingId}"
     const val ENERGY_USER_ENDPOINT = "energy/user/{userId}"
 }

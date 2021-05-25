@@ -7,10 +7,13 @@ import retrofit2.http.Path
 
 interface EnergyAPI {
     @GET(NetworkConstants.ENERGY_BUILDING_ENDPOINT)
-    suspend fun getBuildingEnergyOutput(@Path("buildingId") buildingId: Int): Response<Double>
+    suspend fun getBuildingEnergyOutput(@Path("buildingId") buildingId: Int): Double
 
     @GET(NetworkConstants.ENERGY_ROOM_ENDPOINT)
-    suspend fun getRoomEnergyOutput(@Path("roomId") roomId: Int): Response<Double>
+    suspend fun getRoomEnergyOutput(
+        @Path("roomId") roomId: Int,
+        @Path("buildingId") buildingId: Int
+    ): Double
 
     @GET(NetworkConstants.ENERGY_USER_ENDPOINT)
     suspend fun getUserEnergyOutput(@Path("userId") userId: Int): Response<Double>

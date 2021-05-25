@@ -51,6 +51,7 @@ class RoomDetailsFragment : Fragment() {
             arguments?.let { args ->
                 roomNameTv.text = args.getString(StringConstants.ROOM_NAME) ?: ""
                 deviceViewModel.getDevices(args.getInt(StringConstants.ROOM_ID))
+                viewModel.getRoomEnergyUse(args.getInt(StringConstants.ROOM_ID), args.getInt(StringConstants.BUILDING_ID))
             }
             deviceRv.layoutManager = LinearLayoutManager(requireContext())
             addDeviceBtn.setOnClickListener {
@@ -84,6 +85,9 @@ class RoomDetailsFragment : Fragment() {
                 }
             })
         }
+        viewModel.roomEnergyUseLiveData.observe(viewLifecycleOwner, { energyUse ->
+            binding.roomEnergyUseTv.text = energyUse.toString()
+        })
     }
 
     private val listener = object : DeviceAdapter.DeviceItemClickListener {

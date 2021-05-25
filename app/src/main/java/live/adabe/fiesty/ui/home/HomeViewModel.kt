@@ -1,6 +1,5 @@
 package live.adabe.fiesty.ui.home
 
-import android.os.Bundle
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -28,8 +27,9 @@ class HomeViewModel @Inject constructor(
     private var _buildings = MutableLiveData<List<BuildingResponse>>()
     val buildings: LiveData<List<BuildingResponse>> = _buildings
 
-    var userEnergyUseLivedata = MutableLiveData<Double>()
-    var bundle = MutableLiveData<Bundle?>()
+    val userEnergyUseLivedata = MutableLiveData<Double>()
+    val roomEnergyUseLiveData = MutableLiveData<Double>()
+    val buildingEnergyUseLiveData = MutableLiveData<Double>()
 
     private var _rooms = MutableLiveData<List<Room>>()
     val rooms: LiveData<List<Room>> = _rooms
@@ -117,10 +117,21 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-    fun getUserEnergyUse(){
-        viewModelScope.launch{
+    fun getUserEnergyUse() {
+        viewModelScope.launch {
             userEnergyUseLivedata.postValue(userRepository.getUserEergyUse())
         }
     }
 
+    fun getBuildingEnergyUse(buildingId: Int) {
+        viewModelScope.launch {
+            buildingEnergyUseLiveData.postValue(buildingRepository.getBuildingEnergyUse(buildingId))
+        }
+    }
+
+    fun getRoomEnergyUse(roomId: Int, buildingId: Int) {
+        viewModelScope.launch {
+            roomEnergyUseLiveData.postValue(roomRepository.getRoomEnergyUse(roomId, buildingId))
+        }
+    }
 }
