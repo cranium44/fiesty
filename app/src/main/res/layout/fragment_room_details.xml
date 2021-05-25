@@ -26,7 +26,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="32dp"
         android:text="@string/name"
         android:textColor="@color/black"
         android:textSize="18sp"
@@ -44,6 +44,30 @@
         app:layout_constraintStart_toStartOf="@id/textView16"
         app:layout_constraintTop_toBottomOf="@id/textView16"
         tools:text="Lounge" />
+
+    <TextView
+        android:id="@+id/textView21"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="16dp"
+        android:text="@string/total_energy_use"
+        android:textColor="@color/black"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/room_name_tv" />
+
+    <TextView
+        android:id="@+id/room_energy_use_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="@+id/textView21"
+        app:layout_constraintTop_toBottomOf="@+id/textView21"
+        tools:text="1200" />
 
     <TextView
         android:id="@+id/textView17"
@@ -70,13 +94,13 @@
         android:id="@+id/no_device_data"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:text="@string/there_is_no_device_data_at_the_moment"
         android:textColor="@color/black"
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="@+id/device_rv"
         app:layout_constraintEnd_toEndOf="@+id/device_rv"
         app:layout_constraintStart_toStartOf="@+id/device_rv"
-        app:layout_constraintTop_toTopOf="@+id/device_rv"
-        android:text="@string/there_is_no_device_data_at_the_moment" />
+        app:layout_constraintTop_toTopOf="@+id/device_rv" />
 
     <Button
         android:id="@+id/add_device_btn"
@@ -113,7 +137,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.35" />
+        app:layout_constraintGuide_percent="0.40" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
