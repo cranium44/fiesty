@@ -61,6 +61,7 @@ class HomeFragment : Fragment() {
 
         }
         viewModel.run {
+            getUserEnergyUse()
             buildings.observe(viewLifecycleOwner, { buildings_ ->
                 if (buildings_ != null) {
                     if (buildings_.isNotEmpty()) {
