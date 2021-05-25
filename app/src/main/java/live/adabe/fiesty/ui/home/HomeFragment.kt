@@ -17,7 +17,6 @@ import live.adabe.fiesty.navigation.NavigationService
 import live.adabe.fiesty.ui.adapters.BuildingAdapter
 import live.adabe.fiesty.util.Converter
 import live.adabe.fiesty.util.StringConstants
-import timber.log.Timber
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -38,12 +37,15 @@ class HomeFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        // Inflate the layout for this fragment
         binding = FragmentHomeBinding.inflate(inflater, container, false)
         viewModel = ViewModelProvider(requireActivity())[HomeViewModel::class.java]
         binding.apply {
             buildingRecycler.layoutManager = LinearLayoutManager(requireContext())
-            welcomeText.text = getString(R.string.welcome_text, preferences.getFirstName(), preferences.getLastName())
+            welcomeText.text = getString(
+                R.string.welcome_text,
+                preferences.getFirstName(),
+                preferences.getLastName()
+            )
         }
         return binding.root
     }
@@ -52,7 +54,7 @@ class HomeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.addBuilding.setOnClickListener {
-            with(Bundle()){
+            with(Bundle()) {
                 putString(StringConstants.MODE, StringConstants.CREATE_MODE)
                 navigationService.openBuildingCreateScreen(this@with)
             }
@@ -82,6 +84,9 @@ class HomeFragment : Fragment() {
                         .show()
                     getBuildings()
                 }
+            })
+            userEnergyUseLivedata.observe(viewLifecycleOwner, { userEnergyUse ->
+                binding.totalEnergyUseDisplay.text = userEnergyUse.toString()
             })
         }
     }

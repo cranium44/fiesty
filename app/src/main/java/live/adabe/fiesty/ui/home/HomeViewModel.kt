@@ -13,6 +13,7 @@ import live.adabe.fiesty.models.network.building.BuildingResponse
 import live.adabe.fiesty.models.network.room.RoomRequest
 import live.adabe.fiesty.network.repository.BuildingRepository
 import live.adabe.fiesty.network.repository.RoomRepository
+import live.adabe.fiesty.network.repository.UserRepository
 import live.adabe.fiesty.util.Converter
 import timber.log.Timber
 import javax.inject.Inject
@@ -20,13 +21,14 @@ import javax.inject.Inject
 @HiltViewModel
 class HomeViewModel @Inject constructor(
     private val buildingRepository: BuildingRepository,
-    private val roomRepository: RoomRepository
+    private val roomRepository: RoomRepository,
+    private val userRepository: UserRepository
 ) :
     ViewModel() {
     private var _buildings = MutableLiveData<List<BuildingResponse>>()
     val buildings: LiveData<List<BuildingResponse>> = _buildings
 
-    var screen = MutableLiveData<String>()
+    var userEnergyUseLivedata = MutableLiveData<Double>()
     var bundle = MutableLiveData<Bundle?>()
 
     private var _rooms = MutableLiveData<List<Room>>()
@@ -112,6 +114,12 @@ class HomeViewModel @Inject constructor(
     fun updateRoom(roomId: Int, buildingId: Int, roomRequest: RoomRequest) {
         viewModelScope.launch {
             updateRoomResponse.postValue(roomRepository.updateRoom(roomId, buildingId, roomRequest))
+        }
+    }
+
+    fun getUserEnergyUse(){
+        viewModelScope.launch{
+            userEnergyUseLivedata.postValue(userRepository.getUserEergyUse())
         }
     }
 
