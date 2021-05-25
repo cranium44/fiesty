@@ -122,25 +122,33 @@ class BuildingDetailsFragment : Fragment() {
     }
 
     private fun observeViewModel() {
-        arguments?.let { viewModel.getBuildingRooms(it.getInt(StringConstants.BUILDING_ID)) }
-        viewModel.rooms.observe(viewLifecycleOwner, {
-            if (it == null || it.isEmpty()) {
-                binding.apply {
-                    roomNoData.visibility = View.VISIBLE
-                    roomRecycler.visibility = View.INVISIBLE
+        arguments?.let {
+            viewModel.getBuildingRooms(it.getInt(StringConstants.BUILDING_ID))
+            viewModel.getBuildingEnergyUse(it.getInt(StringConstants.BUILDING_ID))
+        }
+        viewModel.run{
+            rooms.observe(viewLifecycleOwner, {
+                if (it == null || it.isEmpty()) {
+                    binding.apply {
+                        roomNoData.visibility = View.VISIBLE
+                        roomRecycler.visibility = View.INVISIBLE
+                    }
+                } else {
+                    roomAdapter = RoomAdapter(it, listener)
+                    binding.apply {
+                        roomNoData.visibility = View.GONE
+                        roomRecycler.visibility = View.VISIBLE
+                    }
+                    binding.roomRecycler.apply {
+                        adapter = roomAdapter
+                        this.adapter?.notifyDataSetChanged()
+                    }
                 }
-            } else {
-                roomAdapter = RoomAdapter(it, listener)
-                binding.apply {
-                    roomNoData.visibility = View.GONE
-                    roomRecycler.visibility = View.VISIBLE
-                }
-                binding.roomRecycler.apply {
-                    adapter = roomAdapter
-                    this.adapter?.notifyDataSetChanged()
-                }
-            }
-        })
+            })
+            buildingEnergyUseLiveData.observe(viewLifecycleOwner, { energyUse ->
+                binding.buildingEnergyUseTv.text = energyUse.toString()
+            })
+        }
     }
 
     private val listener = object : RoomAdapter.RoomItemClickListener {

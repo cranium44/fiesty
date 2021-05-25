@@ -9,13 +9,15 @@ import live.adabe.fiesty.models.Building
 import live.adabe.fiesty.models.network.building.BuildingRequest
 import live.adabe.fiesty.models.network.building.BuildingResponse
 import live.adabe.fiesty.network.api.BuildingAPI
+import live.adabe.fiesty.network.api.EnergyAPI
 import timber.log.Timber
 import javax.inject.Inject
 
 class BuildingRepository @Inject constructor(
     private val buildingAPI: BuildingAPI,
     private val preferences: Preferences,
-    private val buildingDAO: BuildingDAO
+    private val buildingDAO: BuildingDAO,
+    private val energyAPI: EnergyAPI
 ) {
     suspend fun createBuilding(buildingRequest: BuildingRequest) =
         buildingAPI.createBuilding(preferences.getId(), buildingRequest)
@@ -37,6 +39,16 @@ class BuildingRepository @Inject constructor(
                 buildingAPI.getUserBuilding(preferences.getId(), buildingId)
             } catch (t: Throwable) {
                 null
+            }
+        }
+    }
+
+    suspend fun getBuildingEnergyUse(buildingId: Int): Double {
+        return withContext(Dispatchers.IO) {
+            return@withContext try {
+                energyAPI.getBuildingEnergyOutput(buildingId)
+            } catch (t: Throwable) {
+                0.0
             }
         }
     }

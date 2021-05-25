@@ -6,6 +6,7 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import live.adabe.fiesty.db.Preferences
+import live.adabe.fiesty.network.api.EnergyAPI
 import live.adabe.fiesty.network.api.UserAPI
 import live.adabe.fiesty.network.repository.UserRepository
 import javax.inject.Singleton
@@ -15,12 +16,12 @@ import javax.inject.Singleton
 class RepositoryModule {
     @Provides
     @Singleton
-    fun providePrefences(application: Application): Preferences{
+    fun providePreferences(application: Application): Preferences{
         return Preferences(application)
     }
 
     @Provides
-    fun provideUserRepository(preferences: Preferences, userAPI: UserAPI): UserRepository{
-        return UserRepository(userAPI, preferences)
+    fun provideUserRepository(preferences: Preferences, userAPI: UserAPI, energyAPI: EnergyAPI): UserRepository{
+        return UserRepository(userAPI, energyAPI, preferences)
     }
 }

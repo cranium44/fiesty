@@ -1,6 +1,5 @@
 package live.adabe.fiesty.ui.home
 
-import android.os.Bundle
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -13,6 +12,7 @@ import live.adabe.fiesty.models.network.building.BuildingResponse
 import live.adabe.fiesty.models.network.room.RoomRequest
 import live.adabe.fiesty.network.repository.BuildingRepository
 import live.adabe.fiesty.network.repository.RoomRepository
+import live.adabe.fiesty.network.repository.UserRepository
 import live.adabe.fiesty.util.Converter
 import timber.log.Timber
 import javax.inject.Inject
@@ -20,14 +20,16 @@ import javax.inject.Inject
 @HiltViewModel
 class HomeViewModel @Inject constructor(
     private val buildingRepository: BuildingRepository,
-    private val roomRepository: RoomRepository
+    private val roomRepository: RoomRepository,
+    private val userRepository: UserRepository
 ) :
     ViewModel() {
     private var _buildings = MutableLiveData<List<BuildingResponse>>()
     val buildings: LiveData<List<BuildingResponse>> = _buildings
 
-    var screen = MutableLiveData<String>()
-    var bundle = MutableLiveData<Bundle?>()
+    val userEnergyUseLivedata = MutableLiveData<Double>()
+    val roomEnergyUseLiveData = MutableLiveData<Double>()
+    val buildingEnergyUseLiveData = MutableLiveData<Double>()
 
     private var _rooms = MutableLiveData<List<Room>>()
     val rooms: LiveData<List<Room>> = _rooms
@@ -115,4 +117,21 @@ class HomeViewModel @Inject constructor(
         }
     }
 
+    fun getUserEnergyUse() {
+        viewModelScope.launch {
+            userEnergyUseLivedata.postValue(userRepository.getUserEergyUse())
+        }
+    }
+
+    fun getBuildingEnergyUse(buildingId: Int) {
+        viewModelScope.launch {
+            buildingEnergyUseLiveData.postValue(buildingRepository.getBuildingEnergyUse(buildingId))
+        }
+    }
+
+    fun getRoomEnergyUse(roomId: Int, buildingId: Int) {
+        viewModelScope.launch {
+            roomEnergyUseLiveData.postValue(roomRepository.getRoomEnergyUse(roomId, buildingId))
+        }
+    }
 }

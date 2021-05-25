@@ -6,12 +6,14 @@ import live.adabe.fiesty.db.Preferences
 import live.adabe.fiesty.models.network.user.LoginRequest
 import live.adabe.fiesty.models.network.user.UserRequest
 import live.adabe.fiesty.models.network.user.UserResponse
+import live.adabe.fiesty.network.api.EnergyAPI
 import live.adabe.fiesty.network.api.UserAPI
 import timber.log.Timber
 import javax.inject.Inject
 
 class UserRepository @Inject constructor(
     private val userAPI: UserAPI,
+    private val energyAPI: EnergyAPI,
     private val preferences: Preferences
 ) {
 
@@ -49,6 +51,21 @@ class UserRepository @Inject constructor(
             setPhoneNumber(response_.phoneNumber)
             setId(response_.id)
             setIsLoggedIn(true)
+        }
+    }
+
+    suspend fun getUserEergyUse(): Double {
+        return withContext(Dispatchers.IO) {
+            return@withContext try {
+                val response = energyAPI.getUserEnergyOutput(preferences.getId())
+                if (response.isSuccessful && response.body() != null) {
+                    response.body()
+                } else {
+                    0.0
+                }
+            } catch (t: Throwable) {
+                0.0
+            }!!
         }
     }
 
