@@ -119,7 +119,7 @@ class HomeViewModel @Inject constructor(
 
     fun getUserEnergyUse() {
         viewModelScope.launch {
-            userEnergyUseLivedata.postValue(userRepository.getUserEergyUse())
+            userEnergyUseLivedata.postValue(userRepository.getUserEnergyUse())
         }
     }
 

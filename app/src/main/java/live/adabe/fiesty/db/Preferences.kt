@@ -3,6 +3,7 @@ package live.adabe.fiesty.db
 import android.app.Application
 import android.content.Context
 import android.content.SharedPreferences
+import android.net.Uri
 import javax.inject.Inject
 
 class Preferences @Inject constructor(application: Application) {
@@ -16,6 +17,7 @@ class Preferences @Inject constructor(application: Application) {
         private const val EMAIL = "email"
         private const val ID = "id"
         private const val PHONE = "phone"
+        private const val IMAGE_URI = "image_uri"
         private const val LOGGED_IN_KEY = "logged_in"
     }
 
@@ -61,6 +63,13 @@ class Preferences @Inject constructor(application: Application) {
         }
     }
 
+    fun setImageUri(uri: Uri){
+        with(sharedPreferences.edit()){
+            putString(IMAGE_URI, uri.toString())
+            apply()
+        }
+    }
+
     fun isLoggedIn() = sharedPreferences.getBoolean(LOGGED_IN_KEY, false)
 
     fun getId() = sharedPreferences.getInt(ID, 0)
@@ -72,6 +81,8 @@ class Preferences @Inject constructor(application: Application) {
     fun getLastName() = sharedPreferences.getString(LAST_NAME, "")
 
     fun getEmail() = sharedPreferences.getString(EMAIL, "")
+
+    fun getImageUri() = Uri.parse(sharedPreferences.getString(IMAGE_URI, ""))
 
     fun clearAll() {
         with(sharedPreferences.edit()){

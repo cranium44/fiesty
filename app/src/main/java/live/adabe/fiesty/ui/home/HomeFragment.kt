@@ -17,7 +17,7 @@ import live.adabe.fiesty.navigation.NavigationService
 import live.adabe.fiesty.ui.adapters.BuildingAdapter
 import live.adabe.fiesty.util.Converter
 import live.adabe.fiesty.util.StringConstants
-import live.adabe.fiesty.util.formatToTwoDp
+import live.adabe.fiesty.util.getDrawableResource
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -59,7 +59,14 @@ class HomeFragment : Fragment() {
                 putString(StringConstants.MODE, StringConstants.CREATE_MODE)
                 navigationService.openBuildingCreateScreen(this@with)
             }
-
+        }
+        binding.profileBtn.setOnClickListener { navigationService.openProfileScreen() }
+        binding.run {
+            if(preferences.getImageUri().toString().isNotEmpty()){
+                displayPic.setImageURI(preferences.getImageUri())
+            }else{
+                displayPic.setImageURI(getDrawableResource(R.drawable.ic_user, requireContext()))
+            }
         }
         viewModel.run {
             getUserEnergyUse()
@@ -88,7 +95,8 @@ class HomeFragment : Fragment() {
                 }
             })
             userEnergyUseLivedata.observe(viewLifecycleOwner, { userEnergyUse ->
-                binding.totalEnergyUseDisplay.text = getString(R.string.energy_use_text, userEnergyUse)
+                binding.totalEnergyUseDisplay.text =
+                    getString(R.string.energy_use_text, userEnergyUse)
             })
         }
     }

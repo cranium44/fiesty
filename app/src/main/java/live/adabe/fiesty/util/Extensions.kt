@@ -1,5 +1,8 @@
 package live.adabe.fiesty.util
 
+import android.content.ContentResolver
+import android.content.Context
+import android.net.Uri
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.coroutines.delay
 import java.io.IOException
@@ -59,3 +62,10 @@ suspend fun <T> retryIO(
     }
     return block() // last attempt
 }
+
+fun getDrawableResource(resourceId: Int, context: Context): Uri = Uri.Builder()
+        .scheme(ContentResolver.SCHEME_ANDROID_RESOURCE)
+    .authority(context.resources.getResourcePackageName(resourceId))
+    .appendPath(context.resources.getResourceTypeName(resourceId))
+    .appendPath(context.resources.getResourceEntryName(resourceId))
+    .build()
