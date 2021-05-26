@@ -49,12 +49,13 @@ class UserRepository @Inject constructor(
             setFirstName(response_.firstName)
             setLastName(response_.lastName)
             setPhoneNumber(response_.phoneNumber)
+            setPassword(response_.password)
             setId(response_.id)
             setIsLoggedIn(true)
         }
     }
 
-    suspend fun getUserEergyUse(): Double {
+    suspend fun getUserEnergyUse(): Double {
         return withContext(Dispatchers.IO) {
             return@withContext try {
                 val response = energyAPI.getUserEnergyOutput(preferences.getId())
@@ -69,15 +70,16 @@ class UserRepository @Inject constructor(
         }
     }
 
-    fun logout() {
+    fun logout(): Boolean {
         preferences.clearAll()
+        preferences.setIsLoggedIn(false)
+        return true
     }
 
     suspend fun updateUser(userRequest: UserRequest): UserResponse? {
         return withContext(Dispatchers.IO) {
             return@withContext try {
-                val id = preferences.getId()
-                val response = userAPI.updateUser(id, userRequest)
+                val response = userAPI.updateUser(preferences.getId(), userRequest)
                 saveUserInfo(response)
                 response
             } catch (t: Throwable) {

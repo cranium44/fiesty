@@ -108,7 +108,17 @@ class RoomFragment : Fragment() {
             createRoomResponse.observe(viewLifecycleOwner, {
                 it?.let {
                     Timber.d(it.name)
-                    navigationService.openBuildingDetailsScreen(null)
+                    val bundle = Bundle().apply {
+                        arguments?.let { it1 ->
+                            putInt(
+                                StringConstants.BUILDING_ID,
+                                it1.getInt(StringConstants.BUILDING_ID)
+                            )
+                        }
+                    }
+                    navigationService.openBuildingDetailsScreen(
+                        bundle
+                    )
                     createRoomResponse.postValue(null)
                 }
             })

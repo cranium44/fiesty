@@ -9,6 +9,7 @@ import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import dagger.hilt.android.AndroidEntryPoint
+import live.adabe.fiesty.R
 import live.adabe.fiesty.databinding.FragmentDeviceDetailsBinding
 import live.adabe.fiesty.navigation.NavigationService
 import live.adabe.fiesty.ui.home.HomeViewModel
@@ -59,7 +60,7 @@ class DeviceDetailsFragment : Fragment() {
                         startTimeDisplay.text = getTimeFromDate(device.startTime)
                         stopTimeDisplay.text = getTimeFromDate(device.stopTime)
                     }
-                    energyUseDisplay.text = device.energyUse.toString()
+                    energyUseDisplay.text = getString(R.string.energy_use_text, device.energyUse)
                 }
             })
             editDeviceBtn.setOnClickListener {

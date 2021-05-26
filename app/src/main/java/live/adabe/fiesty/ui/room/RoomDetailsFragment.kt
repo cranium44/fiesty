@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
+import live.adabe.fiesty.R
 import live.adabe.fiesty.databinding.FragmentRoomDetailsBinding
 import live.adabe.fiesty.models.Device
 import live.adabe.fiesty.navigation.NavigationService
@@ -68,6 +69,18 @@ class RoomDetailsFragment : Fragment() {
         }
     }
 
+    override fun onResume() {
+        super.onResume()
+        arguments?.getInt(StringConstants.ROOM_ID)?.let { viewModel.getRoom(it) }
+        viewModel.getRoomLiveData.observe(viewLifecycleOwner,{room ->
+            binding.run {
+                if (room != null) {
+                    roomNameTv.text = room.name
+                }
+            }
+        })
+    }
+
     private fun observeData() {
         deviceViewModel.run {
             deviceListLiveData.observe(viewLifecycleOwner, { devices ->
@@ -86,7 +99,7 @@ class RoomDetailsFragment : Fragment() {
             })
         }
         viewModel.roomEnergyUseLiveData.observe(viewLifecycleOwner, { energyUse ->
-            binding.roomEnergyUseTv.text = energyUse.toString()
+            binding.roomEnergyUseTv.text = getString(R.string.energy_use_text, energyUse)
         })
     }
 
@@ -106,7 +119,6 @@ class RoomDetailsFragment : Fragment() {
         override fun onItemDelete(device: Device) {
             deviceViewModel.deleteDevice(device.deviceId)
         }
-
     }
 
 }

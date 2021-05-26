@@ -41,6 +41,7 @@ class HomeViewModel @Inject constructor(
     var createRoomResponse = MutableLiveData<Room?>()
     var updateRoomResponse = MutableLiveData<Room?>()
     var deleteRoomLiveData = MutableLiveData<Boolean>()
+    val getRoomLiveData = MutableLiveData<Room?>()
 
     init {
         viewModelScope.launch {
@@ -105,6 +106,12 @@ class HomeViewModel @Inject constructor(
         }
     }
 
+    fun getRoom(roomId: Int) {
+        viewModelScope.launch {
+            getRoomLiveData.postValue(roomRepository.getRoom(roomId))
+        }
+    }
+
     fun deleteRoom(roomId: Int) {
         viewModelScope.launch {
             deleteRoomLiveData.postValue(roomRepository.deleteRoom(roomId))
@@ -119,7 +126,7 @@ class HomeViewModel @Inject constructor(
 
     fun getUserEnergyUse() {
         viewModelScope.launch {
-            userEnergyUseLivedata.postValue(userRepository.getUserEergyUse())
+            userEnergyUseLivedata.postValue(userRepository.getUserEnergyUse())
         }
     }
 
