@@ -114,11 +114,11 @@ class DeviceCreateFragment : Fragment() {
         deviceViewModel.run {
             devicesLiveData.observe(viewLifecycleOwner, {
                 it?.let {
-                    with(Bundle()) {
+                    val bundle = Bundle().apply {
                         roomId?.let { it1 -> putInt(StringConstants.ROOM_ID, it1) }
-                        devicesLiveData.postValue(null)
-                        navigationService.openRoomDetailsScreen(this@with)
                     }
+                    devicesLiveData.postValue(null)
+                    navigationService.openRoomDetailsScreen(bundle)
                 }
             })
         }

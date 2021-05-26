@@ -69,6 +69,18 @@ class RoomDetailsFragment : Fragment() {
         }
     }
 
+    override fun onResume() {
+        super.onResume()
+        arguments?.getInt(StringConstants.ROOM_ID)?.let { viewModel.getRoom(it) }
+        viewModel.getRoomLiveData.observe(viewLifecycleOwner,{room ->
+            binding.run {
+                if (room != null) {
+                    roomNameTv.text = room.name
+                }
+            }
+        })
+    }
+
     private fun observeData() {
         deviceViewModel.run {
             deviceListLiveData.observe(viewLifecycleOwner, { devices ->
@@ -107,7 +119,6 @@ class RoomDetailsFragment : Fragment() {
         override fun onItemDelete(device: Device) {
             deviceViewModel.deleteDevice(device.deviceId)
         }
-
     }
 
 }
