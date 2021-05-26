@@ -49,6 +49,7 @@ class UserRepository @Inject constructor(
             setFirstName(response_.firstName)
             setLastName(response_.lastName)
             setPhoneNumber(response_.phoneNumber)
+            setPassword(response_.password)
             setId(response_.id)
             setIsLoggedIn(true)
         }

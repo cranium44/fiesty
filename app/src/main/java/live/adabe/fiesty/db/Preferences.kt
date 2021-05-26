@@ -17,6 +17,7 @@ class Preferences @Inject constructor(application: Application) {
         private const val EMAIL = "email"
         private const val ID = "id"
         private const val PHONE = "phone"
+        private const val PASSWORD = "password"
         private const val IMAGE_URI = "image_uri"
         private const val LOGGED_IN_KEY = "logged_in"
     }
@@ -70,6 +71,13 @@ class Preferences @Inject constructor(application: Application) {
         }
     }
 
+    fun setPassword(password: String){
+        with(sharedPreferences.edit()){
+            putString(PASSWORD, password)
+            apply()
+        }
+    }
+
     fun isLoggedIn() = sharedPreferences.getBoolean(LOGGED_IN_KEY, false)
 
     fun getId() = sharedPreferences.getInt(ID, 0)
@@ -82,7 +90,9 @@ class Preferences @Inject constructor(application: Application) {
 
     fun getEmail() = sharedPreferences.getString(EMAIL, "")
 
-    fun getImageUri() = Uri.parse(sharedPreferences.getString(IMAGE_URI, ""))
+    fun getPassword() = sharedPreferences.getString(PASSWORD, "")
+
+    fun getImageUri(): Uri = Uri.parse(sharedPreferences.getString(IMAGE_URI, ""))
 
     fun clearAll() {
         with(sharedPreferences.edit()){
