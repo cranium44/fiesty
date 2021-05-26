@@ -3,6 +3,7 @@ package live.adabe.fiesty.util
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.coroutines.delay
 import java.io.IOException
+import java.text.DecimalFormat
 
 fun <T : RecyclerView.ViewHolder> T.listen(event: (position: Int, type: Int) -> Unit): T {
     itemView.setOnClickListener {
@@ -33,13 +34,18 @@ fun updateTime(hours: Int, mins: Int): String {
         .append(minutes).append(" ").append(timeSet).toString()
 }
 
+fun formatToTwoDp(number: Double): Double {
+    val df = DecimalFormat("#.##")
+    return df.format(number).toDouble()
+}
+
 suspend fun <T> retryIO(
     times: Int = Int.MAX_VALUE,
     initialDelay: Long = 100, // 0.1 second
     maxDelay: Long = 1000,    // 1 second
     factor: Double = 2.0,
-    block: suspend () -> T): T
-{
+    block: suspend () -> T
+): T {
     var currentDelay = initialDelay
     repeat(times - 1) {
         try {
