@@ -38,7 +38,9 @@
     <string name="end_time">End Time</string>
     <string name="create_device">Create Device</string>
     <string name="buildings">Buildings:</string>
+
     <string name="welcome_text">Hello, %1$s %2$s</string>
+    <string name="energy_use_text">%.2f kWh </string>
     <string name="phone_number">Phone Number</string>
     <string name="device_details">Device Details</string>
     <string name="select_time">Select time</string>

@@ -17,6 +17,7 @@ import live.adabe.fiesty.navigation.NavigationService
 import live.adabe.fiesty.ui.adapters.BuildingAdapter
 import live.adabe.fiesty.util.Converter
 import live.adabe.fiesty.util.StringConstants
+import live.adabe.fiesty.util.formatToTwoDp
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -87,7 +88,7 @@ class HomeFragment : Fragment() {
                 }
             })
             userEnergyUseLivedata.observe(viewLifecycleOwner, { userEnergyUse ->
-                binding.totalEnergyUseDisplay.text = userEnergyUse.toString()
+                binding.totalEnergyUseDisplay.text = getString(R.string.energy_use_text, userEnergyUse)
             })
         }
     }

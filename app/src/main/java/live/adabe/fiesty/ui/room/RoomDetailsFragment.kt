@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
+import live.adabe.fiesty.R
 import live.adabe.fiesty.databinding.FragmentRoomDetailsBinding
 import live.adabe.fiesty.models.Device
 import live.adabe.fiesty.navigation.NavigationService
@@ -86,7 +87,7 @@ class RoomDetailsFragment : Fragment() {
             })
         }
         viewModel.roomEnergyUseLiveData.observe(viewLifecycleOwner, { energyUse ->
-            binding.roomEnergyUseTv.text = energyUse.toString()
+            binding.roomEnergyUseTv.text = getString(R.string.energy_use_text, energyUse)
         })
     }
 
