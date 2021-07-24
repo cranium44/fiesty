@@ -1,10 +1,12 @@
 package live.adabe.fiesty.ui.home
 
+import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -15,9 +17,10 @@ import live.adabe.fiesty.db.Preferences
 import live.adabe.fiesty.models.Building
 import live.adabe.fiesty.navigation.NavigationService
 import live.adabe.fiesty.ui.adapters.BuildingAdapter
-import live.adabe.fiesty.util.Converter
-import live.adabe.fiesty.util.StringConstants
-import live.adabe.fiesty.util.getDrawableResource
+import live.adabe.fiesty.util.*
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
+import java.util.*
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -40,41 +43,25 @@ class HomeFragment : Fragment() {
     ): View {
         binding = FragmentHomeBinding.inflate(inflater, container, false)
         viewModel = ViewModelProvider(requireActivity())[HomeViewModel::class.java]
-        binding.apply {
-            buildingRecycler.layoutManager = LinearLayoutManager(requireContext())
-            welcomeText.text = getString(
-                R.string.welcome_text,
-                preferences.getFirstName(),
-                preferences.getLastName()
-            )
-        }
         return binding.root
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.addBuilding.setOnClickListener {
-            with(Bundle()) {
-                putString(StringConstants.MODE, StringConstants.CREATE_MODE)
-                navigationService.openBuildingCreateScreen(this@with)
-            }
-        }
-        binding.profileBtn.setOnClickListener { navigationService.openProfileScreen() }
-        binding.run {
-            if(preferences.getImageUri().toString().isNotEmpty()){
-                displayPic.setImageURI(preferences.getImageUri())
-            }else{
-                displayPic.setImageURI(getDrawableResource(R.drawable.ic_user, requireContext()))
-            }
-        }
+        initViews()
+        observeViewModels()
+    }
+
+    private fun observeViewModels() {
         viewModel.run {
             getUserEnergyUse()
             buildings.observe(viewLifecycleOwner, { buildings_ ->
                 if (buildings_ != null) {
                     if (buildings_.isNotEmpty()) {
-                        binding.noDataText.visibility = View.GONE
-                        binding.buildingRecycler.visibility = View.VISIBLE
+                        binding.noDataText.hide()
+                        binding.buildingRecycler.show()
                         buildingAdapter =
                             BuildingAdapter(Converter.getBuildingList(buildings_), listener)
                         binding.buildingRecycler.apply {
@@ -83,8 +70,8 @@ class HomeFragment : Fragment() {
                         }
                     }
                 } else {
-                    binding.noDataText.visibility = View.VISIBLE
-                    binding.buildingRecycler.visibility = View.INVISIBLE
+                    binding.noDataText.show()
+                    binding.buildingRecycler.hideLayout()
                 }
             })
             buildingDeleteSuccessLiveData.observe(viewLifecycleOwner, { result ->
@@ -98,6 +85,36 @@ class HomeFragment : Fragment() {
                 binding.totalEnergyUseDisplay.text =
                     getString(R.string.energy_use_text, userEnergyUse)
             })
+        }
+    }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    private fun initViews() {
+        binding.apply {
+            addBuilding.setOnClickListener {
+                with(Bundle()) {
+                    putString(StringConstants.MODE, StringConstants.CREATE_MODE)
+                    navigationService.openBuildingCreateScreen(this@with)
+                }
+            }
+            val date: LocalDate = LocalDate.now()
+             dateDisplay.text = date.format(DateTimeFormatter.ofPattern("MMMM dd, yyyy"))
+
+            profileBtn.setOnClickListener { navigationService.openProfileScreen() }
+
+            if (preferences.getImageUri().toString().isNotEmpty()) {
+                displayPic.setImageURI(preferences.getImageUri())
+            } else {
+                displayPic.setImageURI(getDrawableResource(R.drawable.ic_user, requireContext()))
+            }
+
+            buildingRecycler.layoutManager =
+                LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+            welcomeText.text = getString(
+                R.string.welcome_text,
+                preferences.getFirstName(),
+                preferences.getLastName()
+            )
         }
     }
 

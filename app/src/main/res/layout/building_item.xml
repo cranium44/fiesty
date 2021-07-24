@@ -3,53 +3,55 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:background="@color/item_bg"
+    android:background="@drawable/building_item_bg"
     android:layout_marginBottom="8dp"
     android:padding="8dp"
+    android:layout_marginEnd="8dp"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
     <TextView
         android:id="@+id/building_name"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        app:layout_constraintEnd_toStartOf="@+id/imageView"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="TextView" />
 
     <TextView
-        android:id="@+id/building_address"
+        android:id="@+id/building_energy"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        app:layout_constraintStart_toStartOf="@+id/building_name"
-        app:layout_constraintTop_toBottomOf="@+id/building_name"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintBottom_toBottomOf="@+id/imageView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/imageView"
         tools:text="TextView" />
 
-    <ImageButton
-        android:id="@+id/edit_button"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:layout_marginEnd="4dp"
-        android:backgroundTint="#E8F6F0"
-        android:contentDescription="@string/image"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="@+id/delete_button"
-        app:layout_constraintEnd_toStartOf="@+id/delete_button"
-        app:layout_constraintTop_toTopOf="@+id/delete_button"
-        app:srcCompat="@android:drawable/ic_menu_edit" />
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginEnd="8dp"
+        android:src="@drawable/ic_lighting"
+        app:layout_constraintBottom_toBottomOf="@+id/building_name"
+        app:layout_constraintEnd_toStartOf="@+id/building_energy"
+        app:layout_constraintTop_toTopOf="@+id/building_name"
+        android:contentDescription="@string/name" />
 
-    <ImageButton
-        android:id="@+id/delete_button"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:backgroundTint="#E8F6F0"
-        android:contentDescription="@string/image"
-        android:visibility="visible"
-        app:layout_constraintBottom_toBottomOf="parent"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/building_room_rv"
+        android:layout_width="0dp"
+        android:layout_height="200dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@android:drawable/ic_menu_delete" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/building_name"
+        tools:listitem="@layout/building_child_item"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

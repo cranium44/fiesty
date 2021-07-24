@@ -11,4 +11,10 @@
     <color name="grey_1">#E8E8E8</color>
     <color name="grey_2">#BDBDBD</color>
     <color name="image_border_color">#2345cf</color>
+    <color name="border_item">#757578</color>
+    <color name="text_green">#41AA74</color>
+    <color name="text_grey">#888C95</color>
+    <color name="text_blue">#5B65C4</color>
+    <color name="text_dark">#55585E</color>
+    <color name="child_item">#F3F5F9</color>
 </resources>

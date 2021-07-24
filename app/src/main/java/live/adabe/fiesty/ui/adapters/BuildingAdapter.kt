@@ -20,12 +20,9 @@ class BuildingAdapter(
         fun bind(building: Building) {
             binding.apply {
                 buildingName.text = building.name
-                buildingAddress.text = building.address
+                building.energyRate.toString().also { buildingEnergy.text = "$it kWh" }
                 root.setOnClickListener {
                     listener.onClick(building)
-                }
-                deleteButton.setOnClickListener {
-                    listener.onDelete(building)
                 }
             }
         }
