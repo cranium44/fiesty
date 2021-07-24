@@ -15,9 +15,7 @@ import live.adabe.fiesty.db.Preferences
 import live.adabe.fiesty.models.Building
 import live.adabe.fiesty.navigation.NavigationService
 import live.adabe.fiesty.ui.adapters.BuildingAdapter
-import live.adabe.fiesty.util.Converter
-import live.adabe.fiesty.util.StringConstants
-import live.adabe.fiesty.util.getDrawableResource
+import live.adabe.fiesty.util.*
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -40,41 +38,20 @@ class HomeFragment : Fragment() {
     ): View {
         binding = FragmentHomeBinding.inflate(inflater, container, false)
         viewModel = ViewModelProvider(requireActivity())[HomeViewModel::class.java]
-        binding.apply {
-            buildingRecycler.layoutManager = LinearLayoutManager(requireContext())
-            welcomeText.text = getString(
-                R.string.welcome_text,
-                preferences.getFirstName(),
-                preferences.getLastName()
-            )
-        }
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.addBuilding.setOnClickListener {
-            with(Bundle()) {
-                putString(StringConstants.MODE, StringConstants.CREATE_MODE)
-                navigationService.openBuildingCreateScreen(this@with)
-            }
-        }
-        binding.profileBtn.setOnClickListener { navigationService.openProfileScreen() }
-        binding.run {
-            if(preferences.getImageUri().toString().isNotEmpty()){
-                displayPic.setImageURI(preferences.getImageUri())
-            }else{
-                displayPic.setImageURI(getDrawableResource(R.drawable.ic_user, requireContext()))
-            }
-        }
+        initViews()
         viewModel.run {
             getUserEnergyUse()
             buildings.observe(viewLifecycleOwner, { buildings_ ->
                 if (buildings_ != null) {
                     if (buildings_.isNotEmpty()) {
-                        binding.noDataText.visibility = View.GONE
-                        binding.buildingRecycler.visibility = View.VISIBLE
+                        binding.noDataText.hide()
+                        binding.buildingRecycler.show()
                         buildingAdapter =
                             BuildingAdapter(Converter.getBuildingList(buildings_), listener)
                         binding.buildingRecycler.apply {
@@ -83,8 +60,8 @@ class HomeFragment : Fragment() {
                         }
                     }
                 } else {
-                    binding.noDataText.visibility = View.VISIBLE
-                    binding.buildingRecycler.visibility = View.INVISIBLE
+                    binding.noDataText.show()
+                    binding.buildingRecycler.hideLayout()
                 }
             })
             buildingDeleteSuccessLiveData.observe(viewLifecycleOwner, { result ->
@@ -98,6 +75,33 @@ class HomeFragment : Fragment() {
                 binding.totalEnergyUseDisplay.text =
                     getString(R.string.energy_use_text, userEnergyUse)
             })
+        }
+    }
+
+    private fun initViews() {
+        binding.apply {
+            addBuilding.setOnClickListener {
+                with(Bundle()) {
+                    putString(StringConstants.MODE, StringConstants.CREATE_MODE)
+                    navigationService.openBuildingCreateScreen(this@with)
+                }
+            }
+
+            profileBtn.setOnClickListener { navigationService.openProfileScreen() }
+
+            if (preferences.getImageUri().toString().isNotEmpty()) {
+                displayPic.setImageURI(preferences.getImageUri())
+            } else {
+                displayPic.setImageURI(getDrawableResource(R.drawable.ic_user, requireContext()))
+            }
+
+            buildingRecycler.layoutManager =
+                LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+            welcomeText.text = getString(
+                R.string.welcome_text,
+                preferences.getFirstName(),
+                preferences.getLastName()
+            )
         }
     }
 

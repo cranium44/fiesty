@@ -3,6 +3,7 @@ package live.adabe.fiesty.util
 import android.content.ContentResolver
 import android.content.Context
 import android.net.Uri
+import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.coroutines.delay
 import java.io.IOException
@@ -13,6 +14,18 @@ fun <T : RecyclerView.ViewHolder> T.listen(event: (position: Int, type: Int) -> 
         event.invoke(adapterPosition, itemViewType)
     }
     return this
+}
+
+fun <T: View> T.hide(): Unit{
+    visibility = View.GONE
+}
+
+fun <T: View> T.show(): Unit{
+    visibility = View.VISIBLE
+}
+
+fun <T: View> T.hideLayout(): Unit{
+    visibility = View.INVISIBLE
 }
 
 fun updateTime(hours: Int, mins: Int): String {
