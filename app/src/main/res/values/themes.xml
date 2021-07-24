@@ -25,4 +25,14 @@
         <item name="android:textColor">@color/text_blue</item>
         <item name="fontWeight">700</item>
     </style>
+
+    <style name="RegularGreen">
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">@color/text_green</item>
+    </style>
+
+    <style name="RegularGrey">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/text_grey</item>
+    </style>
 </resources>

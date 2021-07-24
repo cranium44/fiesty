@@ -1,10 +1,12 @@
 package live.adabe.fiesty.ui.home
 
+import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -16,6 +18,9 @@ import live.adabe.fiesty.models.Building
 import live.adabe.fiesty.navigation.NavigationService
 import live.adabe.fiesty.ui.adapters.BuildingAdapter
 import live.adabe.fiesty.util.*
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
+import java.util.*
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -41,10 +46,15 @@ class HomeFragment : Fragment() {
         return binding.root
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         initViews()
+        observeViewModels()
+    }
+
+    private fun observeViewModels() {
         viewModel.run {
             getUserEnergyUse()
             buildings.observe(viewLifecycleOwner, { buildings_ ->
@@ -78,6 +88,7 @@ class HomeFragment : Fragment() {
         }
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     private fun initViews() {
         binding.apply {
             addBuilding.setOnClickListener {
@@ -86,6 +97,8 @@ class HomeFragment : Fragment() {
                     navigationService.openBuildingCreateScreen(this@with)
                 }
             }
+            val date: LocalDate = LocalDate.now()
+             dateDisplay.text = date.format(DateTimeFormatter.ofPattern("MMMM dd, yyyy"))
 
             profileBtn.setOnClickListener { navigationService.openProfileScreen() }
 

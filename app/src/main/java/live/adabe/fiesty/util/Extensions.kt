@@ -16,15 +16,15 @@ fun <T : RecyclerView.ViewHolder> T.listen(event: (position: Int, type: Int) -> 
     return this
 }
 
-fun <T: View> T.hide(): Unit{
+fun <T: View> T.hide(){
     visibility = View.GONE
 }
 
-fun <T: View> T.show(): Unit{
+fun <T: View> T.show(){
     visibility = View.VISIBLE
 }
 
-fun <T: View> T.hideLayout(): Unit{
+fun <T: View> T.hideLayout(){
     visibility = View.INVISIBLE
 }
 
