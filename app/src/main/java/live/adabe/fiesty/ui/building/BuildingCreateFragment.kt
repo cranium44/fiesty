@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import dagger.hilt.android.AndroidEntryPoint
@@ -73,7 +74,6 @@ class BuildingCreateFragment : Fragment() {
         arguments?.let { args ->
             Timber.d(args.getString(StringConstants.MODE))
             if (args.getString(StringConstants.MODE) == StringConstants.EDIT_MODE) {
-
                 binding.run {
                     buildingName.editText?.setText(args.getString(StringConstants.BUILDING_NAME))
                     buildingAddress.editText?.setText(args.getString(StringConstants.BUILDING_ADDRESS))
@@ -89,5 +89,7 @@ class BuildingCreateFragment : Fragment() {
                 }
             }
         }
+
     }
+
 }

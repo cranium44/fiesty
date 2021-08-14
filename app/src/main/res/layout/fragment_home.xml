@@ -114,32 +114,21 @@
         app:layout_constraintStart_toStartOf="@+id/home_start_guideline"
         app:layout_constraintTop_toTopOf="@+id/guideline6" />
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/add_building"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginEnd="32dp"
         android:background="@drawable/input_bg"
-        android:text="@string/add_new_building"
+        android:text="@string/add_new"
         android:textAllCaps="false"
+        android:textColor="@color/white"
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/profile_btn"
-        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintEnd_toStartOf="@+id/home_end_guideline"
         app:layout_constraintStart_toStartOf="@+id/home_start_guideline"
         app:layout_constraintTop_toTopOf="@+id/guideline7" />
-
-    <Button
-        android:id="@+id/profile_btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@drawable/input_bg"
-        android:text="@string/profile"
-        android:textAllCaps="false"
-        android:textSize="18sp"
-        app:layout_constraintBaseline_toBaselineOf="@+id/add_building"
-        app:layout_constraintEnd_toStartOf="@+id/home_end_guideline"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/add_building" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/home_start_guideline"

@@ -13,7 +13,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
-        android:background="@android:color/transparent"
+        android:background="@color/grey_1"
         app:boxBackgroundColor="@android:color/transparent"
         app:layout_constraintBottom_toTopOf="@+id/building_address"
         app:layout_constraintEnd_toStartOf="@+id/guideline4"
@@ -33,7 +33,7 @@
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:background="@android:color/transparent"
+        android:background="@color/grey_1"
         app:boxBackgroundColor="@android:color/transparent"
         app:layout_constraintBottom_toTopOf="@+id/building_energy_rate"
         app:layout_constraintEnd_toStartOf="@+id/guideline4"
@@ -50,11 +50,11 @@
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/building_energy_rate"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:background="@android:color/transparent"
-        app:boxBackgroundColor="@android:color/transparent"
+        android:background="@color/input_bg_grey"
+        app:boxBackgroundColor="@color/input_bg_grey"
         app:layout_constraintBottom_toTopOf="@+id/guideline8"
         app:layout_constraintEnd_toStartOf="@+id/guideline4"
         app:layout_constraintHorizontal_bias="0.5"
@@ -68,7 +68,7 @@
             android:inputType="numberDecimal" />
     </com.google.android.material.textfield.TextInputLayout>
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/save_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

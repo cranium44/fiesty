@@ -17,6 +17,7 @@ import live.adabe.fiesty.db.Preferences
 import live.adabe.fiesty.models.Building
 import live.adabe.fiesty.navigation.NavigationService
 import live.adabe.fiesty.ui.adapters.BuildingAdapter
+import live.adabe.fiesty.ui.add_new.AddNewDialog
 import live.adabe.fiesty.util.*
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
@@ -92,15 +93,16 @@ class HomeFragment : Fragment() {
     private fun initViews() {
         binding.apply {
             addBuilding.setOnClickListener {
-                with(Bundle()) {
-                    putString(StringConstants.MODE, StringConstants.CREATE_MODE)
-                    navigationService.openBuildingCreateScreen(this@with)
-                }
+//                with(Bundle()) {
+//                    putString(StringConstants.MODE, StringConstants.CREATE_MODE)
+//                    navigationService.openBuildingCreateScreen(this@with)
+//                }
+                AddNewDialog().show(requireActivity().supportFragmentManager, "dialog")
             }
             val date: LocalDate = LocalDate.now()
              dateDisplay.text = date.format(DateTimeFormatter.ofPattern("MMMM dd, yyyy"))
 
-            profileBtn.setOnClickListener { navigationService.openProfileScreen() }
+//            profileBtn.setOnClickListener { navigationService.openProfileScreen() }
 
             if (preferences.getImageUri().toString().isNotEmpty()) {
                 displayPic.setImageURI(preferences.getImageUri())
