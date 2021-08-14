@@ -14,9 +14,9 @@
     <string name="image">image</string>
     <string name="your_stats_are">Your stats are:</string>
     <string name="add_new_building">Add new Building</string>
-    <string name="building_name">Building Name</string>
-    <string name="building_address">Building Address</string>
-    <string name="energy_rate">Energy Rate</string>
+    <string name="building_name">Building name</string>
+    <string name="building_address">Building address</string>
+    <string name="energy_rate">Energy rate (kW/hr)</string>
     <string name="no_buildings">You have no buildings now</string>
     <string name="add_room">Add Room</string>
     <string name="edit">Edit</string>
@@ -53,4 +53,5 @@
     <string name="logout">Logout</string>
     <string name="change_password">Change Password</string>
     <string name="profile">Profile</string>
+    <string name="add_new">Add New</string>
 </resources>

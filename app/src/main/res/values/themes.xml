@@ -20,6 +20,12 @@
         <item name="android:textSize">32sp</item>
     </style>
 
+    <style name="TitleH3" parent="TextAppearance.AppCompat">
+        <item name="android:textColor">@color/text_dark</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+
     <style name="TitleBlue">
         <item name="android:textSize">30sp</item>
         <item name="android:textColor">@color/text_blue</item>
