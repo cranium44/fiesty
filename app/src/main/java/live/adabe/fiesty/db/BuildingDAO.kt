@@ -7,20 +7,23 @@ import live.adabe.fiesty.models.Building
 @Dao
 interface BuildingDAO {
     @Query("SELECT * from building")
-    fun getAllBuildings(): LiveData<List<Building>>
+    suspend fun getAllBuildings(): List<Building>
 
     @Query("SELECT * from building WHERE name LIKE :name")
-    fun getBuildingByName(name: String): LiveData<List<Building>>
+    suspend fun getBuildingByName(name: String): List<Building>
 
-    @Insert
-    fun addOneBuilding(building: Building)
+    @Query("SELECT * from building WHERE buildId = :id")
+    suspend fun getBuildingById(id: Int): Building
 
-    @Insert
-    fun addBuildings(vararg buildings: Building)
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun addOneBuilding(building: Building)
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun addBuildings(vararg buildings: Building)
 
     @Update
-    fun updateBuilding(building: Building)
+    suspend fun updateBuilding(building: Building)
 
     @Delete
-    fun deleteBuilding(building: Building)
+    suspend fun deleteBuilding(building: Building)
 }

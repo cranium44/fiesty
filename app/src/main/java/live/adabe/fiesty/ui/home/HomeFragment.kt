@@ -57,14 +57,13 @@ class HomeFragment : Fragment() {
 
     private fun observeViewModels() {
         viewModel.run {
-            getUserEnergyUse()
             buildings.observe(viewLifecycleOwner, { buildings_ ->
                 if (buildings_ != null) {
                     if (buildings_.isNotEmpty()) {
                         binding.noDataText.hide()
                         binding.buildingRecycler.show()
                         buildingAdapter =
-                            BuildingAdapter(Converter.getBuildingList(buildings_), listener)
+                            BuildingAdapter(buildings_, listener)
                         binding.buildingRecycler.apply {
                             adapter = buildingAdapter
                             this.adapter?.notifyDataSetChanged()
@@ -79,7 +78,6 @@ class HomeFragment : Fragment() {
                 if (result) {
                     Toast.makeText(requireContext(), "Deleted Successfully!", Toast.LENGTH_SHORT)
                         .show()
-                    getBuildings()
                 }
             })
             userEnergyUseLivedata.observe(viewLifecycleOwner, { userEnergyUse ->
@@ -93,10 +91,6 @@ class HomeFragment : Fragment() {
     private fun initViews() {
         binding.apply {
             addBuilding.setOnClickListener {
-//                with(Bundle()) {
-//                    putString(StringConstants.MODE, StringConstants.CREATE_MODE)
-//                    navigationService.openBuildingCreateScreen(this@with)
-//                }
                 AddNewDialog().show(requireActivity().supportFragmentManager, "dialog")
             }
             val date: LocalDate = LocalDate.now()
@@ -117,13 +111,6 @@ class HomeFragment : Fragment() {
                 preferences.getFirstName(),
                 preferences.getLastName()
             )
-        }
-    }
-
-    override fun onResume() {
-        super.onResume()
-        viewModel.run {
-            getBuildings()
         }
     }
 

@@ -1,9 +1,6 @@
 package live.adabe.fiesty.ui.home
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import live.adabe.fiesty.models.Building
@@ -14,7 +11,6 @@ import live.adabe.fiesty.network.repository.BuildingRepository
 import live.adabe.fiesty.network.repository.RoomRepository
 import live.adabe.fiesty.network.repository.UserRepository
 import live.adabe.fiesty.util.Converter
-import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
@@ -22,12 +18,16 @@ class HomeViewModel @Inject constructor(
     private val buildingRepository: BuildingRepository,
     private val roomRepository: RoomRepository,
     private val userRepository: UserRepository
-) :
-    ViewModel() {
-    private var _buildings = MutableLiveData<List<BuildingResponse>>()
-    val buildings: LiveData<List<BuildingResponse>> = _buildings
+) : ViewModel() {
 
-    val userEnergyUseLivedata = MutableLiveData<Double>()
+    val buildings: LiveData<List<Building>> = liveData {
+        val data = buildingRepository.getAllUserBuildings()
+        emit(data)
+    }
+
+    val userEnergyUseLivedata = liveData{
+        emit(userRepository.getUserEnergyUse())
+    }
     val roomEnergyUseLiveData = MutableLiveData<Double>()
     val buildingEnergyUseLiveData = MutableLiveData<Double>()
 
@@ -36,22 +36,12 @@ class HomeViewModel @Inject constructor(
 
     var buildingResponse = MutableLiveData<BuildingResponse?>()
     var buildingDeleteSuccessLiveData = MutableLiveData<Boolean>()
-    var buildingGetLiveData = MutableLiveData<BuildingResponse?>()
+    var buildingGetLiveData = MutableLiveData<Building>()
 
     var createRoomResponse = MutableLiveData<Room?>()
     var updateRoomResponse = MutableLiveData<Room?>()
     var deleteRoomLiveData = MutableLiveData<Boolean>()
     val getRoomLiveData = MutableLiveData<Room?>()
-
-    init {
-        viewModelScope.launch {
-            try {
-                _buildings.postValue(buildingRepository.getAllUserBuildings())
-            } catch (t: Throwable) {
-                Timber.e(t.message.toString())
-            }
-        }
-    }
 
     fun saveBuilding(building: Building) {
         viewModelScope.launch {
@@ -71,11 +61,6 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-    fun getBuildings() {
-        viewModelScope.launch {
-            _buildings.postValue(buildingRepository.getAllUserBuildings())
-        }
-    }
 
     fun getBuilding(buildingId: Int) {
         viewModelScope.launch {
@@ -124,11 +109,6 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-    fun getUserEnergyUse() {
-        viewModelScope.launch {
-            userEnergyUseLivedata.postValue(userRepository.getUserEnergyUse())
-        }
-    }
 
     fun getBuildingEnergyUse(buildingId: Int) {
         viewModelScope.launch {

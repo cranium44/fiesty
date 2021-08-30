@@ -1,7 +1,9 @@
 package live.adabe.fiesty.network.repository
 
 import androidx.lifecycle.LiveData
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import live.adabe.fiesty.db.BuildingDAO
 import live.adabe.fiesty.db.Preferences
@@ -19,13 +21,34 @@ class BuildingRepository @Inject constructor(
     private val buildingDAO: BuildingDAO,
     private val energyAPI: EnergyAPI
 ) {
-    suspend fun createBuilding(buildingRequest: BuildingRequest) =
-        buildingAPI.createBuilding(preferences.getId(), buildingRequest)
 
-    suspend fun getAllUserBuildings(): List<BuildingResponse> {
+    init {
+        CoroutineScope(Dispatchers.IO).launch {
+            updateBuildingsInDb()
+        }
+    }
+    suspend fun createBuilding(buildingRequest: BuildingRequest): BuildingResponse? {
+        return try{
+            val response = buildingAPI.createBuilding(preferences.getId(), buildingRequest)
+            buildingDAO.addOneBuilding(
+                Building(
+                    buildId = response.id,
+                    name = response.name,
+                    address = response.address,
+                    energyRate = response.energyRate
+                )
+            )
+            response
+        }catch(t: Throwable){
+            null
+        }
+    }
+
+
+    suspend fun getAllUserBuildings(): List<Building> {
         return withContext(Dispatchers.IO) {
-            return@withContext try {
-                buildingAPI.getAllUserBuildings(preferences.getId())
+            try {
+                buildingDAO.getAllBuildings()
             } catch (t: Throwable) {
                 Timber.e(t.message.toString())
                 emptyList()
@@ -33,10 +56,29 @@ class BuildingRepository @Inject constructor(
         }
     }
 
-    suspend fun getBuilding(buildingId: Int): BuildingResponse? {
+    private suspend fun updateBuildingsInDb() {
+        withContext(Dispatchers.IO) {
+            try {
+                val response = buildingAPI.getAllUserBuildings(preferences.getId())
+                val converted = response.map {
+                    Building(
+                        buildId = it.id,
+                        name = it.name,
+                        address = it.address,
+                        energyRate = it.energyRate
+                    )
+                }
+                buildingDAO.addBuildings(*converted.toTypedArray())
+            } catch (t: Throwable) {
+                Timber.e(t.message.toString())
+            }
+        }
+    }
+
+    suspend fun getBuilding(buildingId: Int): Building? {
         return withContext(Dispatchers.IO) {
-            return@withContext try {
-                buildingAPI.getUserBuilding(preferences.getId(), buildingId)
+            try {
+                buildingDAO.getBuildingById(buildingId)
             } catch (t: Throwable) {
                 null
             }
@@ -45,7 +87,7 @@ class BuildingRepository @Inject constructor(
 
     suspend fun getBuildingEnergyUse(buildingId: Int): Double {
         return withContext(Dispatchers.IO) {
-            return@withContext try {
+            try {
                 energyAPI.getBuildingEnergyOutput(buildingId)
             } catch (t: Throwable) {
                 0.0
@@ -58,7 +100,7 @@ class BuildingRepository @Inject constructor(
 
     suspend fun deleteBuilding(id: Int): Boolean {
         return withContext(Dispatchers.IO) {
-            return@withContext try {
+            try {
                 buildingAPI.deleteBuilding(id).isSuccessful
             } catch (t: Throwable) {
                 Timber.e(t.message.toString())
@@ -67,17 +109,6 @@ class BuildingRepository @Inject constructor(
         }
     }
 
-    suspend fun saveBuildingToDb(building: Building) {
-        withContext(Dispatchers.IO) {
-            buildingDAO.addOneBuilding(building)
-        }
-    }
-
-    suspend fun getBuildingsFromDb(): LiveData<List<Building>> {
-        return withContext(Dispatchers.IO) {
-            return@withContext buildingDAO.getAllBuildings()
-        }
-    }
 
     suspend fun editBuilding(building: Building) {
         withContext(Dispatchers.IO) {
