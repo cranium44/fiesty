@@ -1,6 +1,5 @@
 package live.adabe.fiesty.db
 
-import androidx.lifecycle.LiveData
 import androidx.room.*
 import androidx.room.OnConflictStrategy.REPLACE
 import live.adabe.fiesty.models.Room
@@ -8,15 +7,24 @@ import live.adabe.fiesty.models.Room
 
 @Dao
 interface RoomDAO {
-    @Query("SELECT * FROM room")
-    fun getAllRooms(): LiveData<List<Room>>
+    @Query("SELECT * FROM room WHERE buildingId = :buildId")
+    suspend fun getAllRoomsByBuilding(buildId: Int): List<Room>
 
-    @Insert
-    fun addRoom(room: Room)
+    @Query("SELECT * FROM room")
+    suspend fun getAllRooms(): List<Room>
+
+    @Query("SELECT * FROM room WHERE rmId = :rmId")
+    suspend fun getRoomById(rmId: Int): Room
+
+    @Insert(onConflict = REPLACE)
+    suspend fun addRoom(room: Room)
+
+    @Insert(onConflict = REPLACE)
+    suspend fun addRooms(vararg room: Room)
 
     @Update
-    fun updateRoom(room: Room)
+    suspend fun updateRoom(room: Room)
 
     @Delete
-    fun deleteRoom(room: Room)
+    suspend fun deleteRoom(room: Room)
 }
