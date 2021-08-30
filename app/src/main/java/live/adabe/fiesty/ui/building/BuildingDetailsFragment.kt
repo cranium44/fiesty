@@ -128,7 +128,7 @@ class BuildingDetailsFragment : Fragment() {
             viewModel.getBuildingEnergyUse(it.getInt(StringConstants.BUILDING_ID))
         }
         viewModel.run{
-            rooms.observe(viewLifecycleOwner, {
+            buildingRoomsLiveData.observe(viewLifecycleOwner, {
                 if (it == null || it.isEmpty()) {
                     binding.apply {
                         roomNoData.visibility = View.VISIBLE

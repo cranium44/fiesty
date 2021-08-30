@@ -19,6 +19,7 @@ import live.adabe.fiesty.navigation.NavigationService
 import live.adabe.fiesty.ui.adapters.BuildingAdapter
 import live.adabe.fiesty.ui.add_new.AddNewDialog
 import live.adabe.fiesty.util.*
+import timber.log.Timber
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import java.util.*
@@ -57,29 +58,30 @@ class HomeFragment : Fragment() {
 
     private fun observeViewModels() {
         viewModel.run {
-            getUserEnergyUse()
             buildings.observe(viewLifecycleOwner, { buildings_ ->
-                if (buildings_ != null) {
-                    if (buildings_.isNotEmpty()) {
-                        binding.noDataText.hide()
-                        binding.buildingRecycler.show()
-                        buildingAdapter =
-                            BuildingAdapter(Converter.getBuildingList(buildings_), listener)
-                        binding.buildingRecycler.apply {
-                            adapter = buildingAdapter
-                            this.adapter?.notifyDataSetChanged()
+                allRoomsLiveData.observe(viewLifecycleOwner, {rooms->
+                    if (buildings_ != null) {
+                        if (buildings_.isNotEmpty()) {
+                            binding.noDataText.hide()
+                            binding.buildingRecycler.show()
+                            buildingAdapter =
+                                BuildingAdapter(buildings_, listener, rooms)
+                            Timber.d(allRoomsLiveData.value?.get(0)?.name)
+                            binding.buildingRecycler.apply {
+                                adapter = buildingAdapter
+                                this.adapter?.notifyDataSetChanged()
+                            }
                         }
+                    } else {
+                        binding.noDataText.show()
+                        binding.buildingRecycler.hideLayout()
                     }
-                } else {
-                    binding.noDataText.show()
-                    binding.buildingRecycler.hideLayout()
-                }
+                })
             })
             buildingDeleteSuccessLiveData.observe(viewLifecycleOwner, { result ->
                 if (result) {
                     Toast.makeText(requireContext(), "Deleted Successfully!", Toast.LENGTH_SHORT)
                         .show()
-                    getBuildings()
                 }
             })
             userEnergyUseLivedata.observe(viewLifecycleOwner, { userEnergyUse ->
@@ -93,10 +95,6 @@ class HomeFragment : Fragment() {
     private fun initViews() {
         binding.apply {
             addBuilding.setOnClickListener {
-//                with(Bundle()) {
-//                    putString(StringConstants.MODE, StringConstants.CREATE_MODE)
-//                    navigationService.openBuildingCreateScreen(this@with)
-//                }
                 AddNewDialog().show(requireActivity().supportFragmentManager, "dialog")
             }
             val date: LocalDate = LocalDate.now()
@@ -117,13 +115,6 @@ class HomeFragment : Fragment() {
                 preferences.getFirstName(),
                 preferences.getLastName()
             )
-        }
-    }
-
-    override fun onResume() {
-        super.onResume()
-        viewModel.run {
-            getBuildings()
         }
     }
 

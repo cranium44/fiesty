@@ -17,6 +17,7 @@
     <color name="text_blue">#5B65C4</color>
     <color name="text_dark">#55585E</color>
     <color name="child_item">#F3F5F9</color>
-    <color name="button_blue">#4550BC</color>
+    <color name="button_blue">#FF4550BC</color>
+    <color name="button_disabled">#4D4550BC</color>
     <color name="input_bg_grey">#E5E5E5</color>
 </resources>

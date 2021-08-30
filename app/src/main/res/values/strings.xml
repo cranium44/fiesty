@@ -38,7 +38,6 @@
     <string name="end_time">End Time</string>
     <string name="create_device">Create Device</string>
     <string name="buildings">My Buildings</string>
-
     <string name="welcome_text">Hello, %1$s %2$s</string>
     <string name="energy_use_text">%.2f kWh </string>
     <string name="phone_number">Phone Number</string>
@@ -54,4 +53,6 @@
     <string name="change_password">Change Password</string>
     <string name="profile">Profile</string>
     <string name="add_new">Add New</string>
+    <string name="check_out">Check out your energy usage.</string>
+    <string name="new_building">New Building</string>
 </resources>
