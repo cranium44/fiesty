@@ -48,7 +48,7 @@ class RoomRepository @Inject constructor(
         }
     }
 
-    suspend fun getRooms(buildingId: Int): List<Room> {
+    suspend fun getBuildingRooms(buildingId: Int): List<Room> {
         return withContext(Dispatchers.IO) {
             try {
                 roomDAO.getAllRoomsByBuilding(buildingId)
@@ -58,6 +58,8 @@ class RoomRepository @Inject constructor(
             }
         }
     }
+
+    suspend fun getAllRooms() = roomDAO.getAllRooms()
 
     suspend fun getRoomEnergyUse(roomId: Int, buildingId: Int): Double {
         return withContext(Dispatchers.IO) {

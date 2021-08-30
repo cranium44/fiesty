@@ -10,6 +10,9 @@ interface RoomDAO {
     @Query("SELECT * FROM room WHERE buildingId = :buildId")
     suspend fun getAllRoomsByBuilding(buildId: Int): List<Room>
 
+    @Query("SELECT * FROM room")
+    suspend fun getAllRooms(): List<Room>
+
     @Query("SELECT * FROM room WHERE rmId = :rmId")
     suspend fun getRoomById(rmId: Int): Room
 

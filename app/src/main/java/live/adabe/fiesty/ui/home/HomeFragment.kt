@@ -19,6 +19,7 @@ import live.adabe.fiesty.navigation.NavigationService
 import live.adabe.fiesty.ui.adapters.BuildingAdapter
 import live.adabe.fiesty.ui.add_new.AddNewDialog
 import live.adabe.fiesty.util.*
+import timber.log.Timber
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import java.util.*
@@ -58,21 +59,24 @@ class HomeFragment : Fragment() {
     private fun observeViewModels() {
         viewModel.run {
             buildings.observe(viewLifecycleOwner, { buildings_ ->
-                if (buildings_ != null) {
-                    if (buildings_.isNotEmpty()) {
-                        binding.noDataText.hide()
-                        binding.buildingRecycler.show()
-                        buildingAdapter =
-                            BuildingAdapter(buildings_, listener)
-                        binding.buildingRecycler.apply {
-                            adapter = buildingAdapter
-                            this.adapter?.notifyDataSetChanged()
+                allRoomsLiveData.observe(viewLifecycleOwner, {rooms->
+                    if (buildings_ != null) {
+                        if (buildings_.isNotEmpty()) {
+                            binding.noDataText.hide()
+                            binding.buildingRecycler.show()
+                            buildingAdapter =
+                                BuildingAdapter(buildings_, listener, rooms)
+                            Timber.d(allRoomsLiveData.value?.get(0)?.name)
+                            binding.buildingRecycler.apply {
+                                adapter = buildingAdapter
+                                this.adapter?.notifyDataSetChanged()
+                            }
                         }
+                    } else {
+                        binding.noDataText.show()
+                        binding.buildingRecycler.hideLayout()
                     }
-                } else {
-                    binding.noDataText.show()
-                    binding.buildingRecycler.hideLayout()
-                }
+                })
             })
             buildingDeleteSuccessLiveData.observe(viewLifecycleOwner, { result ->
                 if (result) {
