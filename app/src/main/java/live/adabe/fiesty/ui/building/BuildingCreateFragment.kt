@@ -1,10 +1,11 @@
 package live.adabe.fiesty.ui.building
 
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import dagger.hilt.android.AndroidEntryPoint
@@ -89,7 +90,31 @@ class BuildingCreateFragment : Fragment() {
                 }
             }
         }
+        binding.run {
+            buildingName.editText?.addTextChangedListener(textListener)
+            buildingAddress.editText?.addTextChangedListener(textListener)
+            buildingEnergyRate.editText?.addTextChangedListener(textListener)
+        }
+    }
 
+    private fun validateInput() {
+        binding.run {
+            saveButton.isEnabled = buildingAddress.editText?.text?.isNotEmpty() == true &&
+                    buildingName.editText?.text?.isNotEmpty() == true &&
+                    buildingEnergyRate.editText?.text?.isNotEmpty() == true
+        }
+    }
+
+    private val textListener = object : TextWatcher {
+        override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+        }
+
+        override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+            validateInput()
+        }
+
+        override fun afterTextChanged(p0: Editable?) {
+        }
     }
 
 }

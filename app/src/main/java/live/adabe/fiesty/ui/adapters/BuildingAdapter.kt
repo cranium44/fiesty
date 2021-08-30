@@ -6,10 +6,12 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import live.adabe.fiesty.databinding.BuildingItemBinding
 import live.adabe.fiesty.models.Building
+import live.adabe.fiesty.ui.home.HomeViewModel
 
 class BuildingAdapter(
     private val buildings: List<Building>,
-    private val listener: BuildingItemClickListener
+    private val listener: BuildingItemClickListener,
+    private val viewModel: HomeViewModel
 ) : RecyclerView.Adapter<BuildingAdapter.BuildingViewHolder>() {
 
     class BuildingViewHolder(
